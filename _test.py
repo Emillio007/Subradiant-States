@@ -16,5 +16,12 @@ for i in range(2**20): #1 million (for e.g. 20 atoms)
 t2 = time.time()
 print(t2 - t1)
 
-#Time on HPC ~0.75 seconds
-#Time on desktop ~0.53 seconds ...
+"""
+matmul 1 million times in
+Python: 
+Time on HPC ~0.75 seconds
+Time on desktop ~0.53 seconds ...
+C++:
+Time on HPC ~
+Time on desktop ~0.04 seconds
+"""
