@@ -17,4 +17,4 @@ t2 = time.time()
 print(t2 - t1)
 
 #Time on HPC ~0.75 seconds
-#Time on desktop ~
+#Time on desktop ~0.53 seconds ...
