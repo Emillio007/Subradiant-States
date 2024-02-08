@@ -11,7 +11,7 @@ print(c)
 t1 = time.time()
 
 for i in range(2**20): #1 million (for e.g. 20 atoms)
-    c = a * b
+    c = a @ b
 
 t2 = time.time()
 print(t2 - t1)
