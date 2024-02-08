@@ -22,6 +22,6 @@ Python:
 Time on HPC ~0.75 seconds
 Time on desktop ~0.53 seconds ...
 C++:
-Time on HPC ~
+Time on HPC ~0.06 seconds ...
 Time on desktop ~0.04 seconds
 """
