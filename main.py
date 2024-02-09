@@ -97,6 +97,9 @@ H_eff = np.zeros((2**N, 2**N), dtype=complex)                          #Effectiv
 
 for i in range(N):                                              #Fill the effective Hamiltonian
     for j in range(N):
-        H_eff += (-mu_0 * w0**2) * np.dot(D, np.dot(G[i, j], D))
+        if i == j:
+            continue
+        else:
+            H_eff += (-mu_0 * w0**2) * np.dot(D, np.dot(G[i, j], D))
 
 print(H_eff.shape)
