@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.constants import *
 import time
+from multiprocessing import Pool
 
 #Declarations:
 lambda_0 = 780e-9                                               #m (wavelength of the ??? transition)
@@ -72,11 +73,9 @@ for i in range(N):                                              #Fill the array 
 EFFECTIVE HAMILTONIAN
 In this section, the effective Hamiltonian of the system is calculated.
 """
-
+"""
 def coherence_operators(i, j, N):
-    """
-    Coherence operators
-    """
+    
     space = np.identity(2)
     for k in range(N):
         if k == i:
@@ -87,15 +86,17 @@ def coherence_operators(i, j, N):
             space = np.kron(space, np.identity(2))
         print(k)
 
+pool = Pool()
 time1 = time.time()
-coherence_operators(8, 12, 20)
+result = pool.apply_async(coherence_operators, [8, 12, 20])
 time2 = time.time()
 print(time2-time1)
+"""
 
-H_eff = np.zeros((N, N), dtype=complex)                          #Effective Hamiltonian of the system
+H_eff = np.zeros((2**N, 2**N), dtype=complex)                          #Effective Hamiltonian of the system
 
 for i in range(N):                                              #Fill the effective Hamiltonian
     for j in range(N):
-        H_eff[i, j] += (-mu_0 * w0**2) * np.dot(D, np.dot(G[i, j], D))
+        H_eff += (-mu_0 * w0**2) * np.dot(D, np.dot(G[i, j], D))
 
 print(H_eff.shape)
