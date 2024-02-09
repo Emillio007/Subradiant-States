@@ -62,15 +62,40 @@ def G_0(r, w):
 G = np.zeros((N, N, 3, 3), dtype=complex)                        #Array of Green's tensors
 for i in range(N):                                              #Fill the array of Green's tensors
     for j in range(i, N):
-        G[i, j] = G_0(rij[i, j], w0)
-        G[j, i] = G[i, j]
+        if i == j:
+            G[i, j] = np.zeros((3, 3), dtype=complex)
+        else:
+            G[i, j] = G_0(rij[i, j], w0)
+            G[j, i] = G[i, j]
 
 """
 EFFECTIVE HAMILTONIAN
 In this section, the effective Hamiltonian of the system is calculated.
 """
+
+def coherence_operators(i, j, N):
+    """
+    Coherence operators
+    """
+    space = np.identity(2)
+    for k in range(N):
+        if k == i:
+            space = np.kron(space, np.array([[0, 0], [1, 0]]))
+        elif k == j:
+            space = np.kron(space, np.array([[0, 1], [0, 0]]))
+        else:
+            space = np.kron(space, np.identity(2))
+        print(k)
+
+time1 = time.time()
+coherence_operators(8, 12, 20)
+time2 = time.time()
+print(time2-time1)
+
 H_eff = np.zeros((N, N), dtype=complex)                          #Effective Hamiltonian of the system
 
 for i in range(N):                                              #Fill the effective Hamiltonian
     for j in range(N):
-        H_eff[i, j] = (-mu_0 * w0**2) * np.dot(D, np.dot(G[i, j], D))
+        H_eff[i, j] += (-mu_0 * w0**2) * np.dot(D, np.dot(G[i, j], D))
+
+print(H_eff.shape)
