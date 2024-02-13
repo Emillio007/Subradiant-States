@@ -35,11 +35,14 @@ def getNonZeroEntries(mat):
     return len(np.where(mat == 1)[0])
 
 x = range(1, N+1)
-y = [getNonZeroEntries(doSum(k)) for k in x]
+y1 = [k**2 * k**2 for k in x]
+y2 = [getNonZeroEntries(doSum(k)) for k in x]
 
-plt.plot(x, y, 'x')
+plt.plot(x, y1, 'x', label="entries")
+plt.plot(x, y2, 'x', label="non-zero entries")
 plt.xscale('linear')
 plt.yscale('linear')
+plt.legend()
 plt.show()
 
 """
