@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.constants import *
 import time
-from multiprocessing import Pool
+from qutip import *
 
 #Declarations:
 lambda_0 = 780e-9                                               #m (wavelength of the ??? transition)
@@ -15,7 +15,7 @@ Construct lattice
  (1) Finite linear chain
 """
 d = 0.2 * lambda_0                                              #m (distance between the dipoles)
-N = 20                                                          #number of atoms
+N = 5                                                          #number of atoms
 
 pos = np.zeros((N, 3))                                          #Array of position vectors of the atoms
 z_ticks = np.linspace(-(N*d)/2, (N*d)/2, N)                     #z-coordinates of the atoms
@@ -36,7 +36,7 @@ How does polarization direction of the dipole get into the calculation?
 #Dx = bra(psi0) @ q*ex @ ket(psi1)                                #Dipole moment vector of the atom transition
 #Dy = bra(psi0) @ q*ey @ ket(psi1)
 #Dz = bra(psi0) @ q*ez @ ket(psi1)
-D = np.zeros(3)
+D = Qobj([[1], [1], [1]])                                    #ket of zeros.
 
 """
 GREEN'S TENSOR (in free space)
@@ -55,7 +55,7 @@ def G_0(r, w):
     k0 = w/c
     r_norm = np.linalg.norm(r)
     G = ((np.e**(k0*r_norm*complex(0,1)))/(4*pi*epsilon_0*k0**2 * r_norm**3)) * (
-        (k0**2 * r_norm**2 + k0*r_norm*complex(0, 1) - 1)*np.identity(3) 
+        (k0**2 * r_norm**2 + k0*r_norm*complex(0, 1) - 1)*qeye(3) 
         - (-k0**2 * r_norm**2 - 3*k0*r_norm*complex(0, 1) + 3)*np.outer(r, r)/(r_norm**2)
         )
     return G
@@ -73,33 +73,36 @@ for i in range(N):                                              #Fill the array 
 EFFECTIVE HAMILTONIAN
 In this section, the effective Hamiltonian of the system is calculated.
 """
-"""
 def coherence_operators(i, j, N):
     
-    space = np.identity(2)
-    for k in range(N):
+    sigma_ge = Qobj([[0, 1], [0, 0]])                         #deexcitation
+    sigma_eg = Qobj([[0, 0], [1, 0]])                         #excitation
+
+    if i == 0:
+        space = sigma_eg
+    elif j == 0:
+        space = sigma_ge
+    else:
+        space = qeye(2)
+    for k in range(1, N):
         if k == i:
-            space = np.kron(space, np.array([[0, 0], [1, 0]]))
+            space = tensor([space, sigma_eg])
         elif k == j:
-            space = np.kron(space, np.array([[0, 1], [0, 0]]))
+            space = tensor([space, sigma_ge])
         else:
-            space = np.kron(space, np.identity(2))
-        print(k)
+            space = tensor([space, qeye(2)])
+        #print(k)
 
-pool = Pool()
-time1 = time.time()
-result = pool.apply_async(coherence_operators, [8, 12, 20])
-time2 = time.time()
-print(time2-time1)
-"""
+    return space
 
-H_eff = np.zeros((2**N, 2**N), dtype=complex)                          #Effective Hamiltonian of the system
+def H_eff(N):
+    H_eff = 0                                                       #Effective Hamiltonian of the system
+    for i in range(N):                                              #Fill the effective Hamiltonian
+        for j in range(N):
+            if i == j:
+                continue
+            else:
+                H_eff += (-mu_0 * w0**2) * D.trans() * Qobj(G[i,j]) * D * coherence_operators(i, j, N)
+    return H_eff
 
-for i in range(N):                                              #Fill the effective Hamiltonian
-    for j in range(N):
-        if i == j:
-            continue
-        else:
-            H_eff += (-mu_0 * w0**2) * np.dot(D, np.dot(G[i, j], D))
-
-print(H_eff.shape)
+print(H_eff(N))
