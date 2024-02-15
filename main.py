@@ -12,10 +12,10 @@ ez = np.array([0, 0, 1])                                         #z-axis unit ve
 
 """
 Construct lattice
- (1) Finite linear chain
+ (1) Finite linear chain along z-axis
 """
 d = 0.2 * lambda_0                                              #m (distance between the dipoles)
-N = 5                                                          #number of atoms
+N = 10                                                          #number of atoms
 
 pos = np.zeros((N, 3))                                          #Array of position vectors of the atoms
 z_ticks = np.linspace(-(N*d)/2, (N*d)/2, N)                     #z-coordinates of the atoms
@@ -33,10 +33,14 @@ In this section, the dipole moment vector of chosen atom transition is calculate
 How does polarization direction of the dipole get into the calculation?
 """
 
-#Dx = bra(psi0) @ q*ex @ ket(psi1)                                #Dipole moment vector of the atom transition
-#Dy = bra(psi0) @ q*ey @ ket(psi1)
-#Dz = bra(psi0) @ q*ez @ ket(psi1)
-D = Qobj([[1], [1], [1]])                                    #ket of zeros.
+Dx = 0*ex                                           #Dipole moment vector of the atom transition
+Dy = 0*ey
+Dz = e*ez
+
+D = Qobj(Dz)                                        #Parallel polarization
+
+#Vacuum decay rate for normalization of eigenenergies:
+gamma_0 = (w0**3 * D.norm()**2) / (3 * pi * hbar * epsilon_0 * c**3)
 
 """
 GREEN'S TENSOR (in free space)
@@ -105,4 +109,34 @@ def H_eff(N):
                 H_eff += (-mu_0 * w0**2) * D.trans() * Qobj(G[i,j]) * D * coherence_operators(i, j, N)
     return H_eff
 
-print(H_eff(N))
+def H(N, H_eff):
+    sigma_ee = Qobj([[0, 0], [0, 1]])                             #excited state
+    H = 0
+    for i in range(N):
+
+        if i == 0:
+            space = sigma_ee
+        else:
+            space = qeye(2)
+        for k in range(1, N):
+            if k == i:
+                space = tensor([space, sigma_ee])
+            else:
+                space = tensor([space, qeye(2)])
+
+        H += hbar * w0 * space
+    H += H_eff
+    return H
+
+"""
+Section for producing plots
+"""
+
+
+Hamiltonian = H(N, H_eff(N))
+energies = Hamiltonian.eigenenergies()
+states = Hamiltonian.eigenstates()
+
+#Decay rates are the imaginary parts of the eigenenergies
+decay_rates = np.imag(energies) / gamma_0 #Normalized by vacuum decay rate
+print(decay_rates)
