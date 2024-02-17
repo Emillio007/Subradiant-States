@@ -43,7 +43,7 @@ Dx = 0*ex                                           #Dipole moment vector
 Dy = 0*ey
 Dz = e*a0*ez                                        #Classical dipole moment in z-direction [C*m]
 """This might be the problem, as the transition dipole matrix element could be very different from the classical dipole moment."""
-D = Qobj(Dz)                                        #Parallel polarization
+D = Qobj(Dx+Dy+Dz)                                        #Parallel polarization
 
 #Vacuum decay rate for normalization of eigenenergies:
 gamma_0 = (w0**3 * D.norm()**2) / (3 * pi * hbar * epsilon_0 * c**3)    #[Hz]
@@ -151,4 +151,4 @@ states = Hamiltonian.eigenstates()
 
 #Decay rates are the imaginary parts of the eigenenergies
 decay_rates = - (2/hbar) * np.imag(energies) / gamma_0 #Normalized by vacuum decay rate
-print(max(decay_rates))
+print(Hamiltonian)
