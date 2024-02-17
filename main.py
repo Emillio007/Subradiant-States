@@ -4,11 +4,17 @@ import time
 from qutip import *
 
 #Declarations:
-lambda_0 = 780e-9                                               #m (wavelength of the ??? transition)
-w0 = 2*pi*c/lambda_0                                             #rad/s (angular frequency of the ??? transition)
+lambda_0 = 780e-9                                               #[m] (wavelength of the ??? transition)
+w0 = c/lambda_0                                             #[1/s] (frequency of the ??? transition)
 ex = np.array([1, 0, 0])                                         #x-axis unit vector
 ey = np.array([0, 1, 0])                                         #y-axis unit vector
 ez = np.array([0, 0, 1])                                         #z-axis unit vector
+a0 = 1e-10                                                     #[m] (atomic unit of length)
+
+
+#N.B.:
+#hbar = 1
+
 
 """
 Construct lattice
@@ -33,15 +39,15 @@ In this section, the dipole moment vector of chosen atom transition is calculate
 How does polarization direction of the dipole get into the calculation?
 """
 
-Dx = 0*ex                                           #Dipole moment vector of the atom transition
+Dx = 0*ex                                           #Dipole moment vector
 Dy = 0*ey
-Dz = e*ez
-
+Dz = e*a0*ez                                        #Classical dipole moment in z-direction [C*m]
+"""This might be the problem, as the transition dipole matrix element could be very different from the classical dipole moment."""
 D = Qobj(Dz)                                        #Parallel polarization
 
 #Vacuum decay rate for normalization of eigenenergies:
-gamma_0 = (w0**3 * D.norm()**2) / (3 * pi * hbar * epsilon_0 * c**3)
-
+gamma_0 = (w0**3 * D.norm()**2) / (3 * pi * hbar * epsilon_0 * c**3)    #[Hz]
+print(gamma_0)
 """
 GREEN'S TENSOR (in free space)
 In this section, the Green's tensor for the i'th dipole w.r.t. the j'th dipole is calculated.
@@ -58,9 +64,9 @@ def G_0(r, w):
     """
     k0 = w/c
     r_norm = np.linalg.norm(r)
-    G = ((np.e**(k0*r_norm*complex(0,1)))/(4*pi*epsilon_0*k0**2 * r_norm**3)) * (
-        (k0**2 * r_norm**2 + k0*r_norm*complex(0, 1) - 1)*qeye(3) 
-        - (-k0**2 * r_norm**2 - 3*k0*r_norm*complex(0, 1) + 3)*np.outer(r, r)/(r_norm**2)
+    G = ((np.e**(k0*r_norm*complex(0,1)))/(4 * pi * k0**2 * r_norm**3)) * (
+        (k0**2 * r_norm**2 + k0 * r_norm * complex(0, 1) - 1)*qeye(3) 
+        + (-k0**2 * r_norm**2 - 3*k0*r_norm*complex(0, 1) + 3)*np.outer(r, r)/(r_norm**2)
         )
     return G
 
@@ -98,6 +104,11 @@ def coherence_operators(i, j, N):
         #print(k)
 
     return space
+#Checking the values. They all seem reasonable, however.
+#print(w0)          #384349305128205.1
+#print(mu_0)        #1.2566370614359173e-06
+#print(D.norm())    #1.602176634e-29
+#print(gamma_0/w0)  #1.599244481542414e-10
 
 def H_eff(N):
     H_eff = 0                                                       #Effective Hamiltonian of the system
@@ -125,6 +136,7 @@ def H(N, H_eff):
                 space = tensor([space, qeye(2)])
 
         H += hbar * w0 * space
+        
     H += H_eff
     return H
 
@@ -132,11 +144,11 @@ def H(N, H_eff):
 Section for producing plots
 """
 
-
-Hamiltonian = H(N, H_eff(N))
+Hamiltonian = H(N, H_eff(N))                #Hamiltionian as of eq. (5) in Asenjo-Garcia
 energies = Hamiltonian.eigenenergies()
 states = Hamiltonian.eigenstates()
+#print(energies)
 
 #Decay rates are the imaginary parts of the eigenenergies
-decay_rates = np.imag(energies) / gamma_0 #Normalized by vacuum decay rate
-print(Hamiltonian)
+decay_rates = - (2/hbar) * np.imag(energies) / gamma_0 #Normalized by vacuum decay rate
+print(max(decay_rates))
