@@ -15,7 +15,7 @@ Construct lattice
  (1) Finite linear chain along z-axis
 """
 d = 0.2 * lambda_0                                              #m (distance between the dipoles)
-N = 10                                                          #number of atoms
+N = 2                                                          #number of atoms
 
 pos = np.zeros((N, 3))                                          #Array of position vectors of the atoms
 z_ticks = np.linspace(-(N*d)/2, (N*d)/2, N)                     #z-coordinates of the atoms
@@ -139,4 +139,4 @@ states = Hamiltonian.eigenstates()
 
 #Decay rates are the imaginary parts of the eigenenergies
 decay_rates = np.imag(energies) / gamma_0 #Normalized by vacuum decay rate
-print(decay_rates)
+print(Hamiltonian)
