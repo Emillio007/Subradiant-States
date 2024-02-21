@@ -3,6 +3,7 @@ from scipy.constants import *
 import time
 from qutip import *
 from GreensTensor import *
+from Hamiltonian import *
 
 #Declarations:
 lambda_0 = 780e-9                                               #[m] (wavelength of the ??? transition)
@@ -53,68 +54,13 @@ gamma_0 = (w0**3 * Dnorm**2) / (3 * pi * hbar * epsilon_0 * c**3)    #[Hz]
 G = fill_G(N, rij, w0, type="free_space")
 
 """
-EFFECTIVE HAMILTONIAN
-In this section, the effective Hamiltonian of the system is calculated.
+Section for Hamiltonian:
 """
-def coherence_operators(i, j, N):
-    
-    sigma_ge = Qobj([[0, 1], [0, 0]])                         #deexcitation
-    sigma_eg = Qobj([[0, 0], [1, 0]])                         #excitation
 
-    if i == 0:
-        space = sigma_eg
-    elif j == 0:
-        space = sigma_ge
-    else:
-        space = qeye(2)
-    for k in range(1, N):
-        if k == i:
-            space = tensor([space, sigma_eg])
-        elif k == j:
-            space = tensor([space, sigma_ge])
-        else:
-            space = tensor([space, qeye(2)])
-        #print(k)
 
-    return space
-#Checking the values. They all seem reasonable, however.
-#print(w0)          #384349305128205.1
-#print(mu_0)        #1.2566370614359173e-06
-#print(D.norm())    #1.602176634e-29
-#print(gamma_0/w0)  #1.599244481542414e-10
-
-def H_eff(N):
-    H_eff = 0                                                       #Effective Hamiltonian of the system
-    for i in range(N):                                              #Fill the effective Hamiltonian
-        for j in range(N):
-            if i == j:
-                continue
-            else:
-                H_eff += (-mu_0 * w0**2) * D.trans() * Qobj(G[i,j]) * D * coherence_operators(i, j, N)
-    return H_eff
-
-def H(N, H_eff):
-    sigma_ee = Qobj([[0, 0], [0, 1]])                             #excited state
-    H = 0
-    for i in range(N):
-
-        if i == 0:
-            space = sigma_ee
-        else:
-            space = qeye(2)
-        for k in range(1, N):
-            if k == i:
-                space = tensor([space, sigma_ee])
-            else:
-                space = tensor([space, qeye(2)])
-
-        H += hbar * w0 * space
-        
-    H += H_eff
-    return H
 
 """
-Section for producing plots
+Section for producing plots:
 """
 
 #Hamiltonian = H(N, H_eff(N))                #Hamiltionian as of eq. (5) in Asenjo-Garcia
