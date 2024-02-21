@@ -47,7 +47,7 @@ Dz = e*a0*ez                                        #Classical dipole moment in 
 """This might be the problem, as the transition dipole matrix element could be very different from the classical dipole moment."""
 D = Qobj(Dx+Dy+Dz)                                        #Parallel polarization
 Dnorm = D.norm()
-
+print(Dnorm)
 #Vacuum decay rate for normalization of eigenenergies:
 gamma_0 = (w0**3 * Dnorm**2) / (3 * pi * hbar * epsilon_0 * c**3)    #[Hz]
 
