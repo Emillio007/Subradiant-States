@@ -57,8 +57,19 @@ G = fill_G(N, rij, w0, type="free_space")
 Section for Hamiltonian:
 """
 
+#We want Hamiltonian in basis of {|e_j>}, meaning one excitation on j'th subspace.
+#Do this by computing every matrix element of NxN matrix. It is the block of one excitation in full Hamiltonian
+block = np.zeros((N,N))
+for i in range(N):
+    for j in range(N):
+        if i == j:
+            H_eff = 1
+        else:
+            H_eff = -mu_0 * w0**2 * ez.transpose() @ G[i,j] @ ez
+        block.data[i,j] += H_eff
+    block.data[i,i] += hbar * w0
 
-
+print(block)
 """
 Section for producing plots:
 """
