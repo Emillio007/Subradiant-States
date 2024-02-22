@@ -10,52 +10,126 @@ The assumptions include:
  * The dipoles are point-like particles: I.e. r_i and r_j can be treated as fixed position vectors. 
 """
 
-def G_0(r, w):
+def G_0(r, w0=1, dimensionless=True):
     """
-    Green's tensor in free space. As given by eq. (6) of Asenjo-Garcia et al.
+    Green's tensor in free space. As given by eq. (6) of Asenjo-Garcia et al. 
+    with option for dimensionless units. See bottom for definitions.
 
     ---Parameters:
     r: vector (3) of floats, displacement between the dipoles.
-    w: float, frequency of the atomic transition.
-
+    w0 (optional): float, frequency of the atomic transition. Default: 1
+    dimensionless (optional): bool, toggle dimensionless units. Default: True
+    
     ---Return:
     G: array (3 x 3) of complex floats, Green's tensor in free space between two dipoles.
+
+    ---
+
+    Description:
+    In the unitless case, no w needs to be provided. The variables are scaled such that:
+        G = G' * k0
+        r = r' * r0, r0 = 1/k0
     """
     from numpy.linalg import norm
     from numpy import e, outer, pi
     from scipy.constants import c
     from qutip import qeye
     
-    k0 = w/c
+    k0 = w0/c
     r_norm = norm(r)
-    G = ((e**(k0*r_norm*complex(0,1)))/(4 * pi * k0**2 * r_norm**3)) * (
-        (k0**2 * r_norm**2 + k0 * r_norm * complex(0, 1) - 1)*qeye(3) 
-        + (-k0**2 * r_norm**2 - 3 * k0 * r_norm * complex(0, 1) + 3)*outer(r, r)/(r_norm**2)
-        )
+    if dimensionless:
+        G = ((e**(1j * r_norm))/(4 * pi * r_norm**3)) * (
+            (r_norm**2 + 1j * r_norm - 1) * qeye(3) + 
+            (-r_norm**2 -1j * 3 * r_norm + 3) * (outer(r,r)/r_norm**2)
+            )
+    else:
+        G = ((e**(k0*r_norm*complex(0,1)))/(4 * pi * k0**2 * r_norm**3)) * (
+            (k0**2 * r_norm**2 + k0 * r_norm * complex(0, 1) - 1)*qeye(3) 
+            + (-k0**2 * r_norm**2 - 3 * k0 * r_norm * complex(0, 1) + 3)*outer(r, r)/(r_norm**2)
+            )
     return G
 
-def fill_G(N, rij, w0, type={"free_space"}):
+def fill_G(N, rij, w0=1, dimensionless=True, type="free_space"):
     """
     Fill array of chosen Green's Tensor's for a given lattice with displacement vectors, rij. 
 
     ---Parameters:
     N: Integer number of dipoles.
     rij: array (N x N x 3) of floats, displacement vectors between dipoles in lattice.
-    w0: float, dipole transition frequency.
-    type: string, choose which Green's Tensor to compute.
+    w0 (optional): float, dipole transition frequency. Default: 1
+    dimensionless (optional): bool, default: True
+    type (optional?): string, choose which Green's Tensor to compute. Default: "free-space"
 
-    ---Return.
+    ---Return:
     G: array (N x N x 3 x 3) of complex floats, the Green's Tensor in free space for given lattice. 
     """
     from numpy import zeros, eye
 
     G = zeros((N, N, 3, 3), dtype=complex)                        #Array of Green's tensors
-    for i in range(N):                                              #Fill the array of Green's tensors
+    for i in range(N):                                            #Fill the array of Green's tensors
         for j in range(i, N):
             if i == j:
-                G[i, j] = eye(3, dtype=complex)              #Set diagonal values to 1 to avoid divergence.
+                G[i, j] = eye(3, dtype=complex)                   #Set diagonal values to 1 to avoid divergence.
             else:
                 if type == "free_space":                          #Choose Green's Tensor by given optional argument.
-                    G[i, j] = G_0(rij[i, j], w0)
+                    G[i, j] = G_0(rij[i, j], w0, dimensionless)
                 G[j, i] = G[i, j]                                 #By construction, Green's tensor is symmetric.
     return G
+
+
+def scalar(N, rij, w0=1, dimensionless=True):
+    """
+    G_zz scalar case of Green's Tensor function. 
+
+    --- Parameters:
+
+    N: integer, number of dipoles
+    rij: array (N x N x 3) of floats, displacement vectors between dipoles.
+    w0 (optional): float, transition frequency of dipoles. Default: True.
+    dimensionless (optional): bool, compute dimensionless scalar case. Default: True.
+
+    --- Return:
+    
+    h: array (N x N) of complex numbers, Green's function scalar. 
+
+    ---
+
+    Description:
+    Below is the Scalar case, when using direction z as the only polarization direction of the dipoles. In that case, only the G_zz component is non-zero. 
+    Furthermore, the function (denoted h) can be made dimensionless by introducing:
+        r = r' * r0
+        h = h' * k0
+        r0 = 1/k0
+
+    Reference: equation (6) of Asenjo-Garcia et al.
+
+    """
+    from numpy import zeros, e, pi
+    from numpy.linalg import norm
+    from scipy.constants import c
+
+    h = zeros((N, N), dtype=complex)                        #Array of Green's scalars
+    k0 = w0/c
+
+    #Diagonal value determined by L'Hopital's rule. See notes from meeting 22/2:
+    diagval = (-1 + 5j) / (24*pi)
+
+    if dimensionless:
+        for i in range(N):
+            for j in range(N):
+                r = norm(rij[i,j])
+                if i == j:
+                    h[i, j] = diagval                             #Set diagonals to avoid divergence
+                else:
+                    h[i, j] = ((e**(1j * r)) / (4 * pi * r**3)) * (r**2 + 1j * r - 1)
+    else:
+        for i in range(N):
+            for j in range(N):
+                r = norm(rij[i,j])
+                if i == j:
+                    h[i, j] = diagval
+                else:
+                    h[i, j] = ((e**(1j * k0 * r)) / (4 * pi * k0**2 * r**3)) * (k0**2 * r**2 + 1j * k0 * r - 1)
+
+    return h
+                
