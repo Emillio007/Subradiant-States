@@ -6,7 +6,16 @@ Compute position and interrelative displacement vectors of different lattice con
 
 def linlat(N, d, direction):
     """
-    
+    --- Parameters:
+
+    N: integer, number of lattice sites
+    d: float, distance between sites
+    direction: array (3) of floats, representing lattice vector
+
+    --- Return:
+
+    pos: array (N x 3) of floats, position vectors for each site
+    rij: array (N x N x 3) of floats, interrelative displacement vectors
     """
     from numpy import zeros, linspace
 

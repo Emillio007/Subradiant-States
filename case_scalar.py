@@ -28,6 +28,19 @@ d = 1/(2 * pi * a)                                              #dimensionless d
 
 pos, rij = linlat(N, d, ex)
 
+x = pos[:,0]
+z = np.full_like(x, 0)
+polax = np.full_like(x, 0)  #polarization direction on plot, x
+polaz = np.full_like(x, 1)  #-||-, z
+plt.figure()
+plt.plot(x, z, 'o', color="black", label="sites")
+plt.quiver(x, z, polax, polaz, scale=15, width=0.005, color="red", label=r"$\hat{d}$", pivot="mid")
+plt.ylim(-1, 1)
+plt.xlabel(r"$\mathbf{\hat{x}}$", loc="right")
+plt.ylabel(r"$\mathbf{\hat{z}}$", loc="top")
+plt.title(r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$")
+plt.legend()
+
 G = fill_G(N, rij)              
 
 """
@@ -55,8 +68,14 @@ eigval_scalar, eigvec_scalar = np.linalg.eig(G_scalar)
 decay_rates = 2 * np.imag(eigval_scalar)                       #Factor of 2, see Asenjo-Garcia et al.
 decay_rates.sort()
 
+plt.figure()
 plt.plot(range(1, N+1), decay_rates, 'o')
 plt.yscale("log")
+plt.xscale("linear")
 plt.xlabel(r"$\mathbf{\xi \in [1,N]}$", loc="right")
 plt.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
+plt.title(r"N=50 dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = 0.3$")
+#plt.savefig("figures/case_scalar.png", dpi=300)
+
+
 plt.show()
