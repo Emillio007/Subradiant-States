@@ -63,13 +63,14 @@ def fill_G(N, rij, w0=1, dimensionless=True, type="free_space"):
     ---Return:
     G: array (N x N x 3 x 3) of complex floats, the Green's Tensor in free space for given lattice. 
     """
-    from numpy import zeros, eye
+    from numpy import zeros, eye, pi
 
     G = zeros((N, N, 3, 3), dtype=complex)                        #Array of Green's tensors
+    diagval = (-1 + 5j) / (24*pi)
     for i in range(N):                                            #Fill the array of Green's tensors
         for j in range(i, N):
             if i == j:
-                G[i, j] = eye(3, dtype=complex)                   #Set diagonal values to 1 to avoid divergence.
+                G[i, j] = diagval*eye(3, dtype=complex)                   #Set diagonal values to 1 to avoid divergence.
             else:
                 if type == "free_space":                          #Choose Green's Tensor by given optional argument.
                     G[i, j] = G_0(rij[i, j], w0, dimensionless)

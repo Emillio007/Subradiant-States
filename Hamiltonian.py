@@ -103,6 +103,32 @@ def H(N, w0, H_eff):
     H += H_eff
     return H
 
+def block(N, G, n):
+    """
+    Desciption: TODO
+    """
+    from numpy import zeros
+
+    #If only one directional vector is passed, e.g. ez, then fill (N x 3) dim array of given direction
+    if n.ndim == 1:
+        arr = zeros((N,3))
+        for i in range(N):
+            arr[i] = n
+        n = arr
+    
+    #We want Hamiltonian in basis of {|e_j>}, meaning one excitation on j'th subspace.
+    #Do this by computing every matrix element of NxN matrix. It is the block of one excitation in full Hamiltonian
+    block = zeros((N,N), dtype=complex)
+
+    for i in range(N):
+        for j in range(N):
+            if i == j:
+                block[i, j] += n[i].transpose() @ G[i,j] @ n[i] #WARNING: This might be wrong?!?
+            else:
+                block[i, j] += n[i].transpose() @ G[i,j] @ n[i]        #Dipoles polarized along z-direction.  
+
+    return block
+
 def scalarham(N, rij, w0=1, dimensionless=True):
     """
     See scalar() under GreensTensor.py

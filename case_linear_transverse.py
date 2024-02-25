@@ -50,10 +50,10 @@ All values are unitless, see notes from meeting 22/2.
 """
 
 #Scalar case:
-G_scalar = scalar(N, rij)
+block = block(N, G, ez)
 
 #Eigenvalues:
-eigval_scalar, eigvec_scalar = np.linalg.eig(G_scalar)
+eigval_scalar, eigvec_scalar = np.linalg.eig(block)
 decay_rates = 2 * np.imag(eigval_scalar)                       #Factor of 2, see Asenjo-Garcia et al.
 decay_rates.sort()
 
@@ -67,14 +67,14 @@ plt.title(r"N=50 dipoles in linear lattice, polarized in z-direction, $\frac{d}{
 #plt.savefig("figures/case_scalar.png", dpi=300)
 
 
-#plt.show()
+plt.show()
 
 """
 Hermitiske del af Hamiltonian:
     (h + h^dagger)/2
 """
 
-h = np.matrix(G_scalar)
+h = np.matrix(block)
 herm = (h + h.getH())/2
 herm_val, herm_vec = np.linalg.eigh(herm)
 herm_diag = herm_vec.transpose() @ herm @ herm_vec
