@@ -78,4 +78,30 @@ plt.title(r"N=50 dipoles in linear lattice, polarized in z-direction, $\frac{d}{
 #plt.savefig("figures/case_scalar.png", dpi=300)
 
 
-plt.show()
+#plt.show()
+
+"""
+Hermitiske del af Hamiltonian:
+    (h + h^dagger)/2
+"""
+
+h = np.matrix(G_scalar)
+herm = (h + h.getH())/2
+herm_val, herm_vec = np.linalg.eigh(herm)
+herm_diag = herm_vec.transpose() @ herm @ herm_vec
+herm_trace = herm.trace()
+herm_diag_trace = herm_diag.trace()
+
+"""
+Anti-hermitiske del af Hamiltonian:
+    (h - h^dagger)/2
+"""
+anti = (h - h.getH())/2
+anti_val, anti_vec = np.linalg.eig(anti)
+anti_diag = np.matrix(anti_vec).getH() @ anti @ anti_vec
+anti_trace = anti.trace()
+anti_diag_trace = anti_diag.trace()
+
+print("Sum of eigenvalues: ", np.sum(eigval_scalar))
+print("Trace of herm: ", herm_trace, " and trace of herm_diag: ", herm_diag_trace)
+print("Trace of anti: ", anti_trace, " and trace of anti_diag: ", anti_diag_trace)

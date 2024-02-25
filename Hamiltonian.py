@@ -102,3 +102,12 @@ def H(N, w0, H_eff):
         
     H += H_eff
     return H
+
+def scalarham(N, rij, w0=1, dimensionless=True):
+    """
+    See scalar() under GreensTensor.py
+    """
+    from GreensTensor import scalar
+
+    h = scalar(N, rij, w0, dimensionless)
+    return h
