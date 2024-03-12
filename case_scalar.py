@@ -5,10 +5,17 @@ from qutip import *
 from GreensTensor import *
 from Hamiltonian import *
 from Lattice import *
+from cycler import cycler
 
 plt.rcParams.update({
     "text.usetex": True,
-    "font.family": "Helvetica"
+    "font.family": "Helvetica",
+    "axes.labelsize": 16,
+    "axes.labelweight": "bold",
+    "axes.titlesize": 20,
+    "axes.titlelocation": "left",
+    "axes.prop_cycle": cycler(color=["black", "red", "blue", "purple"]),
+    "axes.grid": True
 })
 
 #Program parameters:
@@ -67,7 +74,7 @@ plt.title(r"N=50 dipoles in linear lattice, polarized in z-direction, $\frac{d}{
 #plt.savefig("figures/case_scalar.png", dpi=300)
 
 
-#plt.show()
+plt.show()
 
 """
 Hermitiske del af Hamiltonian:
