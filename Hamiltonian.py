@@ -134,7 +134,7 @@ def block(N, G, n):
     block = zeros((N,N), dtype=complex)
 
     #Manually set diagval, see meeting notes 7/3:
-    diagval = 1j/2
+    diagval = - 1j/2
 
     for i in range(N):
         for j in range(N):
@@ -155,7 +155,7 @@ def scalarham(N, rij, w0=1, dimensionless=True):
     h = scalar(N, rij, w0, dimensionless)
 
     #Manually set diagval and multiply with constants, see meeting notes 7/3:
-    diagval = 1j/2
+    diagval = - 1j/2
     for i in range(N):
         for j in range(N):
             if i == j:
