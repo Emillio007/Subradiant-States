@@ -66,7 +66,7 @@ def fill_G(N, rij, w0=1, dimensionless=True, type="free_space"):
     from numpy import zeros, eye, pi
 
     G = zeros((N, N, 3, 3), dtype=complex)                        #Array of Green's tensors
-    diagval = (-1 + 5j) / (24*pi)
+    diagval = 1
     for i in range(N):                                            #Fill the array of Green's tensors
         for j in range(i, N):
             if i == j:
@@ -112,8 +112,8 @@ def scalar(N, rij, w0=1, dimensionless=True):
     h = zeros((N, N), dtype=complex)                        #Array of Green's scalars
     k0 = w0/c
 
-    #Diagonal value determined by L'Hopital's rule. See notes from meeting 22/2:
-    diagval = (-1 + 5j) / (24*pi)
+    #Diagonal value is vacuum decay rate in units of gamma_0, must be set in hamiltonian "manually". See notes from meeting 7/3:
+    diagval = 1
 
     if dimensionless:
         for i in range(N):

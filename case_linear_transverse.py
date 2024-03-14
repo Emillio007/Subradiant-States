@@ -59,7 +59,7 @@ decay_rates.sort()
 
 plt.figure()
 plt.plot(range(1, N+1), decay_rates, 'o')
-plt.yscale("log")
+plt.yscale("linear")
 plt.xscale("linear")
 plt.xlabel(r"$\mathbf{\xi \in [1,N]}$", loc="right")
 plt.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")

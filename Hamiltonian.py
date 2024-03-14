@@ -3,6 +3,10 @@ Author: tzs820, s240670, Emil Henningsen
 Module for constructing different Hamiltonians used for describing atomic arrays interacting with light.
 """
 
+"""
+In this section, the full Hamiltonian is constructed (full 2^N x 2^N space), which is very memory-demanding for larger N. 
+"""
+
 def coherence_operators(i, j, N):
     """
     Construct the space of coherence operators at i & j and identity elsewhere.
@@ -103,11 +107,20 @@ def H(N, w0, H_eff):
     H += H_eff
     return H
 
+"""
+BLOCK HAMILTONIANS IN BASIS OF {|e_j>} - denoting the single-excitation states of excitation at j'th atom and ground-state elsewhere.
+The Hamiltonian as described in e.g. Asenjo-Garcia commute with the number-operator meaning it conserves excitation-numbers. 
+In other words, the Hamiltonian will be of block-structure nicely divided in 0, 1, 2, 3, ... and so on excitations. 
+
+Result is arrays of size e.g. (N x N) in the single-excitation case. 
+"""
+
 def block(N, G, n):
     """
     Desciption: TODO
     """
     from numpy import zeros
+    from scipy.constants import pi
 
     #If only one directional vector is passed, e.g. ez, then fill (N x 3) dim array of given direction
     if n.ndim == 1:
@@ -120,12 +133,15 @@ def block(N, G, n):
     #Do this by computing every matrix element of NxN matrix. It is the block of one excitation in full Hamiltonian
     block = zeros((N,N), dtype=complex)
 
+    #Manually set diagval, see meeting notes 7/3:
+    diagval = 1j/2
+
     for i in range(N):
         for j in range(N):
             if i == j:
-                block[i, j] += n[i].transpose() @ G[i,j] @ n[i] #WARNING: This might be wrong?!?
+                block[i, j] = diagval
             else:
-                block[i, j] += n[i].transpose() @ G[i,j] @ n[i]        #Dipoles polarized along z-direction.  
+                block[i, j] += -3*pi * n[i].transpose() @ G[i,j] @ n[i]        #Dipoles polarized along z-direction.  
 
     return block
 
@@ -134,6 +150,17 @@ def scalarham(N, rij, w0=1, dimensionless=True):
     See scalar() under GreensTensor.py
     """
     from GreensTensor import scalar
+    from scipy.constants import pi
 
     h = scalar(N, rij, w0, dimensionless)
+
+    #Manually set diagval and multiply with constants, see meeting notes 7/3:
+    diagval = 1j/2
+    for i in range(N):
+        for j in range(N):
+            if i == j:
+                h[i, j] = diagval
+            else:
+                h[i, j] = -3 * pi * h[i, j]
+
     return h
