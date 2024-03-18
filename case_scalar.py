@@ -12,7 +12,7 @@ plt.rcParams.update({
     "font.family": "Helvetica",
     "axes.labelsize": 16,
     "axes.labelweight": "bold",
-    "axes.titlesize": 20,
+    "axes.titlesize": 16,
     "axes.titlelocation": "left",
     "axes.prop_cycle": cycler(color=["black", "red", "blue", "purple"]),
     "axes.grid": True
@@ -30,8 +30,8 @@ ez = np.array([0, 0, 1])                                         #z-axis unit ve
 Construct lattice
  (1) Finite linear chain along x-axis
 """
-a = 0.3                                                         #d/lambda_0 = a
-d = 1/(2 * pi * a)                                              #dimensionless distance between the dipoles. The 2*pi might be wrong though????
+a = 1000                                                         #d/lambda_0 = a
+d = a                                             #dimensionless distance between the dipoles. 
 
 pos, rij = linlat(N, d, ex)
 
@@ -48,7 +48,7 @@ plt.ylabel(r"$\mathbf{\hat{z}}$", loc="top")
 plt.title(r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$")
 plt.legend()
 
-G = fill_G(N, rij)              
+#G = fill_G(N, rij)              
 
 """
 Section for Hamiltonian:
@@ -57,17 +57,19 @@ All values are unitless, see notes from meeting 22/2.
 """
 
 #Scalar case:
-G_scalar = scalar(N, rij)
+h_scalar = scalarham(N, rij)
 
 #Eigenvalues:
-eigval_scalar, eigvec_scalar = np.linalg.eig(G_scalar)
+eigval_scalar, eigvec_scalar = np.linalg.eig(h_scalar)
 decay_rates = 2 * np.imag(eigval_scalar)                       #Factor of 2, see Asenjo-Garcia et al.
 decay_rates.sort()
+rate_min = decay_rates[0]
+decay_rates = decay_rates - rate_min + 0.0000000000001                            #offsetting all decay rates by min (and 0.01 for the min itself not to be zero)
 
 plt.figure()
 plt.plot(range(1, N+1), decay_rates, 'o')
 plt.yscale("log")
-plt.xscale("linear")
+plt.xscale("log")
 plt.xlabel(r"$\mathbf{\xi \in [1,N]}$", loc="right")
 plt.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
 plt.title(r"N=50 dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = 0.3$")
@@ -81,7 +83,7 @@ Hermitiske del af Hamiltonian:
     (h + h^dagger)/2
 """
 
-h = np.matrix(G_scalar)
+h = np.matrix(h_scalar)
 herm = (h + h.getH())/2
 herm_val, herm_vec = np.linalg.eigh(herm)
 herm_diag = herm_vec.transpose() @ herm @ herm_vec
