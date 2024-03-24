@@ -4,7 +4,7 @@ from scipy.constants import *
 from qutip import *
 from GreensTensor import *
 from Hamiltonian import *
-from Lattice import *
+import Lattice
 
 plt.rcParams.update({
     "text.usetex": True,
@@ -15,18 +15,18 @@ plt.rcParams.update({
 N = 50                                                          #number of atoms
 
 #Declarations:
-ex = np.array([1, 0, 0])                                         #x-axis unit vector
-ey = np.array([0, 1, 0])                                         #y-axis unit vector
-ez = np.array([0, 0, 1])                                         #z-axis unit vector
+
 
 """
 Construct lattice
  (1) Finite linear chain along x-axis
 """
 a = 0.3                                                         #d/lambda_0 = a
-d = 1/(2 * pi * a)                                              #dimensionless distance between the dipoles. The 2*pi might be wrong though????
-
-pos, rij = linlat(N, d, ex)
+#d = 1/(2 * pi * a)                                              #dimensionless distance between the dipoles. The 2*pi might be wrong though????
+d = 100                     #TODO: find ud af enheder for d og hvorfor størrelsen er, hvad den er. 
+lattice = Lattice()
+lattice.linlat()        #initialize linear lattice
+pos, rij = lattice.getPositions(), lattice.getDisplacements()
 
 x = pos[:,0]
 z = np.full_like(x, 0)
