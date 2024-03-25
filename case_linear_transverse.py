@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 from scipy.constants import *
 from qutip import *
 from GreensTensor import *
-from Hamiltonian import *
+import Hamiltonian
 import Lattice
+import Plots
+from utils import *
 
 plt.rcParams.update({
     "text.usetex": True,
@@ -25,23 +27,11 @@ a = 0.3                                                         #d/lambda_0 = a
 #d = 1/(2 * pi * a)                                              #dimensionless distance between the dipoles. The 2*pi might be wrong though????
 d = 100                     #TODO: find ud af enheder for d og hvorfor størrelsen er, hvad den er. 
 lattice = Lattice()
-lattice.linlat()        #initialize linear lattice
-pos, rij = lattice.getPositions(), lattice.getDisplacements()
+lattice.linlat(N, d)        #initialize linear lattice
+pos, rij, pola = lattice.getPositions(), lattice.getDisplacements(), lattice.getPolarizations()
 
-x = pos[:,0]
-z = np.full_like(x, 0)
-polax = np.full_like(x, 0)  #polarization direction on plot, x
-polaz = np.full_like(x, 1)  #-||-, z
-plt.figure()
-plt.plot(x, z, 'o', color="black", label="sites")
-plt.quiver(x, z, polax, polaz, scale=15, width=0.005, color="red", label=r"$\hat{d}$", pivot="mid")
-plt.ylim(-1, 1)
-plt.xlabel(r"$\mathbf{\hat{x}}$", loc="right")
-plt.ylabel(r"$\mathbf{\hat{z}}$", loc="top")
-plt.title(r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$")
-plt.legend()
-
-G = fill_G(N, rij)              
+p = Plots()
+figDip, axDip = p.plotDipoles(lattice)
 
 """
 Section for Hamiltonian:
@@ -50,22 +40,15 @@ All values are unitless, see notes from meeting 22/2.
 """
 
 #Scalar case:
-block = block(N, G, ez)
+G = fill_G(N, rij)
+block = Hamiltonian()
+block.block(N, G, ez)       #initialize block hamiltonian with N dipoles and calculated G (vacuum) and ez pola direction.
 
-#Eigenvalues:
-eigval_scalar, eigvec_scalar = np.linalg.eig(block)
-decay_rates = 2 * np.imag(eigval_scalar)                       #Factor of 2, see Asenjo-Garcia et al.
-decay_rates.sort()
+#decay rates:
+decay_rates = block.getDecayRates()
 
-plt.figure()
-plt.plot(range(1, N+1), decay_rates, 'o')
-plt.yscale("linear")
-plt.xscale("linear")
-plt.xlabel(r"$\mathbf{\xi \in [1,N]}$", loc="right")
-plt.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
-plt.title(r"N=50 dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = 0.3$")
+
 #plt.savefig("figures/case_scalar.png", dpi=300)
-
 
 plt.show()
 

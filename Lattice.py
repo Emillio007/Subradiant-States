@@ -5,22 +5,58 @@ Compute position and interrelative displacement vectors of different lattice con
 """
 
 from numpy import ndarray
-from utils import *
 
 class Lattice:
 
     #Declarations:
+    
+    N = None
+    d = None
 
     positions = None
     displacements = None
     polarizations = None
 
-    def __init__(self, pos : ndarray = None, disp : ndarray = None, pola : ndarray = None):
+    def __init__(self, N : int = None, d : float = None, pos : ndarray = None, disp : ndarray = None, pola : ndarray = None):
         """
         TODO: Description
         """
         self.positions = pos
         self.displacements = disp
+        self.polarizations = pola
+
+    """Get methods:"""
+
+    def getN(self) -> int:
+        return self.N
+    
+    def getd(self) -> float:
+        return self.d
+
+    def getPositions(self) -> ndarray:
+        return self.positions
+    
+    def getDisplacements(self) -> ndarray:
+        return self.displacements
+    
+    def getPolarizations(self) -> ndarray:
+        return self.polarizations
+    
+    """Set methods:"""
+
+    def getN(self, N : int):
+        self.N = N
+    
+    def getd(self, d : float):
+        self.d = d
+        
+    def setPositions(self, pos : ndarray):
+        self.positions = pos
+
+    def setDisplacements(self, disp : ndarray):
+        self.displacements = disp
+    
+    def setPolarizations(self, pola : ndarray):
         self.polarizations = pola
 
     """Construct different standard lattices:"""
@@ -42,10 +78,11 @@ class Lattice:
         rij: array (N x N x 3) of floats, interrelative displacement vectors
         """
         from numpy import zeros, linspace, array, full_like
+        from utils import ex, ez
 
         #if no direction is supplied, set standard direction to x:
         if direction == None:
-            direction = array([1, 0, 0])
+            direction = ex
         
         #if no polarization is supplied and not already set, set standard to z.
         if polarizations == None and self.polarizations == None:
@@ -65,25 +102,4 @@ class Lattice:
         #Store in internal containers:
         self.positions = pos
         self.displacements = rij
-
-    """Get methods:"""
-
-    def getPositions(self) -> ndarray:
-        return self.positions
-    
-    def getDisplacements(self) -> ndarray:
-        return self.displacements
-    
-    def getPolarizations(self) -> ndarray:
-        return self.polarizations
-    
-    """Set methods:"""
-        
-    def setPositions(self, pos : ndarray):
-        self.positions = pos
-
-    def setDisplacements(self, disp : ndarray):
-        self.displacements = disp
-    
-    def setPolarizations(self, pola : ndarray):
-        self.polarizations = pola
+        self.polarizations = polarizations
