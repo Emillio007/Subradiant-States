@@ -7,6 +7,10 @@ from numpy import ndarray
 
 class Hamiltonian:
 
+    #flags:
+    initialized = False
+    decomposed = False
+
     N = None
     hamiltonian = None
     eigvec = None
@@ -16,8 +20,19 @@ class Hamiltonian:
     e = Exception("Hamiltonian is empty. ")
 
     def __init__(self, N : int = None, ham : ndarray = None):
+        if ham == None:
+            self.initialized = False
+        else:
+            self.initialized = True
         self.hamiltonian = ham
         self.N = N
+
+    #Assertations:
+    def assertInit(self):
+        if self.initialized == False:
+            raise self.e
+        else:
+            pass
 
     """
     GET methods:
@@ -37,12 +52,10 @@ class Hamiltonian:
         from numpy import imag, sort
 
         #if ham is empty
-        if self.hamiltonian == None:
-            raise self.e
-            return None
+        self.assertInit()
         
         #if eigval is empty
-        if self.eigval == None:
+        if not self.decomposed:
             self.eigenDecomposition()
         
         decay_rates = 2 * imag(self.eigval)     #Factor of 2, see Asenjo-Garcia et al.
@@ -52,6 +65,11 @@ class Hamiltonian:
 
         return decay_rates
 
+    def isDecomposed(self) -> bool:
+        return self.decomposed
+    
+    def isInit(self) -> bool:
+        return self.initialized
 
     """
     SET methods:
@@ -63,10 +81,16 @@ class Hamiltonian:
     def setHam(self, ham : ndarray):
         self.hamiltonian = ham
 
+        #flags:
+        self.initialized = True
+        self.decomposed = False
+
     """----- Construct standard hamiltonians -----"""
 
     """
     In this section, the full Hamiltonian is constructed (full 2^N x 2^N space), which is very memory-demanding for larger N. 
+
+    N.B.: Currently incompatible
     """
 
     def coherence_operators(self, i, j, N):
@@ -184,6 +208,10 @@ class Hamiltonian:
         from numpy import zeros
         from scipy.constants import pi
 
+        #Raise flags:
+        self.initialized = False
+        self.decomposed = False
+
         self.setN(N)
 
         #If only one directional vector is passed, e.g. ez, then fill (N x 3) dim array of given direction
@@ -210,12 +238,19 @@ class Hamiltonian:
         #Store in internal container.
         self.hamiltonian = block
 
+        #Flag:
+        self.initialized = True
+
     def scalarham(self, N : int, rij : ndarray, w0 : float = 1, dimensionless : bool = True):
         """
         See scalar() under GreensTensor.py
         """
         from GreensTensor import scalar
         from scipy.constants import pi
+
+        #Flags:
+        self.initialized = False
+        self.decomposed = False
 
         self.setN(N)
 
@@ -232,6 +267,9 @@ class Hamiltonian:
 
         #store in internal
         self.hamiltonian = h
+        
+        #Lower flag:
+        self.initialized = True
 
     def eigenDecomposition(self):
         """
@@ -239,12 +277,15 @@ class Hamiltonian:
         """
         from numpy.linalg import eig    #import eig, since ham might not be herm
 
-        if self.hamiltonian == None:
-            raise self.e
+        #Check if ham is empty
+        self.assertInit()
         
         eigval, eigvec = eig(self.hamiltonian)
 
         #Store:
         self.eigval = eigval
         self.eigvec = eigvec
+
+        #Flags:
+        self.decomposed = True
         

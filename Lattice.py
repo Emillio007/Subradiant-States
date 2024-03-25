@@ -24,6 +24,8 @@ class Lattice:
         self.positions = pos
         self.displacements = disp
         self.polarizations = pola
+        self.N = N
+        self.d = d
 
     """Get methods:"""
 
@@ -44,10 +46,10 @@ class Lattice:
     
     """Set methods:"""
 
-    def getN(self, N : int):
+    def setN(self, N : int):
         self.N = N
     
-    def getd(self, d : float):
+    def setd(self, d : float):
         self.d = d
         
     def setPositions(self, pos : ndarray):
@@ -86,7 +88,9 @@ class Lattice:
         
         #if no polarization is supplied and not already set, set standard to z.
         if polarizations == None and self.polarizations == None:
-            polarizations = full_like(zeros(N), ez)    #orient all dipoles along z-direction.
+            polarizations = zeros((N,3))    #orient all dipoles along z-direction.
+            for i in range(N):
+                polarizations[i,:] = ez
 
         pos = zeros((N, 3))                                          #Array of position vectors of the lattice sites (atoms).
         ticks = linspace(-(N*d)/2, (N*d)/2, N)                       #displacement vectors in lattice
