@@ -100,19 +100,22 @@ class Plots:
         return fig, ax
     
     #Plot rates manually
-    def plotRates(self, N : int, rates : ndarray) -> tuple[plt.Figure, plt.Axes]:
+    def plotRates(self, N : int, d : float, rates : ndarray, scale : str = "linear", title : str = None) -> tuple[plt.Figure, plt.Axes]:
         """
         TODO: Description
-
-        Find smart way to transfor information from hamiltonian to plot. Maybe actually just feed hamiltonian directly?
         """
+
+        #TODO: beware: ru encoding might not work.
+        if title == None: 
+            title = str(f"N = {N}", ru"dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = 0.3$")
+
         fig, ax = plt.figure()
         ax.plot(range(1, N+1), rates, 'o')
-        ax.yscale("linear")
-        ax.xscale("linear")
-        ax.xlabel(r"$\mathbf{\xi \in [1,N]}$", loc="right")
+        ax.yscale(scale)
+        ax.xscale(scale)
+        ax.xlabel(str(r"$\mathbf{\xi \in [1,$",f"{N}]","}"), loc="right")
         ax.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
-        ax.title(str(f"N = {N}", r"dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = 0.3$"))
+        ax.title(title)
 
         return fig, ax
 

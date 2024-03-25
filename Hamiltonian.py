@@ -69,7 +69,7 @@ class Hamiltonian:
     In this section, the full Hamiltonian is constructed (full 2^N x 2^N space), which is very memory-demanding for larger N. 
     """
 
-    def coherence_operators(i, j, N):
+    def coherence_operators(self, i, j, N):
         """
         Construct the space of coherence operators at i & j and identity elsewhere.
         Ref.: Asenjo-Garcia et al. equation (5)
@@ -106,7 +106,7 @@ class Hamiltonian:
 
         return space
 
-    def H_eff(N, w0, D, G):
+    def H_eff(self, N, w0, D, G):
         """
         Function for calculating effective Hamiltonian, ref.: Asenjo-Garcia et al. equation (5)
 
@@ -130,10 +130,10 @@ class Hamiltonian:
                 if i == j:
                     continue
                 else:
-                    H_eff += (-mu_0 * w0**2) * D.trans() * Qobj(G[i,j]) * D * coherence_operators(i, j, N)
+                    H_eff += (-mu_0 * w0**2) * D.trans() * Qobj(G[i,j]) * D * self.coherence_operators(i, j, N)
         return H_eff
 
-    def H(N, w0, H_eff):
+    def H(self, N, w0, H_eff):
         """
         Function for calculating full Hamiltonian, ref.: Asenjo-Garcia et al. equation (5)
 
