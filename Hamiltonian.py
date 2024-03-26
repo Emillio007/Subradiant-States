@@ -284,7 +284,7 @@ class Hamiltonian:
         h = scalar(N, rij, w0, dimensionless)
 
         #Manually set diagval and multiply with constants, see meeting notes 7/3:
-        diagval = - 1j/2
+        diagval = 1 - 1j/2
         for i in range(N):
             for j in range(N):
                 if i == j:

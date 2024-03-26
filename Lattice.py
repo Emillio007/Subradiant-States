@@ -109,3 +109,9 @@ class Lattice:
         self.setPositions(pos)
         self.setDisplacements(rij)
         self.setPolarizations(polarizations)
+
+    def circlelat(self, N : int, d : float, ) -> None:
+        """
+        TODO: Description
+        """
+        

@@ -100,7 +100,7 @@ class Plots:
         return fig
     
     #Plot rates manually
-    def plotRates(self, N : int, d : float, rates : ndarray, scale : str = "linear", title : str = None) -> tuple[plt.Figure, plt.Axes]:
+    def plotRates(self, N : int, d : float, rates : ndarray, scalex : str = "linear", scaley : str = "linear", title : str = None) -> tuple[plt.Figure, plt.Axes]:
         """
         TODO: Description
         """
@@ -110,15 +110,15 @@ class Plots:
 
         fig = plt.figure()
         plt.plot(range(1, N+1), rates, 'o')
-        plt.yscale(scale)
-        plt.xscale(scale)
+        plt.yscale(scaley)
+        plt.xscale(scalex)
         plt.xlabel(r"$\mathbf{\xi \in [1,}$" + f"{N}]", loc="right")
         plt.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
         plt.title(title, wrap = True)
 
         return fig
 
-    def plotRatesLat(self, lat : Lattice, ham : Hamiltonian, scale : str = "linear", title : str = None) -> plt.Figure:
+    def plotRatesLat(self, lat : Lattice, ham : Hamiltonian, scalex : str = "linear", scaley : str = "linear", title : str = None) -> plt.Figure:
         """
         TODO: Description
 
@@ -130,6 +130,6 @@ class Plots:
         d = lat.getd()
         rates = ham.getDecayRates()
 
-        fig = self.plotRates(N, d, rates, scale, title)
+        fig = self.plotRates(N, d, rates, scalex, scaley, title)
 
         return fig
