@@ -46,24 +46,24 @@ class Lattice:
     
     """Set methods:"""
 
-    def setN(self, N : int):
+    def setN(self, N : int) -> None:
         self.N = N
     
-    def setd(self, d : float):
+    def setd(self, d : float)-> None:
         self.d = d
         
-    def setPositions(self, pos : ndarray):
+    def setPositions(self, pos : ndarray)-> None:
         self.positions = pos
 
-    def setDisplacements(self, disp : ndarray):
+    def setDisplacements(self, disp : ndarray)-> None:
         self.displacements = disp
     
-    def setPolarizations(self, pola : ndarray):
+    def setPolarizations(self, pola : ndarray)-> None:
         self.polarizations = pola
 
     """Construct different standard lattices:"""
 
-    def linlat(self, N : int, d : float, direction : ndarray = None, polarizations : ndarray = None):
+    def linlat(self, N : int, d : float, direction : ndarray = None, polarizations : ndarray = None)-> None:
         """
         --- Parameters:
 
@@ -104,6 +104,8 @@ class Lattice:
                 rij[j, i] = -rij[i, j]                               #this array is symmetric by construction.
 
         #Store in internal containers:
-        self.positions = pos
-        self.displacements = rij
-        self.polarizations = polarizations
+        self.setN(N)
+        self.setd(d)
+        self.setPositions(pos)
+        self.setDisplacements(rij)
+        self.setPolarizations(polarizations)

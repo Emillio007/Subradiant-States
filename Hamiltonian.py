@@ -4,6 +4,7 @@ Module for constructing different Hamiltonians used for describing atomic arrays
 """
 
 from numpy import ndarray
+import warnings
 
 class Hamiltonian:
 
@@ -18,6 +19,7 @@ class Hamiltonian:
 
     #Standard exception:
     e = Exception("Hamiltonian is empty. ")
+    ed = Warning("Hamiltonian has not been eigendecomposed, proceeding to do so.")
 
     def __init__(self, N : int = None, ham : ndarray = None):
         if ham == None:
@@ -28,9 +30,18 @@ class Hamiltonian:
         self.N = N
 
     #Assertations:
-    def assertInit(self):
+    def assertInit(self) -> None:
         if self.initialized == False:
             raise self.e
+        else:
+            pass
+
+    def assertDecomposed(self) -> None:
+        if self.decomposed == False:
+            #push warning
+            warnings.warn(self.ed)
+            #Then try eigen decomposition:
+            self.eigenDecomposition()
         else:
             pass
 
@@ -48,26 +59,36 @@ class Hamiltonian:
     #Specialized:
 
     def getEigenDecomp(self, sort : bool = True) -> tuple[ndarray, ndarray]:
-        
-        return self.eigval, self.eigvec
-
-    def getDecayRates(self, sort : bool = True) -> ndarray:
         """
         TODO: Description
         """
-        from numpy import imag, sort
+
+        #Assertations:
+        self.assertInit()
+        self.assertDecomposed()
+
+        return self.eigval, self.eigvec
+
+    def getDecayRates(self, sort : bool = True, rescale : bool = True) -> ndarray:
+        """
+        TODO: Description
+        """
+        from numpy import imag, sort, min
 
         #if ham is empty
         self.assertInit()
         
         #if eigval is empty
-        if not self.decomposed:
-            self.eigenDecomposition()
+        self.assertDecomposed()
         
         decay_rates = 2 * imag(self.eigval)     #Factor of 2, see Asenjo-Garcia et al.
 
         if sort:
             decay_rates = sort(decay_rates)
+
+        minval = min(decay_rates)
+        if rescale:
+            decay_rates -= minval
 
         return decay_rates
 
@@ -81,10 +102,10 @@ class Hamiltonian:
     SET methods:
     """
 
-    def setN(self, N : int):
+    def setN(self, N : int) -> None:
         self.N = N
 
-    def setHam(self, ham : ndarray):
+    def setHam(self, ham : ndarray) -> None:
         self.hamiltonian = ham
 
         #flags:
@@ -207,7 +228,7 @@ class Hamiltonian:
     Result is arrays of size e.g. (N x N) in the single-excitation case. 
     """
 
-    def block(self, N : int, G : ndarray, n : ndarray):
+    def block(self, N : int, G : ndarray, n : ndarray) -> None:
         """
         Desciption: TODO
         """
@@ -232,7 +253,7 @@ class Hamiltonian:
         block = zeros((N,N), dtype=complex)
 
         #Manually set diagval, see meeting notes 7/3:
-        diagval = - 1j/2
+        diagval = 1 - 1j/2
 
         for i in range(N):
             for j in range(N):
@@ -247,7 +268,7 @@ class Hamiltonian:
         #Flag:
         self.initialized = True
 
-    def scalarham(self, N : int, rij : ndarray, w0 : float = 1, dimensionless : bool = True):
+    def scalarham(self, N : int, rij : ndarray, w0 : float = 1, dimensionless : bool = True) -> None:
         """
         See scalar() under GreensTensor.py
         """
@@ -277,7 +298,7 @@ class Hamiltonian:
         #Lower flag:
         self.initialized = True
 
-    def eigenDecomposition(self):
+    def eigenDecomposition(self) -> None:
         """
         TODO: Description
         """

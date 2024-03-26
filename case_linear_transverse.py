@@ -43,11 +43,13 @@ All values are unitless, see notes from meeting 22/2.
 G = fill_G(N, rij)
 block = Hamiltonian.Hamiltonian()
 block.block(N, G, ez)       #initialize block hamiltonian with N dipoles and calculated G (vacuum) and ez pola direction.
+block.eigenDecomposition()
 
 #decay rates:
 decay_rates = block.getDecayRates()
 
-figDec, axDec = p.plotRatesLat(lattice, block)
+mytitle = r"$N = %r$ dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = %r$".format((N, d))
+figDec = p.plotRatesLat(lattice, block, scale = "log", title=mytitle)
 #plt.savefig("figures/case_scalar.png", dpi=300)
 
 p.show()
@@ -57,7 +59,7 @@ Hermitiske del af Hamiltonian:
     (h + h^dagger)/2
 """
 
-h = np.matrix(block)
+h = np.matrix(block.getHam())
 herm = (h + h.getH())/2
 herm_val, herm_vec = np.linalg.eigh(herm)
 herm_diag = herm_vec.transpose() @ herm @ herm_vec
@@ -74,7 +76,7 @@ anti_diag = np.matrix(anti_vec).getH() @ anti @ anti_vec
 anti_trace = anti.trace()
 anti_diag_trace = anti_diag.trace()
 
-eigval_scalar = block.get
+eigval_scalar, eigvec_scalar = block.getEigenDecomp()
 print("Sum of eigenvalues: ", np.sum(eigval_scalar))
 print("Trace of herm: ", herm_trace, " and trace of herm_diag: ", herm_diag_trace)
 print("Trace of anti: ", anti_trace, " and trace of anti_diag: ", anti_diag_trace)

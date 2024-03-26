@@ -36,7 +36,7 @@ class Plots:
 
     """modules:"""
 
-    def add(self, fig, name : str = None):
+    def add(self, fig, name : str = None) -> None:
         """
         Add a figure to the instantiated manager container with given name (dict key). 
         """
@@ -45,18 +45,18 @@ class Plots:
             name = number
         self.figures[name] = fig
 
-    def remove(self, name : str):
+    def remove(self, name : str) -> None:
         """
         Remove specified figure from container (name = dict key)
         """
         self.figures.pop(name)
 
-    def show(self):
+    def show(self) -> None:
         plt.show()
 
     """SET modules:"""
 
-    def setInteractive(self, interactive : bool = False):
+    def setInteractive(self, interactive : bool = False) -> None:
         """
         Set matplotlib mode to interactive. If false (standard), figures are not shown until show() is called.
         If true, figures are shown immediately after creation.
@@ -73,7 +73,7 @@ class Plots:
         return plt.isinteractive()
             
     """Different standard type plots: """
-    def plotDipoles(self, lat : Lattice) -> tuple[plt.Figure, plt.Axes]:
+    def plotDipoles(self, lat : Lattice) -> plt.Figure:
         """
         TODO: Description
         """
@@ -94,7 +94,7 @@ class Plots:
         plt.ylim(-1, 1)
         plt.xlabel(r"$\mathbf{\hat{x}}$", loc="right")
         plt.ylabel(r"$\mathbf{\hat{z}}$", loc="top")
-        plt.title(r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$")
+        plt.title(r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$", wrap = True)
         plt.legend()
         
         return fig
@@ -105,20 +105,20 @@ class Plots:
         TODO: Description
         """
 
-        if title == None: #ERROR NOT SUPPORTED !!!
-            title = str(f"N = {N}", r"dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} =$", f"{d}")
+        if title == None: 
+            title = r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = $" + f"{d}"
 
-        fig, ax = plt.figure()
-        ax.plot(range(1, N+1), rates, 'o')
-        ax.yscale(scale)
-        ax.xscale(scale)
-        ax.xlabel(str(r"$\mathbf{\xi \in [1,$",f"{N}]","}"), loc="right")
-        ax.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
-        ax.title(title)
+        fig = plt.figure()
+        plt.plot(range(1, N+1), rates, 'o')
+        plt.yscale(scale)
+        plt.xscale(scale)
+        plt.xlabel(r"$\mathbf{\xi \in [1,}$" + f"{N}]", loc="right")
+        plt.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
+        plt.title(title, wrap = True)
 
-        return fig, ax
+        return fig
 
-    def plotRatesLat(self, lat : Lattice, ham : Hamiltonian) -> tuple[plt.Figure, plt.Axes]:
+    def plotRatesLat(self, lat : Lattice, ham : Hamiltonian, scale : str = "linear", title : str = None) -> plt.Figure:
         """
         TODO: Description
 
@@ -130,6 +130,6 @@ class Plots:
         d = lat.getd()
         rates = ham.getDecayRates()
 
-        fig, ax = self.plotRates(N, d, rates)
+        fig = self.plotRates(N, d, rates, scale, title)
 
-        return fig, ax
+        return fig
