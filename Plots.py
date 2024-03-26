@@ -108,9 +108,10 @@ class Plots:
         """
         TODO: Description
         """
+        from textwrap import wrap
 
         if title == None: 
-            title = r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = $" + f"{d}"
+            title = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = $" + f"{d}", 60))
 
         fig = plt.figure()
         plt.plot(range(1, N+1), rates, 'o')
@@ -118,7 +119,7 @@ class Plots:
         plt.xscale(scalex)
         plt.xlabel(r"$\mathbf{\xi \in [1,}$" + f"{N}]", loc="right")
         plt.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
-        plt.title(title, wrap = True)
+        plt.title(title)
 
         return fig
 
