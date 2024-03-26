@@ -26,12 +26,12 @@ Construct lattice
 a = 0.3                                                         #d/lambda_0 = a
 #d = 1/(2 * pi * a)                                              #dimensionless distance between the dipoles. The 2*pi might be wrong though????
 d = 100                     #TODO: find ud af enheder for d og hvorfor størrelsen er, hvad den er. 
-lattice = Lattice()
+lattice = Lattice.Lattice()
 lattice.linlat(N, d)        #initialize linear lattice
 pos, rij, pola = lattice.getPositions(), lattice.getDisplacements(), lattice.getPolarizations()
 
-p = Plots()
-figDip, axDip = p.plotDipoles(lattice)
+p = Plots.Plots()
+figDip = p.plotDipoles(lattice)
 
 """
 Section for Hamiltonian:
@@ -41,16 +41,16 @@ All values are unitless, see notes from meeting 22/2.
 
 #Scalar case:
 G = fill_G(N, rij)
-block = Hamiltonian()
+block = Hamiltonian.Hamiltonian()
 block.block(N, G, ez)       #initialize block hamiltonian with N dipoles and calculated G (vacuum) and ez pola direction.
 
 #decay rates:
 decay_rates = block.getDecayRates()
 
-
+figDec, axDec = p.plotRatesLat(lattice, block)
 #plt.savefig("figures/case_scalar.png", dpi=300)
 
-plt.show()
+p.show()
 
 """
 Hermitiske del af Hamiltonian:

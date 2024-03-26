@@ -88,16 +88,16 @@ class Plots:
         polay = pola[:,1]
         polaz = pola[:,2]
 
-        fig, ax = plt.figure()
-        ax.plot(x, z, 'o', color="black", label="sites")
-        ax.quiver(x, z, polax, polaz, scale=15, width=0.005, color="red", label=r"$\hat{d}$", pivot="mid")
-        ax.ylim(-1, 1)
-        ax.xlabel(r"$\mathbf{\hat{x}}$", loc="right")
-        ax.ylabel(r"$\mathbf{\hat{z}}$", loc="top")
-        ax.title(r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$")
-        ax.legend()
+        fig = plt.figure()
+        plt.plot(x, z, 'o', color="black", label="sites")
+        plt.quiver(x, z, polax, polaz, scale=15, width=0.005, color="red", label=r"$\hat{d}$", pivot="mid")
+        plt.ylim(-1, 1)
+        plt.xlabel(r"$\mathbf{\hat{x}}$", loc="right")
+        plt.ylabel(r"$\mathbf{\hat{z}}$", loc="top")
+        plt.title(r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$")
+        plt.legend()
         
-        return fig, ax
+        return fig
     
     #Plot rates manually
     def plotRates(self, N : int, d : float, rates : ndarray, scale : str = "linear", title : str = None) -> tuple[plt.Figure, plt.Axes]:
@@ -105,9 +105,8 @@ class Plots:
         TODO: Description
         """
 
-        #TODO: beware: ru encoding might not work.
-        if title == None: 
-            title = str(f"N = {N}", ru"dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = 0.3$")
+        if title == None: #ERROR NOT SUPPORTED !!!
+            title = str(f"N = {N}", r"dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} =$", f"{d}")
 
         fig, ax = plt.figure()
         ax.plot(range(1, N+1), rates, 'o')
