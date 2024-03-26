@@ -28,8 +28,14 @@ class Hamiltonian:
 
     def getHam(self) -> ndarray:
         return self.hamiltonian
+    
 
     #Specialized:
+
+    def getEigenDecomp(self, sort : bool = True) -> tuple[ndarray, ndarray]:
+        
+        return self.eigval, self.eigvec
+
     def getDecayRates(self, sort : bool = True) -> ndarray:
         """
         TODO: Description

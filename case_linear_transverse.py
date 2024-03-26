@@ -74,6 +74,7 @@ anti_diag = np.matrix(anti_vec).getH() @ anti @ anti_vec
 anti_trace = anti.trace()
 anti_diag_trace = anti_diag.trace()
 
+eigval_scalar = block.get
 print("Sum of eigenvalues: ", np.sum(eigval_scalar))
 print("Trace of herm: ", herm_trace, " and trace of herm_diag: ", herm_diag_trace)
 print("Trace of anti: ", anti_trace, " and trace of anti_diag: ", anti_diag_trace)
