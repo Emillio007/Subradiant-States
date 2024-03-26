@@ -73,6 +73,10 @@ class Plots:
         return plt.isinteractive()
             
     """Different standard type plots: """
+
+    def plot(self, *args, **kwargs) -> list:
+        return plt.plot(*args, **kwargs)
+
     def plotDipoles(self, lat : Lattice) -> plt.Figure:
         """
         TODO: Description

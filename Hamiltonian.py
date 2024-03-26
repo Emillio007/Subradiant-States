@@ -12,10 +12,15 @@ class Hamiltonian:
     initialized = False
     decomposed = False
 
+    #Internal storage:
     N = None
     hamiltonian = None
     eigvec = None
     eigval = None
+
+    #private variables:
+    #Manually set diagval, see meeting notes 7/3:
+    diagval = 1 - 1j/2
 
     #Standard exception:
     e = Exception("Hamiltonian is empty. ")
@@ -252,13 +257,10 @@ class Hamiltonian:
         #Do this by computing every matrix element of NxN matrix. It is the block of one excitation in full Hamiltonian
         block = zeros((N,N), dtype=complex)
 
-        #Manually set diagval, see meeting notes 7/3:
-        diagval = 1 - 1j/2
-
         for i in range(N):
             for j in range(N):
                 if i == j:
-                    block[i, j] = diagval
+                    block[i, j] = self.diagval
                 else:
                     block[i, j] += -3*pi * n[i].transpose() @ G[i,j] @ n[i]        #Dipoles polarized along z-direction.  
 
@@ -283,12 +285,11 @@ class Hamiltonian:
 
         h = scalar(N, rij, w0, dimensionless)
 
-        #Manually set diagval and multiply with constants, see meeting notes 7/3:
-        diagval = 1 - 1j/2
+        #Multiply with constants, see notes meetin 7/3
         for i in range(N):
             for j in range(N):
                 if i == j:
-                    h[i, j] = diagval
+                    h[i, j] = self.diagval
                 else:
                     h[i, j] = -3 * pi * h[i, j]
 

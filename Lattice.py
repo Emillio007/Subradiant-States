@@ -27,6 +27,13 @@ class Lattice:
         self.N = N
         self.d = d
 
+    def clearLat(self) -> None:
+        self.positions = None
+        self.displacements = None
+        self.polarizations = None
+        self.N = None
+        self.d = None
+
     """Get methods:"""
 
     def getN(self) -> int:
@@ -82,6 +89,9 @@ class Lattice:
         from numpy import zeros, linspace, array, full_like
         from utils import ex, ez
 
+        #If already init, re-init.
+        self.clearLat()
+
         #if no direction is supplied, set standard direction to x:
         if direction == None:
             direction = ex
@@ -110,7 +120,7 @@ class Lattice:
         self.setDisplacements(rij)
         self.setPolarizations(polarizations)
 
-    def circlelat(self, N : int, d : float, ) -> None:
+    def circlelat(self, N : int, d : float, distance_measure : {"inter", "radius"} = "inter") -> None:
         """
         TODO: Description
         """
