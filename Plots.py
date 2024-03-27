@@ -124,7 +124,7 @@ class Plots:
         return fig
     
     #Plot rates manually
-    def plotRates(self, N : int, d : float, rates : ndarray, scalex : str = "linear", scaley : str = "linear", title : str = None) -> tuple[plt.Figure, plt.Axes]:
+    def plotRates(self, N : int, d : float, rates : ndarray, ax : plt.Axes = None, scalex : str = "linear", scaley : str = "linear", title : str = None) -> plt.Figure:
         """
         TODO: Description
         """
@@ -133,17 +133,22 @@ class Plots:
         if title == None: 
             title = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = $" + f"{d}", 60))
 
-        fig = plt.figure()
-        plt.plot(range(1, N+1), rates, 'o')
-        plt.yscale(scaley)
-        plt.xscale(scalex)
-        plt.xlabel(r"$\mathbf{\xi \in [1,}$" + f"{N}]", loc="right")
-        plt.ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
-        plt.title(title)
+        if ax is None:
+            fig = plt.figure()
+            ax = plt.gca()
+        else:
+            fig = ax.get_figure()
+        
+        ax.plot(range(1, N+1), rates, 'o')
+        ax.set_yscale(scaley)
+        ax.set_xscale(scalex)
+        ax.set_xlabel(r"$\mathbf{\xi \in [1,%s]}$" % N, loc="right")
+        ax.set_ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
+        ax.set_title(title)
 
         return fig
 
-    def plotRatesLat(self, lat : Lattice, ham : Hamiltonian, scalex : str = "linear", scaley : str = "linear", title : str = None) -> plt.Figure:
+    def plotRatesLat(self, lat : Lattice, ham : Hamiltonian, ax : plt.Axes = None, scalex : str = "linear", scaley : str = "linear", title : str = None) -> plt.Figure:
         """
         TODO: Description
 
@@ -155,6 +160,6 @@ class Plots:
         d = lat.getd()
         rates = ham.getDecayRates()
 
-        fig = self.plotRates(N, d, rates, scalex, scaley, title)
+        fig = self.plotRates(N, d, rates, ax, scalex, scaley, title)
 
         return fig
