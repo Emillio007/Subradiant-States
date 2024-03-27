@@ -5,6 +5,7 @@ Compute position and interrelative displacement vectors of different lattice con
 """
 
 from numpy import ndarray
+from typing import Literal
 
 class Lattice:
 
@@ -128,7 +129,7 @@ class Lattice:
         self.setDisplacements(rij)
         self.setPolarizations(polarizations)
 
-    def circlelat(self, N : int, d : float, distance_measure : {"inter", "radius"} = "inter") -> None:
+    def circlelat(self, N : int, d : float, distance_measure : Literal["inter", "radius"] = "inter") -> None:
         """
         TODO: Description
         """
