@@ -7,6 +7,7 @@ import Hamiltonian
 import Lattice
 import Plots
 from utils import *
+from textwrap import wrap
 
 plt.rcParams.update({
     "text.usetex": True,
@@ -23,16 +24,14 @@ N = 50                                                          #number of atoms
 Construct lattice
  (1) Finite linear chain along x-axis
 """
-a = 100                                                         #d/lambda_0 = a
-#d = 1/(2 * pi * a)                                              #dimensionless distance between the dipoles. The 2*pi might be wrong though????
-d = 0.3                     #TODO: find ud af enheder for d og hvorfor størrelsen er, hvad den er. 
+a = 0.3                          #d/lambda_0 = a
+d = 2*pi * a                     #Faktor 2pi fordi r i enheder af 1/k0
 lattice = Lattice.Lattice()
-lattice.linlat(N, d)        #initialize linear lattice
+lattice.linlat(N, d, ex, ez)        #initialize linear lattice
 pos, rij, pola = lattice.getPositions(), lattice.getDisplacements(), lattice.getPolarizations()
-
 p = Plots.Plots()
 figDip = p.plotDipoles(lattice)
-
+plt.savefig("figures/dipoles_case_linear_transverse_d_03.png", dpi=300)
 """
 Section for Hamiltonian:
 
@@ -47,7 +46,7 @@ scal.eigenDecomposition()
 #Linear transverse case:
 G = fill_G(N, rij)
 block = Hamiltonian.Hamiltonian()
-block.block(N, G, ez)       #initialize block hamiltonian with N dipoles and calculated G (vacuum) and ez pola direction.
+block.block(N, G, pola)       #initialize block hamiltonian with N dipoles and calculated G (vacuum) and ez pola direction.
 block.eigenDecomposition()
 
 #decay rates:
@@ -55,10 +54,10 @@ decay_rates = block.getDecayRates()
 decay_rates_scalar = scal.getDecayRates()
 
 """Plotting decay rates of linear transverse and scalar case to see, if they are equal (which they should)"""
-mytitle = r"$N = 50$ dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = 100$"
-figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=None)
+mytitle = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = $" + f"{a}", 60))
+figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=mytitle)
 #figDecScal = p.plotRates(N, d, decay_rates_scalar, scaley="log", title="Scalar case")
-#plt.savefig("figures/case_scalar_d_03.png", dpi=300)
+plt.savefig("figures/case_linear_transverse_d_03.png", dpi=300)
 
 p.show()
 

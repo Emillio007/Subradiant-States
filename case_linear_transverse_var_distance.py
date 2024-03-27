@@ -27,8 +27,8 @@ for distance in d:
     x[:] = distance
     lat.linlat(N, distance)
     displacements = lat.getDisplacements()
-    #G = fill_G(N, displacements)
-    scal.scalarham(N, displacements)
+    G = fill_G(N, displacements)
+    scal.block(N, G, ez)
     scal.eigenDecomposition()
     y = scal.getDecayRates()
     p.plot(x, y, 'o', color="blue")

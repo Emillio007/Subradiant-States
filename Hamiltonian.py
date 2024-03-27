@@ -74,7 +74,7 @@ class Hamiltonian:
 
         return self.eigval, self.eigvec
 
-    def getDecayRates(self, sort : bool = True, rescale : bool = True) -> ndarray:
+    def getDecayRates(self, sort : bool = True) -> ndarray:
         """
         TODO: Description
         """
@@ -91,9 +91,10 @@ class Hamiltonian:
         if sort:
             decay_rates = sort(decay_rates)
 
-        minval = min(decay_rates)
-        if rescale:
-            decay_rates -= minval
+        """Don't do this: """
+        #minval = min(decay_rates)
+        #if rescale:
+        #    decay_rates -= minval
 
         return decay_rates
 
@@ -265,7 +266,7 @@ class Hamiltonian:
                     block[i, j] += -3*pi * n[i].transpose() @ G[i,j] @ n[i]        #Dipoles polarized along z-direction.  
 
         #Store in internal container.
-        self.hamiltonian = block
+        self.hamiltonian = -block #finish with a minus sign due to eigenvalues being damping. See meeting notes 27/3
 
         #Flag:
         self.initialized = True
@@ -294,7 +295,7 @@ class Hamiltonian:
                     h[i, j] = -3 * pi * h[i, j]
 
         #store in internal
-        self.hamiltonian = h
+        self.hamiltonian = -h   #Finish with a minus sign due to eigenvalues being damping. See meeting notes 27/3
         
         #Lower flag:
         self.initialized = True

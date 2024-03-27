@@ -92,15 +92,23 @@ class Lattice:
         #If already init, re-init.
         self.clearLat()
 
+        #Helper function
+        def fillPola(dir):
+            polarizations = zeros((N,3))    #orient all dipoles along z-direction.
+            for i in range(N):
+                polarizations[i,:] = dir
+            return polarizations
+
         #if no direction is supplied, set standard direction to x:
-        if direction == None:
+        if direction is None:
             direction = ex
         
         #if no polarization is supplied and not already set, set standard to z.
-        if polarizations == None and self.polarizations == None:
-            polarizations = zeros((N,3))    #orient all dipoles along z-direction.
-            for i in range(N):
-                polarizations[i,:] = ez
+        if polarizations is None and self.polarizations is None:
+            polarizations = fillPola(ez)                #Orient all dipoles along z
+        elif polarizations.shape == (3,):
+            dir = polarizations
+            polarizations = fillPola(dir)
 
         pos = zeros((N, 3))                                          #Array of position vectors of the lattice sites (atoms).
         ticks = linspace(-(N*d)/2, (N*d)/2, N)                       #displacement vectors in lattice
@@ -124,4 +132,3 @@ class Lattice:
         """
         TODO: Description
         """
-        
