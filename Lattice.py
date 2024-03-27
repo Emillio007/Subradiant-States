@@ -85,7 +85,7 @@ class Lattice:
         for i in range(N):
             polarizations[i,:] = dir
         return polarizations
-    
+
     def fillDisplacements(self, N : int, pos : ndarray) -> ndarray:
         """
         TODO: Description
@@ -150,7 +150,7 @@ class Lattice:
         self.setPolarizations(polarizations)
 
     def circlelat(self, N : int, d : float, distance_measure : Literal["inter", "radius"] = "inter", 
-                  std_polarization : Literal["inwards", "inwards alternating", "outwards", "outwards alternating", "azimuthal",
+                  std_polarization : Literal["inwards", "radial alternating", "outwards", "azimuthal",
                                              "azimuthal alternating", "other"] = "other", polarizations : ndarray = None) -> None:
         """
         TODO: Description
@@ -204,18 +204,40 @@ class Lattice:
                     #Last case, the entire array is supplied:
                     pola = polarizations
             case "inwards":
-                #some vector math..
-                pass
-            case "inwards alternating":
-                raise self.exception_not_yet_implemented
+                pola = zeros((N,3))
+                for i in range(N):
+                    x = -cos(angle*i)
+                    y = -sin(angle*i)
+                    pola[i,0] = x
+                    pola[i,1] = y
+            case "radial alternating":
+                pola = zeros((N,3))
+                for i in range(N):
+                    x = (-1)**i * cos(angle*i)
+                    y = (-1)**i * sin(angle*i)
+                    pola[i,0] = x
+                    pola[i,1] = y
             case "outwards":
-                raise self.exception_not_yet_implemented
-            case "outwards alternating":
-                raise self.exception_not_yet_implemented
+                pola = zeros((N,3))
+                for i in range(N):
+                    x = cos(angle*i)
+                    y = sin(angle*i)
+                    pola[i,0] = x
+                    pola[i,1] = y
             case "azimuthal":
-                raise self.exception_not_yet_implemented
+                pola = zeros((N,3))
+                for i in range(N):
+                    x = cos(angle*i + pi/2)
+                    y = sin(angle*i + pi/2)
+                    pola[i,0] = x
+                    pola[i,1] = y
             case "azimuthal alternating":
-                raise self.exception_not_yet_implemented
+                pola = zeros((N,3))
+                for i in range(N):
+                    x = (-1)**i * cos(angle*i + pi/2)
+                    y = (-1)**i * sin(angle*i + pi/2)
+                    pola[i,0] = x
+                    pola[i,1] = y
 
         #Store in internal containers:
         self.setN(N)
