@@ -24,14 +24,14 @@ N = 50                                                          #number of atoms
 Construct lattice
  (1) Finite linear chain along x-axis
 """
-a = 0.3                          #d/lambda_0 = a
+a = 0.1                          #d/lambda_0 = a
 d = 2*pi * a                     #Faktor 2pi fordi r i enheder af 1/k0
 lattice = Lattice.Lattice()
 lattice.linlat(N, d, ex, ex)        #initialize linear lattice
 pos, rij, pola = lattice.getPositions(), lattice.getDisplacements(), lattice.getPolarizations()
 p = Plots.Plots()
-figDip = p.plotDipoles(lattice)
-plt.savefig("figures/dipoles_case_linear_parallel_d_03.png", dpi=300)
+figDip = p.plotDipolesPlane(lattice, plane = "xz")
+#plt.savefig("figures/dipoles_case_linear_parallel_d_03.png", dpi=300)
 """
 Section for Hamiltonian:
 
@@ -50,6 +50,6 @@ decay_rates = block.getDecayRates()
 """Plotting decay rates of linear parallel """
 mytitle = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in x-direction, $\frac{d}{\lambda_0} = $" + f"{a}", 60))
 figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=mytitle)
-plt.savefig("figures/case_linear_parallel_d_03.png", dpi=300)
+#plt.savefig("figures/case_linear_parallel_d_03.png", dpi=300)
 
 p.show()

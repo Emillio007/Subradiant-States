@@ -9,6 +9,7 @@ import Lattice
 import Hamiltonian
 from numpy import ndarray
 from cycler import cycler
+from typing import Literal
 
 class Plots:
 
@@ -77,7 +78,7 @@ class Plots:
     def plot(self, *args, **kwargs) -> list:
         return plt.plot(*args, **kwargs)
 
-    def plotDipoles(self, lat : Lattice) -> plt.Figure:
+    def plotDipolesPlane(self, lat : Lattice, plane : Literal["xy", "xz", "yz"] = "xy", title = None) -> plt.Figure:
         """
         TODO: Description
         """
@@ -92,13 +93,32 @@ class Plots:
         polay = pola[:,1]
         polaz = pola[:,2]
 
+        ax1, ax2 = None, None
+        p1, p2 = None, None
+        po1, po2 = None, None
+        match(plane):
+            case "xy":
+                ax1, ax2 = "x", "y"
+                p1, p2 = x, y
+                po1, po2 = polax, polay
+            case "xz":
+                ax1, ax2 = "x", "z"
+                p1, p2 = x, z
+                po1, po2 = polax, polaz
+            case "yz":
+                ax1, ax2 = "y", "z"
+                p1, p2 = y, z
+                po1, po2 = polay, polaz
+
         fig = plt.figure()
-        plt.plot(x, z, 'o', color="black", label="sites")
-        plt.quiver(x, z, polax, polaz, scale=15, width=0.005, color="red", label=r"$\hat{d}$", pivot="mid")
-        plt.ylim(-1, 1)
-        plt.xlabel(r"$\mathbf{\hat{x}}$", loc="right")
-        plt.ylabel(r"$\mathbf{\hat{z}}$", loc="top")
-        plt.title(r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$", wrap = True)
+        plt.plot(p1, p2, 'o', color="black", label="sites")
+        plt.quiver(p1, p2, po1, po2, scale=15, width=0.005, color="red", label=r"$\hat{d}$", pivot="mid")
+        #plt.ylim(-1, 1)
+        plt.xlabel(r"$\mathbf{\hat{%a}}$" % ax1, loc="right")
+        plt.ylabel(r"$\mathbf{\hat{%a}}$" % ax2, loc="top")
+        if title is None:
+            title = r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$"
+        plt.title(title, wrap = True)
         plt.legend()
         
         return fig
