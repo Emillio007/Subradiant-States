@@ -17,6 +17,7 @@ class Hamiltonian:
     hamiltonian = None
     eigvec = None
     eigval = None
+    index_sorted = None
 
     #private variables:
     #Manually set diagval, see meeting notes 7/3:
@@ -25,12 +26,14 @@ class Hamiltonian:
     #Standard exception:
     e = Exception("Hamiltonian is empty. ")
     ed = Warning("Hamiltonian has not been eigendecomposed, proceeding to do so.")
+    ep = Warning("Probabilities exceed 1.")
 
     def __init__(self, N : int = None, ham : ndarray = None):
         if ham == None:
             self.initialized = False
         else:
             self.initialized = True
+        self.decomposed = False
         self.hamiltonian = ham
         self.N = N
 
@@ -60,6 +63,8 @@ class Hamiltonian:
     def getHam(self) -> ndarray:
         return self.hamiltonian
     
+    def getSortedIndex(self) -> ndarray:
+        return self.index_sorted
 
     #Specialized:
 
@@ -77,8 +82,14 @@ class Hamiltonian:
     def getDecayRates(self, sort : bool = True) -> ndarray:
         """
         TODO: Description
+        
+        Note: If sort = True, the decay rates will be sorted lowest to highest. 
+        The sorted indexes are stored if needed for extracting the corresponding eigvec.
         """
-        from numpy import imag, sort, min
+        from numpy import imag, argsort, min
+
+        #Reset sorted indexes:
+        self.index_sorted = None
 
         #if ham is empty
         self.assertInit()
@@ -89,7 +100,9 @@ class Hamiltonian:
         decay_rates = 2 * imag(self.eigval)     #Factor of 2, see Asenjo-Garcia et al.
 
         if sort:
-            decay_rates = sort(decay_rates)
+            sortind = argsort(decay_rates)
+            decay_rates = decay_rates[sortind]
+            self.index_sorted = sortind
 
         """Don't do this: """
         #minval = min(decay_rates)
@@ -97,6 +110,29 @@ class Hamiltonian:
         #    decay_rates -= minval
 
         return decay_rates
+    
+    def getAmplNorm(self, index : int) -> ndarray:
+        """
+        Get amplitude norms for eigenvector at index.
+
+        TODO: Description
+        """
+        from numpy import sum, imag, real, sqrt, power
+
+        #assertations as getDecayRates:
+        self.assertInit()
+        self.assertDecomposed()
+
+        ampl = self.eigvec[index]
+        amplnorm = sqrt(real(ampl)**2 + imag(ampl)**2)  #Get norm of complexvalued 
+
+        accProb = sum(power(amplnorm, 2))
+        if accProb > 1:
+            warnings.warn(self.ep)
+            print("The probabilities sum to: ", accProb)
+
+        return amplnorm
+        
 
     def isDecomposed(self) -> bool:
         return self.decomposed

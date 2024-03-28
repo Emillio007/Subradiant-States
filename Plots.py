@@ -5,6 +5,7 @@ Plotting module
 """
 
 import matplotlib.pyplot as plt
+import matplotlib
 import Lattice
 import Hamiltonian
 from numpy import ndarray
@@ -78,11 +79,16 @@ class Plots:
     def plot(self, *args, **kwargs) -> list:
         return plt.plot(*args, **kwargs)
 
-    def plotDipolesPlane(self, lat : Lattice, plane : Literal["xy", "xz", "yz"] = "xy", title = None) -> plt.Figure:
+    def plotDipolesPlane(self, lat : Lattice, plane : Literal["xy", "xz", "yz"] = "xy", title : str = None, ham : Hamiltonian = None, index : int = None) -> plt.Figure:
         """
         TODO: Description
         """
-        
+        from numpy import array
+
+        ampl = array([1])  #just the same color, if no ham provided
+        if not ham is None and not index is None:
+            ampl = ham.getAmplNorm(index=index)
+
         pos, dir, pola = lat.getPositions(), lat.getDisplacements(), lat.getPolarizations()
 
         x = pos[:,0]    #All x coordinates
@@ -112,7 +118,10 @@ class Plots:
 
         fig = plt.figure()
         plt.plot(p1, p2, 'o', color="black", label="sites")
-        plt.quiver(p1, p2, po1, po2, scale=15, width=0.005, color="red", label=r"$\hat{d}$", pivot="mid")
+        cmap = matplotlib.cm.coolwarm
+        norm = matplotlib.colors.Normalize(vmin=min(ampl), vmax=max(ampl))
+        h = plt.quiver(p1, p2, po1, po2, scale=15, width=0.005, cmap=cmap, norm=norm, label=r"$\hat{d}$", pivot="mid")
+        plt.colorbar(matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap))
         #plt.ylim(-1, 1)
         plt.xlabel(r"$\mathbf{\hat{%a}}$" % ax1, loc="right")
         plt.ylabel(r"$\mathbf{\hat{%a}}$" % ax2, loc="top")
