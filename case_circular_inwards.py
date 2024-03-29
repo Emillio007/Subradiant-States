@@ -34,7 +34,7 @@ print(decay_rates)
 
 #Plotting dipoles in plane with colormap of probability amplitude norms of most subradiant eigenstate
 mytitle = "\n".join(wrap(r"$N = %s$ dipoles in circular lattice with $\frac{d}{\lambda0}=%s$ polarized inwards" % (N, a), 60))
-p.plotDipolesPlane(lat, plane="xy", title=mytitle, ham=block, index=block.index_sorted[0])  #Indexes have been sorted, bc getDecayRates have been called above.
+p.plotDipolesPlane(lat, plane="xy", title=mytitle, ham=block, index=block.getSortedIndex()[0])  #Indexes have been sorted, bc getDecayRates have been called above.
 
 p.plotRatesLat(lat, block, scalex="log", scaley="log", title=mytitle)
 

@@ -79,11 +79,19 @@ class Plots:
     def plot(self, *args, **kwargs) -> list:
         return plt.plot(*args, **kwargs)
 
-    def plotDipolesPlane(self, lat : Lattice, plane : Literal["xy", "xz", "yz"] = "xy", title : str = None, ham : Hamiltonian = None, index : int = None) -> plt.Figure:
+    def plotDipolesPlane(self, lat : Lattice, ax : plt.Axes = None, plane : Literal["xy", "xz", "yz"] = "xy", title : str = None, 
+                         xlim : tuple[float, float] = None, ylim : tuple[float, float] = None, ham : Hamiltonian = None, 
+                         index : int = None, legend : bool = True) -> tuple[plt.Figure, plt.Axes]:
         """
         TODO: Description
         """
         from numpy import array
+        firstTime = False
+        if ax is None:
+            plt.figure()
+            ax = plt.gca()
+            firstTime = True    #Raise flag for colorbar
+        fig = plt.gcf()
 
         ampl = array([1])  #just the same color, if no ham provided
         if not ham is None and not index is None:
@@ -116,21 +124,29 @@ class Plots:
                 p1, p2 = y, z
                 po1, po2 = polay, polaz
 
-        fig = plt.figure()
-        plt.plot(p1, p2, 'o', color="black", label="sites")
         cmap = matplotlib.cm.coolwarm
         norm = matplotlib.colors.Normalize(vmin=min(ampl), vmax=max(ampl))
-        h = plt.quiver(p1, p2, po1, po2, scale=15, width=0.005, cmap=cmap, norm=norm, label=r"$\hat{d}$", pivot="mid")
-        plt.colorbar(matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap))
-        #plt.ylim(-1, 1)
-        plt.xlabel(r"$\mathbf{\hat{%a}}$" % ax1, loc="right")
-        plt.ylabel(r"$\mathbf{\hat{%a}}$" % ax2, loc="top")
+        sm = matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap)
+        sm.set_array([])
+        ax.scatter(p1, p2, c=ampl, cmap=cmap, norm=norm, label="sites")
+        ax.quiver(p1, p2, po1, po2, scale=15, width=0.005, color=cmap(norm(ampl)), label=r"$\hat{d}$", pivot="mid")
+        if firstTime:
+            plt.colorbar(sm, label=r"Amplitude norm of $|e_j> = |c_j|$")
+        if not ylim is None:
+            lower, upper = ylim
+            ax.set_ylim(lower, upper)
+        if not xlim is None:
+            lower, upper = xlim
+            ax.set_xlim(lower, upper)
+        ax.set_xlabel(r"$\mathbf{\hat{%c}}$" % ax1, loc="right")
+        ax.set_ylabel(r"$\mathbf{\hat{%c}}$" % ax2, loc="top")
         if title is None:
             title = r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$"
-        plt.title(title, wrap = True)
-        plt.legend()
+        fig.suptitle(title, wrap = True)
+        if legend:
+            plt.legend()
         
-        return fig
+        return fig, ax
     
     #Plot rates manually
     def plotRates(self, N : int, d : float, rates : ndarray, ax : plt.Axes = None, scalex : str = "linear", scaley : str = "linear", title : str = None) -> plt.Figure:

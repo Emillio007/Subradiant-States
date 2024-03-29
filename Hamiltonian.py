@@ -129,7 +129,7 @@ class Hamiltonian:
         accProb = sum(power(amplnorm, 2))
         if accProb > 1:
             warnings.warn(self.ep)
-            print("The probabilities sum to: ", accProb)
+        print("The probabilities sum to: ", accProb)
 
         return amplnorm
         

@@ -30,8 +30,7 @@ lattice = Lattice.Lattice()
 lattice.linlat(N, d, ex, ez)        #initialize linear lattice
 pos, rij, pola = lattice.getPositions(), lattice.getDisplacements(), lattice.getPolarizations()
 p = Plots.Plots()
-figDip = p.plotDipoles(lattice)
-plt.savefig("figures/dipoles_case_linear_transverse_d_03.png", dpi=300)
+
 """
 Section for Hamiltonian:
 
@@ -53,11 +52,16 @@ block.eigenDecomposition()
 decay_rates = block.getDecayRates()
 decay_rates_scalar = scal.getDecayRates()
 
-"""Plotting decay rates of linear transverse and scalar case to see, if they are equal (which they should)"""
 mytitle = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = $" + f"{a}", 60))
+
+#Plotting dipoles after "getDecayRates()" has been called
+figDip = p.plotDipolesPlane(lattice, plane="xz", title=mytitle, ylim=(-1,1), ham = block, index=block.getSortedIndex()[0])
+#plt.savefig("figures/dipoles_case_linear_transverse_d_03.png", dpi=300)
+
+"""Plotting decay rates of linear transverse and scalar case to see, if they are equal (which they should)"""
 figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=mytitle)
 #figDecScal = p.plotRates(N, d, decay_rates_scalar, scaley="log", title="Scalar case")
-plt.savefig("figures/case_linear_transverse_d_03.png", dpi=300)
+#plt.savefig("figures/case_linear_transverse_d_03.png", dpi=300)
 
 p.show()
 
