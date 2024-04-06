@@ -149,6 +149,62 @@ class Lattice:
         self.setDisplacements(rij)
         self.setPolarizations(polarizations)
 
+    def twopiece(self, N : int, d : float, theta : float, direction : ndarray = None, polarizations : ndarray = None) -> None:
+        """
+        Linear lattice broken in two pieces with angle theta \in [0,2pi) on corner.
+        TODO: Description
+        """
+        from utils import ex
+        from numpy import array, cos, sin, concatenate
+        
+        #if lattice is already initialized, clear out:
+        self.clearLat()
+
+        if direction is None:
+            direction = ex
+
+        first_dir = direction
+        second_dir = array([cos(theta), 0, sin(theta)]) . first_dir #break into z-direction by default. 
+
+        #if N is even, break at half+1 lattice site
+        if N % 2 == 0:
+            N_first = N/2 + 1
+        else:
+            N_first = N/2
+        N_second = N - N_first
+
+        #Set polarizations:
+        if polarizations is None:   #by default x-dir
+            first_pola = ex
+            second_pola = ex
+        elif polarizations.shape == (N,3):
+            first_pola = polarizations[0:N_first, :]
+            second_pola = polarizations[N_first+1:-1, :]
+        #else if pola is just vector, do nothing
+
+        #Construct first linlat piece and store
+        self.linlat(N_first, d, first_dir, first_pola)
+        first_pos = self.getPositions()
+        first_disp = self.getDisplacements()
+        first_pola = self.getPolarizations()
+
+        #Second:
+        self.linlat(N_second, d, second_dir, second_pola):
+        second_pos = self.getPositions()
+        second_disp = self.getDisplacements()
+        second_pola = self.getPolarizations()
+
+        #Join lattices together:
+        pos = concatenate([first_pos, second_pos], axis=0)
+        disp = concatenate([first_disp, second_disp], axis=0)
+        pola = concatenate([first_pola, second_pola], axis=0)
+
+        self.setPositions(pos)
+        self.setDisplacements(disp)
+        self.setPolarizations(pola)
+        self.setN(N)
+        self.setd(d)
+
     def circlelat(self, N : int, d : float, distance_measure : Literal["inter", "radius"] = "inter", 
                   std_polarization : Literal["inwards", "radial alternating", "outwards", "azimuthal",
                                              "azimuthal alternating", "other"] = "other", polarizations : ndarray = None) -> None:
