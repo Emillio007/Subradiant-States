@@ -155,7 +155,7 @@ class Lattice:
         TODO: Description
         """
         from utils import ex
-        from numpy import array, cos, sin, concatenate
+        from numpy import array, cos, sin, concatenate, dot
         
         #if lattice is already initialized, clear out:
         self.clearLat()
@@ -164,13 +164,13 @@ class Lattice:
             direction = ex
 
         first_dir = direction
-        second_dir = array([cos(theta), 0, sin(theta)]) . first_dir #break into z-direction by default. 
+        second_dir = dot(array([cos(theta), 0, sin(theta)]), first_dir) #break into z-direction by default. 
 
         #if N is even, break at half+1 lattice site
         if N % 2 == 0:
-            N_first = N/2 + 1
+            N_first = int(N/2)
         else:
-            N_first = N/2
+            N_first = int(N/2 + 1)
         N_second = N - N_first
 
         #Set polarizations:
@@ -180,23 +180,30 @@ class Lattice:
         elif polarizations.shape == (N,3):
             first_pola = polarizations[0:N_first, :]
             second_pola = polarizations[N_first+1:-1, :]
+        else:
+            first_pola = polarizations
+            second_pola = polarizations
         #else if pola is just vector, do nothing
 
         #Construct first linlat piece and store
         self.linlat(N_first, d, first_dir, first_pola)
         first_pos = self.getPositions()
-        first_disp = self.getDisplacements()
         first_pola = self.getPolarizations()
+        #Replace:
+        for i in range(N_first):
+            first_pos[i,:] -= N_first/2 * d * first_dir
 
         #Second:
-        self.linlat(N_second, d, second_dir, second_pola):
+        self.linlat(N_second, d, second_dir, second_pola)
         second_pos = self.getPositions()
-        second_disp = self.getDisplacements()
         second_pola = self.getPolarizations()
+        #Replace:
+        for i in range(N_second):
+            second_pos[i,:] += (N_second/2 + 1) * d * second_dir
 
         #Join lattices together:
         pos = concatenate([first_pos, second_pos], axis=0)
-        disp = concatenate([first_disp, second_disp], axis=0)
+        disp = self.fillDisplacements(N, pos)
         pola = concatenate([first_pola, second_pola], axis=0)
 
         self.setPositions(pos)

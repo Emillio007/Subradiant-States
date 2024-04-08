@@ -26,10 +26,12 @@ Construct lattice
 """
 a = 0.3                          #d/lambda_0 = a
 d = 2*pi * a                     #Faktor 2pi fordi r i enheder af 1/k0
+theta = np.pi/2
 lattice = Lattice.Lattice()
-lattice.linlat(N, d, ex, ex)        #initialize linear lattice
+lattice.twopiece(N, d, theta, ex, ex)        #initialize linear lattice
 pos, rij, pola = lattice.getPositions(), lattice.getDisplacements(), lattice.getPolarizations()
 p = Plots.Plots()
+
 
 """
 Section for Hamiltonian:
@@ -46,15 +48,15 @@ block.eigenDecomposition()
 #decay rates:
 decay_rates = block.getDecayRates()
 
-mytitle = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in x-direction, $\frac{d}{\lambda_0} = $" + f"{a}", 60))
+mytitle = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in broken linear lattice, polarized in x-direction, $\frac{d}{\lambda_0} = $" + f"{a}", 60))
 
-figDip, axDip = p.plotDipolesPlane(lattice, plane = "xz", title=mytitle, xlim=None, ylim=(-1,1), ham=block, index=block.getSortedIndex()[0])
-figDip.set_size_inches(12, 5)
+#figDip, axDip = p.plotDipolesPlane(lattice, plane = "xz", title=mytitle, xlim=None, ylim=None, ham=block, index=block.getSortedIndex()[0])
+#figDip.set_size_inches(12, 5)
 #plt.savefig("figures/dipoles_case_linear_parallel_d_03.png", dpi=300)
 
 """Plotting decay rates of linear parallel """
-
-figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=mytitle)
+print(decay_rates)
+#figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=mytitle)
 #plt.savefig("figures/case_linear_parallel_d_03.png", dpi=300)
 
-p.show()
+#p.show()
