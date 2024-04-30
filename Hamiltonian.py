@@ -61,9 +61,11 @@ class Hamiltonian:
         return self.N
 
     def getHam(self) -> ndarray:
+        self.assertInit()
         return self.hamiltonian
     
     def getSortedIndex(self) -> ndarray:
+        self.assertDecomposed()
         return self.index_sorted
 
     #Specialized:
