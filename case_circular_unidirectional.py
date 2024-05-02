@@ -18,7 +18,7 @@ p = Plots.Plots()
 Circular lattice, unidirectional polarization
 """
 
-a = 0.3  #d/lambda0 .... Bug: for a = 0.01 the lowest decay rate is negative.
+a = 0.01  #d/lambda0 .... Bug: for a = 0.01 the lowest decay rate is negative.
 d = 2*pi * a                    #The distance to feed G in units of 1/k0
 
 pola = np.zeros((N,3))
