@@ -118,7 +118,7 @@ class Lattice:
         pos: array (N x 3) of floats, position vectors for each site
         rij: array (N x N x 3) of floats, interrelative displacement vectors
         """
-        from numpy import zeros, linspace, array, full_like
+        from numpy import zeros, linspace, array, full_like, arange
         from utils import ex, ez
 
         #If already init, re-init.
@@ -136,7 +136,12 @@ class Lattice:
             polarizations = self.fillPola(N, dir)
 
         pos = zeros((N, 3))                                          #Array of position vectors of the lattice sites (atoms).
-        ticks = linspace(-(N*d)/2, (N*d)/2, N)                       #displacement vectors in lattice
+        #ticks = linspace(-(N*d)/2, (N*d)/2, N)                       #displacement vectors in lattice LEGACY CALCULATION
+        ticks = arange(0, N, 1) * d
+        ticks = ticks - (N-1)*d/2
+        #ticks = []                                             #Brug denne udfyldning af ticks, for at sammenligne med Adrians resultater.
+        #for i in range(N):
+        #    ticks.append(i*d)
         for i in range(len(ticks)):
             pos[i, :] = direction * ticks[i]
 
