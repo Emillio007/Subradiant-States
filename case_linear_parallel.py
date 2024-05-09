@@ -24,7 +24,7 @@ N = 50                                                          #number of atoms
 Construct lattice
  (1) Finite linear chain along x-axis
 """
-a = 0.3                          #d/lambda_0 = a
+a = 1/100000                          #d/lambda_0 = a
 d = 2*pi * a                     #Faktor 2pi fordi r i enheder af 1/k0
 lattice = Lattice.Lattice()
 lattice.linlat(N, d, ex, ex)        #initialize linear lattice
@@ -52,9 +52,21 @@ figDip, axDip = p.plotDipolesPlane(lattice, plane = "xz", title=mytitle, xlim=No
 figDip.set_size_inches(12, 5)
 #plt.savefig("figures/dipoles_case_linear_parallel_d_03.png", dpi=300)
 
+eigval, eigvec = block.getEigenDecomp()
+
+def check_expectation_value(index : int) -> None:
+    ind = block.getSortedIndex()[index]
+    vec = eigvec[:,ind]
+    #print(vec)
+    expec_val = np.transpose(np.conjugate(vec)) @ block.getHam() @ vec
+    print("Actual eigenvalue: ", eigval[ind], "\n Expectation value: ", expec_val)
+
+#check_expectation_value(0)
+#Checking the expectation value against the eigenvalue returns the same. So still positive imaginary component for sufficient conditions.
+
 """Plotting decay rates of linear parallel """
 
 figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=mytitle)
 #plt.savefig("figures/case_linear_parallel_d_03.png", dpi=300)
-print(decay_rates)
-p.show()
+#print(decay_rates)
+#p.show()
