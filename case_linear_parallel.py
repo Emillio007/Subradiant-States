@@ -15,7 +15,7 @@ plt.rcParams.update({
 })
 
 #Program parameters:
-N = 50                                                          #number of atoms
+N = 2                                                          #number of atoms
 
 #Declarations:
 
@@ -24,7 +24,7 @@ N = 50                                                          #number of atoms
 Construct lattice
  (1) Finite linear chain along x-axis
 """
-a = 1/100000                          #d/lambda_0 = a
+a = 1/100000                         #d/lambda_0 = a
 d = 2*pi * a                     #Faktor 2pi fordi r i enheder af 1/k0
 lattice = Lattice.Lattice()
 lattice.linlat(N, d, ex, ex)        #initialize linear lattice
@@ -45,6 +45,7 @@ block.eigenDecomposition()
 
 #decay rates:
 decay_rates = block.getDecayRates()
+print(decay_rates)
 
 mytitle = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in x-direction, $\frac{d}{\lambda_0} = $" + f"{a}", 60))
 
