@@ -15,7 +15,7 @@ plt.rcParams.update({
 })
 
 #Program parameters:
-N = 2                                                          #number of atoms
+N = 4                                                          #number of atoms
 
 #Declarations:
 
@@ -71,3 +71,28 @@ figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=myti
 #plt.savefig("figures/case_linear_parallel_d_03.png", dpi=300)
 #print(decay_rates)
 #p.show()
+
+
+ham = block.getHam()
+herm = (ham + np.transpose(ham.conjugate())) / 2
+anti = (ham - np.transpose(ham.conjugate())) / 2
+
+def check_sign():
+    """Strengt antihermitiske del burde kun have samme fortegns egenværdier (sandsynligheder)"""
+    anti_val, anti_vec = np.linalg.eig(anti)
+    print("Strengt anti-hermitiske dels egenværdier: ", anti_val)
+
+    herm_val, herm_vec = np.linalg.eig(herm)
+    print("Strengt hermitiske dels egenværdier: ", herm_val)
+
+    constr = herm + anti
+    constr_val, constr_vec = np.linalg.eig(constr)
+    constr_rates = 2*np.sort(np.imag(constr_val))
+    print("Rekonstrueret egenværdier: ", constr_val)
+    print("Rekonstrueret henfaldsrater: ", constr_rates)
+
+def check_commutation():
+    val = np.dot(herm, anti) - np.dot(anti, herm)
+    print("Commutation value: ", val)
+
+check_commutation()
