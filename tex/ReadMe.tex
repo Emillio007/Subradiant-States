@@ -1,0 +1,55 @@
+\newgeometry{top=2cm,left=2cm,right=2cm,bottom=2cm}
+\section*{Introduction}
+
+NBI package is a package written by Karen A. Voigt in agreement with the Niels Bohr Institute's administration. The package contains the official, updated logos for the University of Copenhagen and the Natural Science Faculty. Later versions will include logos for other institutes as well. Future versions will also include a more elaborate command for authors and supervisors which allows multiple inputs with separate/multiple affiliations.\\
+
+The information the student is prompted to provide covers everything the institute needs when registering and cataloguing theses. The commands are fairly intuitive. The package will prompt you to provide:\\
+
+\begin{compactitem}[-]
+\item A title
+\item A subtitle
+\item The kind of project this covers
+\item An author
+\item A supervisor
+\item Your institute(s)
+\item Your department
+\item Your email
+\item The hand-in date for the project
+\item The defence date of the project
+\end{compactitem}
+
+\section*{Commands}
+
+\begin{compactitem}[-]
+\item To provide a title for the thesis, use
+\verb|\title{}|
+\item To provide a subtitle for the thesis, use
+\verb|\subtitle{}|. If no subtitle, leave field blank to hide.
+\item To provide the kind of project, use
+\verb|\project{}|
+\item To provide the author of the thesis' name, use \verb|\author{}|
+\item The package is set to put today's date as default. To change this, use \verb|\date{}| and either put in a specific date or leave blank to hide the date.
+\item To provide the sueprvisor(s) for the project, use \verb|\supervisor{}| and seperate supervisors by and.
+\item To provide an institute (or more), use only one command \verb|\supervisor{}|
+\item To provide your department, use \verb|\department{}|
+\item To provide an email, use \verb|\email{}|
+\item To provide the hand-in date, use \verb|\handindate{}|
+\item To provide a date for the defence or exam, use \verb|\defencedate{}|
+\end{compactitem}
+
+\subsection*{Here's an example}
+
+\noindent \verb|\supervisor{Dr. Jones}|\\
+\verb|\project{Jeg har pillet mig i navlen}|\\
+\verb|\author{A LaTeX enthusiast}|\\
+\verb|\title{Why i want to be a duck}|\\
+\verb|\subtitle{Something in a subtitle}|\\
+\verb|\department{Andediskoteket}|\\
+\verb|\institute{Niels Bohr Institutet}|\\
+\verb|\email{voigt@nbi.ku.com}|\\
+\verb|\handindate{24.13.1699}|\\
+\verb|\defencedate{35.00.7331}|\\
+
+% \section{Ducks are awesome}
+% \subsection{Proof of ducks' awesomeness}
+% \subsubsection{End of story}
