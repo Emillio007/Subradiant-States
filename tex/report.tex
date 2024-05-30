@@ -25,7 +25,7 @@
 \supervisor{Klaus Mølmer}
 \project{Project outside course scope}
 \author{Emil H. Henningsen}
-\title{Investigation of Collective Atomic States}
+\title{Investigation of Collective Atomic Excitation States}
 \subtitle{}
 \institute{Niels Bohr Institute}
 \department{Hy-Q - Center for Hybrid Quantum Networks}
@@ -48,17 +48,58 @@ TODO.
 
 \section{Introduction}
 
-The collective excitation states of an atomic array is a well-known phenomenon in the physics of light-matter interaction. In the field of quantum information processing, long-lived quantum states are desired for implementing both quantum communication protocols and quantum computing. Certain excited states of atomic arrays display greatly amplified (superradiant) or suppresed (subradiant) decay rates, when compared to a single atom in vacuum. Such states arise in the interplay of atoms arranged closely together and the surrounding electromagnetic field. In the following, exciting new geometries and variations are investigated within the scope of finding highly subradiant states. The model used for these calculations is a fully quantum approach, in which the atoms are assumed dipoles, and the suppresed radiance is manifested as destructive interference between these (???). Furthermore, theoretical considerations are presented to elaborate on expectations and results of these calculations. 
+The collective excitation states of an atomic array is a well-known phenomenon in the physics of light-matter interaction (REF). In the field of quantum information processing, long-lived quantum states are desired for implementing both quantum communication protocols and quantum computing. Certain excited states of atomic arrays display greatly amplified (superradiant) or suppresed (subradiant) decay rates, when compared to a single atom in vacuum. Such states arise in the interplay of atoms arranged closely together and the surrounding electromagnetic field. In the following, exciting new geometries and variations are investigated within the scope of finding highly subradiant states. The model used for these calculations is a second quantized approach, in which the atoms are assumed dipoles, and the suppresed radiance is manifested as destructive interference between these (???). Furthermore, theoretical considerations are presented to elaborate on expectations and results of these calculations. This project is restricted to radiation in free-space.
 
 \section{Theory}
 
-TODO: Med udgangspunkt i Asenjo-Garcia opsummér de gjorte antagelser og de deraf følgende resultater for Greens funktion. 
+TODO: Med udgangspunkt i Asenjo-Garcia opsummér de gjorte antagelser og de deraf følgende resultater for Greens funktion. Hvorfor kan vi tillade os at diagonalisere ikke-hermitisk Hamilton og forvente retvisende egenværdier? Se på fx sum af sandsynlighed osv. Trace af hermitisk matrix er bevaret. 
+
+Kæde: Foton kan ikke undslippe ortogonalt til kæden. Hvorfor? -> "Spin-bølge" tilstand i gitteret. -> faststoffysik-sprog. Subradiante tilstande for bølgevektorer indenfor første Brillouin-zone. 
+
+Greens tensor divergerer for i=j tilfælde. Diagonalen indsættes ved håndkraft. 
+
+Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. Vidde på egenværdier gør det svært for algoritmen at være præcis, derfor skal der ikke så meget til, før vi havner på den forkerte side.  DISKUSSION?
+
+\subsection{}
+
+\subsection{Time-evolution of excitation}
+
+Er dette interessant? Tidslig udvikling kan opnås ved invertering, se noter møde 4/4.
 
 \section{Method}
 
+Issue: Full size of Hilbert-space scales exponentially -> high memory requirements.
+
+\subsection{Block hamiltonian}
+
+Excitation number conserved -> block-diagonal matrix (evt. inkluder N=2 tilfælde fra noter) -> NxN matrix problem (N(N+1)/2 x N(N+1)/2 for 2-excitation states ...)
+
+\subsection{Dimensionless computation}
+
 \section{Results \& Discussion}
 
+Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. Vidde på egenværdier gør det svært for algoritmen at være præcis, derfor skal der ikke så meget til, før vi havner på den forkerte side. TEORI?
+
 TODO: Evt. put noget om, at det er svært at addressere disse subradiante tilstande, og at der indtil videre ikke findes nogle gode protokoller for netop dette (kilde? Udover introduktion in Asenjo-Garcia et al.). 
+
+\subsection{Linear chain}
+
+\subsubsection{Varying polarization in linear chain}
+
+\subsubsection{Broken chain}
+
+\subsection{Circular chain}
+
+\subsection{???}
+
+\subsection{Further research}
+
+Other geometries of interest? Helix, . How is decay affected by curvature?
+Any specific geometries that make efficient and high-fidelity communication protocols available?
+
+Multiexcitation states and their behaviour (REF, Asenjo-Garcia, Israeli guy)
+
+The framework developed by Grüner & Welsch (REF) can be extended to include propagation in other media and guided modes. This opens up for other interesting directions to go. E.g. how circular lattices around a fibre with a guided mode acts. How does it affect the decay rates of the system? 
 
 \section{Conclusion}
 
