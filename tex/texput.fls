@@ -1,0 +1,3 @@
+PWD c:/Users/emilh/Desktop/Code/Subradiant States/Subradiant-States/tex
+INPUT c:/texlive/2021/texmf-var/web2c/luahbtex/lualatex.fmt
+OUTPUT texput.log
