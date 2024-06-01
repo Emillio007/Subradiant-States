@@ -53,14 +53,16 @@ The collective excitation states of an atomic array is a well-known phenomenon i
 
 \section{Theory}
 
+
+
 The effective Hamiltonian (REF Asenjo), which is subject to diagonalization:
 \begin{equation}
     \begin{split}
-        H_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}^\dagger G_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}} \sigma_+^i \sigma_-^j \\
+        \hat{H}_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}^\dagger G_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}} \sigma_+^i \sigma_-^j \\
         &=- \mu_0 \cdot \omega_0^2 \cdot \|\bar{\mathscr{D}}\|^2 \cdot \sum_{i,j = 1}^N \hat{n}^T G_0(\bar{r_i}, \bar{r_j}, \omega_0) \hat{n} \sigma_+^i \sigma_-^j \\
     \end{split}
 \end{equation}
-Where $\mu_0$ is the vacuum permeability, $\omega_0$ is the atomic transition frequency, $\bar{\mathscr{D}}$ is the dipole vector at atom j (however, for most applications, equal directioned dipoles are chosen) and $\sigma_\pm^i$ is the i'th atom's coherence operators. In the last line, the dipole amplitude is separated from the direction, which proves useful when converting to a unitless model \ref{sec:dimless}.
+Where $\mu_0$ is the vacuum permeability, $\omega_0$ is the atomic transition frequency, $\bar{\mathscr{D}}$ is the dipole vector at atom j (however, for most applications, equal directioned dipoles are chosen) and $\sigma_\pm^i$ is the i'th atom's coherence operators. In the last line, the dipole amplitude is separated from the direction, which proves useful when converting to a dimensionless model \ref{sec:dimless}.
 
 TODO: Med udgangspunkt i Asenjo-Garcia opsummér de gjorte antagelser og de deraf følgende resultater for Greens funktion. Hvorfor kan vi tillade os at diagonalisere ikke-hermitisk Hamilton og forvente retvisende egenværdier? Se på fx sum af sandsynlighed osv. Trace af hermitisk matrix er bevaret. 
 
