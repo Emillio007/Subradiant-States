@@ -9,6 +9,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{mathrsfs}
+\usepackage{dsfont}
 \usepackage{lmodern}
 \usepackage{textcomp}
 \usepackage{hyperref}
@@ -53,13 +54,28 @@ The collective excitation states of an atomic array is a well-known phenomenon i
 
 \section{Theory}
 
+The model is developed from a classical perspective, but will in the end be used to describe the quantized field and therefore be a fully quantum model (REF Gruner og Welsch). The model is used to describe the interaction between atoms and the empty-space electromagnetic field. The model is capable of describing both homogenous and inhomogenous Kramers-Kronig dielectrics (REF Gruner og Welsch), which makes it desirable for in-depth studies of collectively excited atomic arrays in various settings and environments. Due to the quantities of interest in this project, the framework is restricted to free space in the following. 
 
+List of assumptions and approximations (REF Asenjo):
+\begin{itemize}\label{list:assumptions}
+    \item All photons are mediated in vacuum, i.e. $\varepsilon(\bar{r},\omega) = \varepsilon_0$,
+    \item Targeting a single transition in the atoms, the dipole-interaction between atoms and the field happens at a narrow band-width, i.e. $\omega \rightarrow \omega_0$,
+    \item The atoms are tightly trapped, such that their positions can be treated as stationary points. 
+    \item Interatomic distances are smaller than the wavelength of emitted photons, $d < \lambda_0$. With this, the retardation of the field between the atoms can be neglected, 
+    \item There are no strongly-coupled modes between the field and the atoms (which would e.g. be the case, if the atoms were placed in an optical cavity). Together with the abovementioned assumption, the emission is in the Markovian regime, which means "the system will have no memory of its past" (REF Deutsch) once the photon has escaped. 
+\end{itemize}
+The latter two points allow for the promotion of field and dipole moment to quantum operators, after which the field described by Green's tensor and radiation-scattering dipoles can be coherently described by atomic coherence operators. In particular, the Green's tensor under these assumptions become (REF Asenjo, equation 6):
+
+\begin{equation}\label{eq:Greens}
+    \underline{G}_0 (\bar{r}_{ij}, \omega_0) = \frac{e^{ik_0r}}{4\pi k_0^2 r^3} \cdot \left[ (k_0^2r^2 + ik_0r - 1) \mathds{1}_3 + (-k_0^2 r^2 -3ik_0r + 3) \frac{\ket{\bar{r}_{ij}}\bra{\bar{r}_{ij}}}{r^2} \right].
+\end{equation}
+Where $r$ is the norm of the displacement between atoms i and j: $\bar{r}_{ij}$, $k_0=\frac{\omega_0}{c}$ is the norm of the wave vector, $\mathds{1}_3$ is the three-dimensional identity matrix and $\ket{\bar{r}_{ij}}\bra{\bar{r}_{ij}}$ is the outer product of the displacement vector. 
 
 The effective Hamiltonian (REF Asenjo), which is subject to diagonalization:
-\begin{equation}
+\begin{equation}\label{eq:Heff}
     \begin{split}
-        \hat{H}_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}^\dagger G_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}} \sigma_+^i \sigma_-^j \\
-        &=- \mu_0 \cdot \omega_0^2 \cdot \|\bar{\mathscr{D}}\|^2 \cdot \sum_{i,j = 1}^N \hat{n}^T G_0(\bar{r_i}, \bar{r_j}, \omega_0) \hat{n} \sigma_+^i \sigma_-^j \\
+        \hat{H}_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}^\dagger G_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}} \sigma_+^i \sigma_-^j, \\
+        &=- \mu_0 \cdot \omega_0^2 \cdot \|\bar{\mathscr{D}}\|^2 \cdot \sum_{i,j = 1}^N \hat{n}^T G_0(\bar{r_i}, \bar{r_j}, \omega_0) \hat{n} \sigma_+^i \sigma_-^j. \\
     \end{split}
 \end{equation}
 Where $\mu_0$ is the vacuum permeability, $\omega_0$ is the atomic transition frequency, $\bar{\mathscr{D}}$ is the dipole vector at atom j (however, for most applications, equal directioned dipoles are chosen) and $\sigma_\pm^i$ is the i'th atom's coherence operators. In the last line, the dipole amplitude is separated from the direction, which proves useful when converting to a dimensionless model \ref{sec:dimless}.
