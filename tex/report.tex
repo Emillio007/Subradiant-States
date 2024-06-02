@@ -15,7 +15,7 @@
 \usepackage{hyperref}
 \usepackage{physics}
 \usepackage{listings}
-%\setlength{\parindent}{0pt}
+\setlength{\parindent}{0pt}
 \usepackage{setspace}
 \usepackage[sorting=none]{biblatex}
 \usepackage{caption}
@@ -50,21 +50,23 @@ TODO.
 
 \section{Introduction}
 
-The collective excitation states of an atomic array is a well-known phenomenon in the physics of light-matter interaction (REF). In the field of quantum information processing, long-lived quantum states are desired for implementing both quantum communication protocols and quantum computing. Certain excited states of atomic arrays display greatly amplified (superradiant) or suppresed (subradiant) decay rates, when compared to a single atom in vacuum. Such states arise in the interplay of atoms arranged closely together and the surrounding electromagnetic field. In the following, exciting new geometries and variations are investigated within the scope of finding highly subradiant states. The model used for these calculations is a second quantized approach, in which the atoms are assumed dipoles, and the suppresed radiance is manifested as destructive interference between these (???). Furthermore, theoretical considerations are presented to elaborate on expectations and results of these calculations. This project is restricted to radiation in free-space.
+The collective excitation states of an atomic array is a well-known phenomenon in the physics of light-matter interaction (REF). In the field of quantum information processing, long-lived quantum states are desired for implementing both quantum communication protocols and quantum computing. Certain excited states of atomic arrays display greatly amplified (superradiant) or suppresed (subradiant) decay rates, when compared to a single atom in vacuum. Such states arise in the interplay of atoms arranged closely together and the surrounding electromagnetic field. In the following, exciting new geometries and variations are investigated within the scope of finding highly subradiant states. The model used for these calculations is a second quantized approach, in which the atoms are assumed dipoles, and the suppresed radiance is manifested as destructive interference between these (???). Furthermore, theoretical considerations are presented to elaborate on expectations and results of these calculations. This project is restricted to radiation in free-space. 
 
-\section{Theory}
+Hvad er mine quantities of interest?
+
+\section{Theory}\label{sec:theory}
 
 The model is developed from a classical perspective, but will in the end be used to describe the quantized field and therefore be a fully quantum model (REF Gruner og Welsch). The model is used to describe the interaction between atoms and the empty-space electromagnetic field. The model is capable of describing both homogenous and inhomogenous Kramers-Kronig dielectrics (REF Gruner og Welsch), which makes it desirable for in-depth studies of collectively excited atomic arrays in various settings and environments. Due to the quantities of interest in this project, the framework is restricted to free space in the following. 
 
 List of assumptions and approximations (REF Asenjo):
 \begin{itemize}\label{list:assumptions}
     \item All photons are mediated in vacuum, i.e. $\varepsilon(\bar{r},\omega) = \varepsilon_0$,
-    \item Targeting a single transition in the atoms, the dipole-interaction between atoms and the field happens at a narrow band-width, i.e. $\omega \rightarrow \omega_0$,
+    \item Targeting a single transition in the atoms (two-level system), the dipole-interaction between atoms and the field happens at a narrow band-width, i.e. $\omega \rightarrow \omega_0$,
     \item The atoms are tightly trapped, such that their positions can be treated as stationary points. 
     \item Interatomic distances are smaller than the wavelength of emitted photons, $d < \lambda_0$. With this, the retardation of the field between the atoms can be neglected, 
     \item There are no strongly-coupled modes between the field and the atoms (which would e.g. be the case, if the atoms were placed in an optical cavity). Together with the abovementioned assumption, the emission is in the Markovian regime, which means "the system will have no memory of its past" (REF Deutsch) once the photon has escaped. 
 \end{itemize}
-The latter two points allow for the promotion of field and dipole moment to quantum operators, after which the field described by Green's tensor and radiation-scattering dipoles can be coherently described by atomic coherence operators. In particular, the Green's tensor under these assumptions become (REF Asenjo, equation 6):
+The latter two points allow for the promotion of field and dipole moment to quantum operators, after which the field described by Green's tensor and radiation-scattering dipoles can be coherently described by atomic coherence operators. In particular, the Green's tensor under these assumptions become (REF Asenjo, Equation 6):
 
 \begin{equation}\label{eq:Greens}
     \underline{G}_0 (\bar{r}_{ij}, \omega_0) = \frac{e^{ik_0r}}{4\pi k_0^2 r^3} \cdot \left[ (k_0^2r^2 + ik_0r - 1) \mathds{1}_3 + (-k_0^2 r^2 -3ik_0r + 3) \frac{\ket{\bar{r}_{ij}}\bra{\bar{r}_{ij}}}{r^2} \right].
@@ -74,21 +76,34 @@ Where $r$ is the norm of the displacement between atoms i and j: $\bar{r}_{ij}$,
 The effective Hamiltonian (REF Asenjo), which is subject to diagonalization:
 \begin{equation}\label{eq:Heff}
     \begin{split}
-        \hat{H}_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}^\dagger G_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}} \sigma_+^i \sigma_-^j, \\
-        &=- \mu_0 \cdot \omega_0^2 \cdot \|\bar{\mathscr{D}}\|^2 \cdot \sum_{i,j = 1}^N \hat{n}^T G_0(\bar{r_i}, \bar{r_j}, \omega_0) \hat{n} \sigma_+^i \sigma_-^j. \\
+        \hat{H}_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}^\dagger \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}} \sigma_+^i \sigma_-^j, \\
+        &=- \mu_0 \cdot \omega_0^2 \cdot \|\bar{\mathscr{D}}\|^2 \cdot \sum_{i,j = 1}^N \hat{n}^T \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \hat{n} \sigma_+^i \sigma_-^j. \\
     \end{split}
 \end{equation}
-Where $\mu_0$ is the vacuum permeability, $\omega_0$ is the atomic transition frequency, $\bar{\mathscr{D}}$ is the dipole vector at atom j (however, for most applications, equal directioned dipoles are chosen) and $\sigma_\pm^i$ is the i'th atom's coherence operators. In the last line, the dipole amplitude is separated from the direction, which proves useful when converting to a dimensionless model \ref{sec:dimless}.
+Where $\mu_0$ is the vacuum permeability, $\omega_0$ is the atomic transition frequency, $\bar{\mathscr{D}}$ is the dipole vector at atom j (however, for most applications, equal directioned dipoles are chosen) and $\sigma_\pm^i$ is the i'th atom's coherence operators acting on the i'th subspace of full Hilbert space. In the last line, the dipole amplitude is separated from the direction, which proves useful when converting to a dimensionless model in Section \ref{sec:dimless}. This matrix fully describes the atom-atom interaction in a quantum jump formalism (REF Asenjo). However, this is not the entire description of the system. At some point, a photon mode is excited, and the excitation is lost to the system. This reflects in the fact that the above matrix is non-Hermitian, i.e. $\hat{H}_{eff} \neq \hat{H}_{eff}^\dagger$. Hermitian matrices conserve norm, meaning no probability amplitude leaves the system. In this description, probability amplitude "leaks" away, as the probability of exciting an photon mode increases. If the system is initialized with an excitation, then at $t=0$, the eigenvectors are the actual eigenstates of the system, even though the non-Hermiticity dictates the non-existence of a single orthonormal basis for the singular value decomposition. It is therefore still valid to consider the eigenvectors, and of particular interest in this project the eigenvalues, of the effective Hamiltonian. The eigenvalues of this matrix are complex numbers, where the real part corresponds to a finite energyshift due to the atoms being close together, and the imaginary part corresponds to damping in time of the state, i.e. decay rates (REF Asenjo, Equation 7): $\lambda_\xi = J_\xi - \frac{i}{2} \Gamma_\xi$. The steps taken towards diagonalizing the matrix is described in Section \ref{sec:block}. 
 
-TODO: Med udgangspunkt i Asenjo-Garcia opsummér de gjorte antagelser og de deraf følgende resultater for Greens funktion. Hvorfor kan vi tillade os at diagonalisere ikke-hermitisk Hamilton og forvente retvisende egenværdier? Se på fx sum af sandsynlighed osv. Trace af hermitisk matrix er bevaret. 
+Another issue must also be adressed before working with the abovementioned framework. It is evident in Equation \ref{eq:Greens} that the diagonal values diverge, when the distance goes to zero. The diagonal values describe the interaction of the atoms with themselves, i.e. if they were to be alone, $N = 1$, there should be no energy shift, and the decay rate must be the well-known spontaneous vacuum emission rate:
+
+\begin{equation}\label{eq:vac_emission_rate}
+    \Gamma_0 = \frac{\omega_0^3}{3\pi \hbar \varepsilon_0 c^3} \cdot \|\bar{\mathscr{D}}\|^2
+\end{equation}
+
+Therefore, the diagonal values of $\hat{H}_{eff}$ are but a constant offset of the identity, which gives the full matrix:
+
+\begin{equation}
+    \hat{H} = \sum_{i=0}^N (\hbar \omega_0 - \frac{i}{2}\Gamma_0) \hat{\sigma}_{ee}^{i} -\mu_0 \omega_0^2 \|\bar{\mathscr{D}}\|^2 \sum_{i,j = 1, i \neq j}^N \hat{n}^T \underline{G}_0(\bar{r}_{ij}, \omega_0) \hat{n} \sigma_+^i \sigma_-^j.
+\end{equation}
+NOTE: Ved ikke lige med denne del.... Skal i hvert fald inkludere noget omkring diagonalen indsættes ved håndkraft.
+
+In general, becuase the atomic transitions are well-defined two-level systems, this formalism can be considered as spin-wave excitations in arrays of spin-½ particles. This does not give any more clarity on the behaviour of the system for single excitation states, as this is equivalently described by interference between the dipoles. It is another case, when considering multiple excitation states, as the fermionic nature of spin-½ particles gives rise to interesting dynamics (REF Asenjo, Section IIIC). In this project, the quantities of interest limits the use of the formalism to the single-excitation manifold, but multiple excitations is one of the directions outlined as further research in Section \ref{sec:further}. 
 
 Kæde: Foton kan ikke undslippe ortogonalt til kæden. Hvorfor? -> "Spin-bølge" tilstand i gitteret. -> faststoffysik-sprog. Subradiante tilstande for bølgevektorer indenfor første Brillouin-zone. 
 
-Greens tensor divergerer for i=j tilfælde. Diagonalen indsættes ved håndkraft. 
+Dipolbilledet bliver ukorrekt for to excitationer og derover, men formalismen holder stadig. 
 
 Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. Vidde på egenværdier gør det svært for algoritmen at være præcis, derfor skal der ikke så meget til, før vi havner på den forkerte side.  DISKUSSION?
 
-\subsection{}
+\subsection{The case of $N=2$}\label{sec:N2}
 
 \subsection{Time-evolution of excitation}
 
@@ -98,7 +113,7 @@ Er dette interessant? Tidslig udvikling kan opnås ved invertering, se noter mø
 
 Issue: Full size of Hilbert-space scales exponentially -> high memory requirements.
 
-\subsection{Block hamiltonian}
+\subsection{Block hamiltonian}\label{sec:block}
 
 Excitation number conserved -> block-diagonal matrix (evt. inkluder N=2 tilfælde fra noter) -> NxN matrix problem (N(N+1)/2 x N(N+1)/2 for 2-excitation states ...)
 
@@ -114,13 +129,15 @@ TODO: Evt. put noget om, at det er svært at addressere disse subradiante tilsta
 
 \subsubsection{Varying polarization in linear chain}
 
+Vi ser også i Asenjo IIIA figur 1, at der forventes en mærkeligere opførsel for nogle tilstande, når polarisering er transversal. Måske noget der kan forklare opførslen af de superradiante tilstande. TEORI???
+
 \subsubsection{Broken chain}
 
 \subsection{Circular chain}
 
 \subsection{???}
 
-\subsection{Further research}
+\subsection{Further research} \label{sec:further}
 
 Other geometries of interest? Helix, . How is decay affected by curvature?
 Any specific geometries that make efficient and high-fidelity communication protocols available?
