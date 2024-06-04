@@ -160,17 +160,27 @@ Where $\tilde{r}$ is the norm of $\bar{\tilde{r}}_{ij}$. The Green's tensor is n
 \end{equation}
 Unless otherwise stated, the above unitless Hamiltonian and variables are the entities in mind, when discussing results, and the tilde's are omitted. 
 
-It is also important to note that the distances put into the Greens tensor are in units of $2\pi$, because of the conversion between angular frequency and regular frequency. So, $r \rightarrow \frac{d}{\lambda_0} = 2 \pi r$, which is a useful way to express distances between the atoms, as it compares directly to the wavelength of the radiated photons. (ER DET HER RIGTIGT?)
+It is also important to note that the distances inserted the Greens tensor are in units of $2\pi$, because of the conversion between angular frequency and regular frequency ($r$ is expressed in units of $k_0^{-1}$). So, $r \rightarrow \frac{d}{\lambda_0} = 2 \pi r$, which is a useful way to express distances between the atoms, as it compares directly to the wavelength of the radiated photons. (ER DET HER RIGTIGT? ... nok ikke)
 
 \section{Results \& Discussion}
 
-Firstly, following the Paper of Asenjo-Garcia \& al. (REF Asenjo), the computation is compared to the case of a $N=50$ linear chain with parallel polarized dipoles, i.e. both $\bar{r}_{ij}$ and $\hat{n}$ are directed in the same direction. The results match, and Figure 3 of (REF Asenjo) has been reproduced. Secondly, the variation of polarization in the linear chain is investigated, which may be a particularly relevant parameter, as it is controllable in practice with an external magnetic field. Thirdly, a linear chain broken in the middle with varying angle is investigated to see, how the excitation of the most subradiant mode is spread across the system. Lastly, the circular lattice is also investigated with varying polarizations. Finally, some unexpected negative decay rates are discussed, and some probable causes are proposed. 
+Firstly, following (REF Asenjo), the computation is compared to the case of a $N=50$ linear chain with parallel polarized dipoles, i.e. both $\bar{r}_{ij}$ and $\hat{n}$ are directed in the same direction. The results match, and Figure 3 of (REF Asenjo) has been reproduced. Secondly, the variation of polarization in the linear chain is investigated, which may be a particularly relevant parameter, as it is controllable in practice with an external magnetic field. Thirdly, a linear chain broken in the middle with varying angle is investigated to see, how the excitation of the most subradiant mode is spread across the system. Lastly, the circular lattice is also investigated with varying polarizations. Finally, some unexpected negative decay rates are discussed, and some probable causes are proposed. 
 
 \subsection{Linear chain}\label{disc:linear_chain}
 
+In Figure \ref{fig:linear_chain_decayrates_distance_N50}, the decay rates of a linear chain with $N=50$ atoms are plotted as function of interatomic distance, i.e. the lattice constant.
+
+\begin{figure}[H]
+    \includegraphics[width=0.75\linewidth]{figs/case_linear_parallel_var_distance_01_2.png}
+    \caption{Decay rates of $N=50$ linear chain with dipole moments aligned in parallel to the chain. Each vertical line of points represent the decay rates of the 50 eigenstates at the given distance. Similar tendencies as Figure 3a of (REF Asenjo).}
+    \label{fig:linear_chain_decayrates_distance_N50}
+\end{figure}
+
+The dipole moments are aligned in parallel to the chain axis. Based on this plot and the production of the other plots of Figure 3 of (REF Asenjo), the computation is verified. In Figure \ref{fig:linear_chain_decayrates_distance_N50}, it is seen that there is no significantly subradiant modes before $\frac{d}{\lambda_0} < 0.5$, i.e. when the distance between the atoms are less than half the wave-length. This property of the system is analytically motivated, as noted in Section IIIA of (REF Asenjo), since the lattice vector must be $d < \frac{\lambda_0}{2}$ to support guided modes in the infinite linear chain. This will serve as a guideline for choosing latticeconstants in the following cases. 
+
 Since the modes of wavevector within the first Brillouin zone are guided modes (REF Asenjo), the only permitted place for the system to emit photons is at the ends of the chain. Therefore, it is hypothesized that the probability amplitude is primarily decreased, when the waves reach the end of the chain. 
 
-God forklaring af figur, der viser a, b, c og d. a: decay rate rangeret, b: most subradiant mode probability amplitude, c: decay rate as function of d og endelig d: as function of N. 
+God forklaring af figur, der viser a, b, c og d. a: decay rate rangeret, b: most subradiant mode probability amplitude, c: decay rate as function of d og endelig d: as function of N. Xi indexes the modes by decay rates from smallest to greatest. 
 
 \subsubsection{Varying polarization in linear chain}\label{disc:linear_chain_varypola}
 
@@ -180,7 +190,7 @@ Vi ser også i Asenjo IIIA figur 1, at der forventes en mærkeligere opførsel f
 
 \subsection{Circular chain}\label{disc:circular}
 
-The circular lattice is particularly interesting, because the spin-wave modes of the chain never encounters a boundary, which in Section \ref{disc:linear_chain} is the hypothesized primary loss of excited probability amplitude. As seen in (REF Asenjo), the circular lattice's most subradiant mode achieves exponential decrease in decay rate as function of N, $\Gamma_{\xi = 0} \propto e^{-N}$, compared to the linear chain's $\Gamma_{\xi=0} \propto N^{-3}$. But, how does the decay rate change as function of varying the polarization of the chain? First, the circular lattice with most subradiant mode probability amplitude, decay rate as function of interatomic distance and as function of N. 
+The circular lattice is particularly interesting, because the spin-wave modes of the chain never encounters a boundary, which in Section \ref{disc:linear_chain} is the hypothesized primary loss of excited probability amplitude. As seen in (REF Asenjo), the circular lattice's most subradiant mode achieves exponential decrease in decay rate as function of N, $\Gamma_{\xi = 1} \propto e^{-N}$, compared to the linear chain's $\Gamma_{\xi=1} \propto N^{-3}$. But, how does the decay rate change as function of varying the polarization of the chain? First, the circular lattice with most subradiant mode probability amplitude, decay rate as function of interatomic distance and as function of N. 
 
 \subsection{Negative decay rates}
 
@@ -192,7 +202,7 @@ Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. 
 
 TODO: Evt. put noget om, at det er svært at addressere disse subradiante tilstande, og at der indtil videre ikke findes nogle gode protokoller for netop dette (kilde? Udover introduktion in Asenjo-Garcia et al.). 
 
-\subsection{Further research} \label{sec:further}
+\subsection{Further research}\label{sec:further}
 
 Other geometries of interest? Helix, . How is decay affected by curvature?
 Any specific geometries that make efficient and high-fidelity communication protocols available?

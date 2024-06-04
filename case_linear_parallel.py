@@ -15,7 +15,7 @@ plt.rcParams.update({
 })
 
 #Program parameters:
-N = 4                                                          #number of atoms
+N = 50                                                          #number of atoms
 
 #Declarations:
 
@@ -24,7 +24,7 @@ N = 4                                                          #number of atoms
 Construct lattice
  (1) Finite linear chain along x-axis
 """
-a = 1/100000                         #d/lambda_0 = a
+a = 0.2                         #d/lambda_0 = a
 d = 2*pi * a                     #Faktor 2pi fordi r i enheder af 1/k0
 lattice = Lattice.Lattice()
 lattice.linlat(N, d, ex, ex)        #initialize linear lattice
@@ -70,7 +70,7 @@ def check_expectation_value(index : int) -> None:
 figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=mytitle)
 #plt.savefig("figures/case_linear_parallel_d_03.png", dpi=300)
 #print(decay_rates)
-#p.show()
+p.show()
 
 
 ham = block.getHam()
@@ -95,4 +95,4 @@ def check_commutation():
     val = np.dot(herm, anti) - np.dot(anti, herm)
     print("Commutation value: ", val)
 
-check_commutation()
+#check_commutation()
