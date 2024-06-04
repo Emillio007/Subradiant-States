@@ -105,6 +105,24 @@ Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. 
 
 \subsection{The case of $N=2$}\label{sec:N2}
 
+\begin{equation}\label{eq:N2_general}
+    \hat{H}_{eff} = 
+    \begin{pmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & \hbar \omega_0 & 0 & 0 \\
+        0 & 0 & \hbar \omega_0 & 0 \\
+        0 & 0 & 0 & 2 \hbar \omega_0 \\
+    \end{pmatrix}
+    - \mu_0 \omega_0^2 \| \bar{\mathscr{D}} \|^2
+    \begin{pmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & h_{11} & h_{12} & 0 \\
+        0 & h_{21} & h_{22} & 0 \\
+        0 & 0 & 0 & h_{11} + h_{22} \\
+    \end{pmatrix}
+\end{equation}
+Where $h_{ij}$ is the matrix element $\hat{n}^T G_0(\bar{r}_{ij},\omega_0) \hat{n}$. As discussed, the diagonal values are due to the interaction of the atoms with themselves, i.e. it is the spontaneous decay rate. The $N=2$ case is not particularly interesting for numerical analysis, as it can be fully determined analytically. It does however show an important property of the Hamiltonian structure, which will be utilized for the analysis of larger systems in Section \ref{sec:block}. The Hamiltonian is block diagonal. 
+
 \subsection{Time-evolution of excitation}
 
 Er dette interessant? Tidslig udvikling kan opnås ved invertering, se noter møde 4/4.
@@ -113,29 +131,66 @@ Er dette interessant? Tidslig udvikling kan opnås ved invertering, se noter mø
 
 Issue: Full size of Hilbert-space scales exponentially -> high memory requirements.
 
+Many-body quantum mechanics is in many cases a challenge to compute. In this case, the goal is to find the eigenvalues and eigenvectors of the Hamiltonian in Equation \ref{eq:Heff}. Diagonalization of a matrix is a computation in polynomial time of the dimension, but since the Hamiltonian encodes the information of an exponentially increasing dimension Hilbert-space, the actual scaling of the diagonalization algorithm is exponential. Furthermore, the memory requirements of storing the Hamiltonian is itself exponentially increasing for every atom that is added to the system. Also for sparse matrix methods. Therefore, it is not tractable to consider the full Hilbert space, when diagonalizing the Hamiltoninan. 
+
 \subsection{Block hamiltonian}\label{sec:block}
 
 Excitation number conserved -> block-diagonal matrix (evt. inkluder N=2 tilfælde fra noter) -> NxN matrix problem (N(N+1)/2 x N(N+1)/2 for 2-excitation states ...)
 
+The structure of Equation \ref{eq:Heff} has a useful property, as seen initially for the $N=2$ case in Section \ref{sec:N2}. It commutes with the excitation-number operator, $[\hat{H}_{eff}, \hat{N}_{exc}] = 0$, which means the Hamiltonian has a block-diagonal structure. In other words, in the basis of single excitations, the Hamiltonian is effectively an $N \times N$ matrix. The basis is $\{ \ket{e_i} \}_{i=1}^N$, where $\ket{e_i}$ is the i'th atom excited and the remaining in the ground state: $\ket{g_1, g_2, g_3, ..., e_i, ..., g_{N-1}, g_N}$. In the single excitation case, the problem is but the diagonalization of an $N \times N$ matrix. In the k excitations case, it is half the binomial factor, because the atoms are indistinguishable: $\frac{1}{4} \begin{pmatrix} N \\ k \\ \end{pmatrix} \times \begin{pmatrix} N \\ k \\ \end{pmatrix}$.
+
 \subsection{Dimensionless computation}\label{sec:dimless}
+
+Finding the eigenvalues of the system is now efficiently solvable in a classical setting. In order to preserve as much precision as possible, the dimensions are transformed to a unitless system. This is done by choosing the following units: $[E]=\hbar \Gamma_0$, $[r] = k_0^{-1}$ and $[t] = \Gamma_0^{-1}$, where $\Gamma_0$ is the vacuum spontaneous emission rate. The choice of units for energy and distance will give the following changes: 
+
+\begin{equation}\label{eq:Green_unitless}
+    \begin{split}
+        &\underline{G_0}(\bar{r}_{ij}, \omega_0) \longrightarrow k_0 \cdot \tilde{\underline{G}}_0(\bar{\tilde{r}}_{ij}) \\
+        \rightarrow &\tilde{\underline{G}}_0(\bar{\tilde{r}}_{ij}) = \frac{e^{i\tilde{r}}}{4\pi \tilde{r}^3} \left[ (\tilde{r}^2 - i\tilde{r} + 1) \mathds{1}_3 (-\tilde{r}^2 - 3i\tilde{r} + 3) \frac{\ket{\bar{\tilde{r}}_{ij}}\bra{\bar{\tilde{r}}_{ij}}}{\tilde{r}^2} \right]
+    \end{split}
+\end{equation}
+Where $\tilde{r}$ is the norm of $\bar{\tilde{r}}_{ij}$. The Green's tensor is now unitless. In order to get the Hamiltonian in the above energy units, a few factors must be considered. The factor in front of $\hat{H}_{eff}$, $A_0$ is after changing units of Green's tensor compared to $\hbar \Gamma_0$, which finally gives the unitless Hamiltonian:
+
+\begin{equation}\label{eq:Hamiltonian_unitless}
+    \begin{split}
+        &A_0 = -\mu_0 \omega_0^2 \| \bar{\mathscr{D}} \|^2 k_0^{-1} = - \frac{\omega_0^3}{\varepsilon_0 c^3} \| \bar{\mathscr{D}} \|^2 \\
+        &\hbar \Gamma_0 = \frac{\omega_0^3}{3\pi \varepsilon_0 c^3} \| \bar{\mathscr{D}} \|^2 \\
+        \longrightarrow & \tilde{H}_{ij} = -3 \pi \hat{n}^T \underline{\tilde{G}}_0 (\bar{\tilde{r}}_{ij}) \hat{n}
+    \end{split}
+\end{equation}
+Unless otherwise stated, the above unitless Hamiltonian and variables are the entities in mind, when discussing results, and the tilde's are omitted. 
+
+It is also important to note that the distances put into the Greens tensor are in units of $2\pi$, because of the conversion between angular frequency and regular frequency. So, $r \rightarrow \frac{d}{\lambda_0} = 2 \pi r$, which is a useful way to express distances between the atoms, as it compares directly to the wavelength of the radiated photons. (ER DET HER RIGTIGT?)
 
 \section{Results \& Discussion}
 
-Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. Vidde på egenværdier gør det svært for algoritmen at være præcis, derfor skal der ikke så meget til, før vi havner på den forkerte side. TEORI?
+Firstly, following the Paper of Asenjo-Garcia \& al. (REF Asenjo), the computation is compared to the case of a $N=50$ linear chain with parallel polarized dipoles, i.e. both $\bar{r}_{ij}$ and $\hat{n}$ are directed in the same direction. The results match, and Figure 3 of (REF Asenjo) has been reproduced. Secondly, the variation of polarization in the linear chain is investigated, which may be a particularly relevant parameter, as it is controllable in practice with an external magnetic field. Thirdly, a linear chain broken in the middle with varying angle is investigated to see, how the excitation of the most subradiant mode is spread across the system. Lastly, the circular lattice is also investigated with varying polarizations. Finally, some unexpected negative decay rates are discussed, and some probable causes are proposed. 
 
-TODO: Evt. put noget om, at det er svært at addressere disse subradiante tilstande, og at der indtil videre ikke findes nogle gode protokoller for netop dette (kilde? Udover introduktion in Asenjo-Garcia et al.). 
+\subsection{Linear chain}\label{disc:linear_chain}
 
-\subsection{Linear chain}
+Since the modes of wavevector within the first Brillouin zone are guided modes (REF Asenjo), the only permitted place for the system to emit photons is at the ends of the chain. Therefore, it is hypothesized that the probability amplitude is primarily decreased, when the waves reach the end of the chain. 
 
-\subsubsection{Varying polarization in linear chain}
+God forklaring af figur, der viser a, b, c og d. a: decay rate rangeret, b: most subradiant mode probability amplitude, c: decay rate as function of d og endelig d: as function of N. 
+
+\subsubsection{Varying polarization in linear chain}\label{disc:linear_chain_varypola}
 
 Vi ser også i Asenjo IIIA figur 1, at der forventes en mærkeligere opførsel for nogle tilstande, når polarisering er transversal. Måske noget der kan forklare opførslen af de superradiante tilstande. TEORI???
 
-\subsubsection{Broken chain}
+\subsubsection{Broken chain}\label{disc:linear_broken}
 
-\subsection{Circular chain}
+\subsection{Circular chain}\label{disc:circular}
 
-\subsection{???}
+The circular lattice is particularly interesting, because the spin-wave modes of the chain never encounters a boundary, which in Section \ref{disc:linear_chain} is the hypothesized primary loss of excited probability amplitude. As seen in (REF Asenjo), the circular lattice's most subradiant mode achieves exponential decrease in decay rate as function of N, $\Gamma_{\xi = 0} \propto e^{-N}$, compared to the linear chain's $\Gamma_{\xi=0} \propto N^{-3}$. But, how does the decay rate change as function of varying the polarization of the chain? First, the circular lattice with most subradiant mode probability amplitude, decay rate as function of interatomic distance and as function of N. 
+
+\subsection{Negative decay rates}
+
+For very small distances, e.g. $\frac{d}{\lambda0} = 0.00001$, the decay rates predicted by the diagonalization of the Hamiltonian can become negative, $a_\xi(t)=e^{-Gamma_\xi t} a_\xi (0) \rightarrow e^{Gamma_\xi t} a_\xi (0)$. This is of course unphysical. As seen, it would mean increase in probability. If the system initialized in a state with negative decay rate, the probability would become greater than 1. Why does it happen for very small interatomic distances? Remember, no assumption was made about the chosen transition. Choosing a microwave transition with optically trapped atoms would e.g. produce such circumstances. 
+
+Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. Vidde på egenværdier gør det svært for algoritmen at være præcis, derfor skal der ikke så meget til, før vi havner på den forkerte side. TEORI?
+
+\subsection{Adressing subradiant states}
+
+TODO: Evt. put noget om, at det er svært at addressere disse subradiante tilstande, og at der indtil videre ikke findes nogle gode protokoller for netop dette (kilde? Udover introduktion in Asenjo-Garcia et al.). 
 
 \subsection{Further research} \label{sec:further}
 
