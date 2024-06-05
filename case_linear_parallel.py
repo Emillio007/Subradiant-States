@@ -24,7 +24,7 @@ N = 50                                                          #number of atoms
 Construct lattice
  (1) Finite linear chain along x-axis
 """
-a = 0.2                         #d/lambda_0 = a
+a = 0.3                         #d/lambda_0 = a
 d = 2*pi * a                     #Faktor 2pi fordi r i enheder af 1/k0
 lattice = Lattice.Lattice()
 lattice.linlat(N, d, ex, ex)        #initialize linear lattice

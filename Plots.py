@@ -142,7 +142,7 @@ class Plots:
         ax.set_ylabel(r"$\mathbf{\hat{%c}}$" % ax2, loc="top")
         if title is None:
             title = r"Linear lattice of $N=50$ dipoles, $\frac{d}{\lambda_0}=0.3$"
-        fig.suptitle(title, wrap = True)
+        fig.suptitle(title, wrap = True, size="large")
         if legend:
             plt.legend()
         
@@ -169,7 +169,7 @@ class Plots:
         ax.set_xscale(scalex)
         ax.set_xlabel(r"$\mathbf{\xi \in [1,%s]}$" % N, loc="right")
         ax.set_ylabel(r"$\mathbf{\Gamma_\xi / \Gamma_0}$", loc="top")
-        ax.set_title(title)
+        ax.set_title(title, loc="center")
 
         return fig
 

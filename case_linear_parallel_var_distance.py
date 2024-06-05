@@ -41,6 +41,6 @@ for i in range(len(a)):
 plt.xlabel(r"$\frac{d}{\lambda_0}$", loc="right")
 plt.ylabel(r"$\Gamma_\xi / \Gamma_0$", loc="top")
 plt.ylim(0,3)
-plt.title("\n".join(wrap(r"Varying $\frac{d}{\lambda_0} \in [0.1, 2.0]$ in linear chain of $N=%s$ parallel polarized dipoles" % (N), 80)))
-#plt.savefig("figures/case_linear_parallel_var_distance_01_2.png", dpi=300)
+plt.title("\n".join(wrap(r"Varying $\frac{d}{\lambda_0} \in [0.1, 2.0]$ in linear chain of $N=%s$ parallel polarized dipoles" % (N), 80)), loc="center")
+plt.savefig("figures/case_linear_parallel_var_distance_01_2.png", dpi=300)
 p.show()
