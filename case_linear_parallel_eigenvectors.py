@@ -49,11 +49,11 @@ decay_rates = block.getDecayRates()
 
 figDip, axDip = None, None
 amount = 10         #Number of lowest eigenstates to plot
-mytitle = "\n".join(wrap(r"The %s lowest first-excitation eigenvectors of $N = %s$ dipoles in linear lattice, polarized in x-direction, $\frac{d}{\lambda_0} = %s$" % (amount, N, a), 80))
+mytitle = "\n".join(wrap(r"The %s lowest first-excitation eigenvectors of $N = %s$ dipoles in linear lattice, parallel polarized, $\frac{d}{\lambda_0} = %s$" % (amount, N, a), 80))
 positions = pos #Original positions
 startind = 0
 for i in range(amount):
-    positions[:,2] = startind + i                 #Add i to all z-coordinates to shift the i'th dipole chain upwards.
+    positions[:,2] = startind + i+1                 #Add i to all z-coordinates to shift the i'th dipole chain upwards.
     lattice.setPositions(positions)    
     figDip, axDip = p.plotDipolesPlane(lattice, ax=axDip, plane = "xz", title=mytitle, xlim=None, ylim=None, ham=block, index=block.getSortedIndex()[startind+i], legend=False)
     print("Decay rate of ", startind+i, "'th state: ", 2*np.imag(val[startind+i]))
@@ -61,7 +61,7 @@ for i in range(amount):
     TODO: Find ud af, hvorfor argsort ikke sorterer rigtigt. Altså, hvorfor er de sidste fire tilstande sorteret på hovedet? 
     """
 #print(decay_rates)
-axDip.set_ylabel(r"$|\psi_i> \in [%s, %s)$"%(startind, N), loc="top")
+axDip.set_ylabel(r"$|\psi_\xi> \in [%s, %s]$"%(startind+1, N), loc="top")
 #figDip.set_size_inches(9, 6) #Standard matplotlib size
 plt.savefig("figures/dipoles_case_linear_parallel_10loweststates.png", dpi=300)
 

@@ -168,7 +168,7 @@ Firstly, following (REF Asenjo), the computation is compared to the case of a $N
 
 \subsection{Linear chain}\label{disc:linear_chain}
 
-In Figure \ref{fig:linear_chain_decayrates_distance_N50}, the decay rates of a linear chain with $N=50$ atoms are plotted as function of interatomic distance, i.e. the lattice constant.
+In Figure \ref{fig:fig1}, a deeper insight into the linear chain (also referred to as linear lattice) in one dimension. The linear chain is an interesting first geometrical configuration to consider due to its "simplicity". The linear chain introduces less new dependencies to the system and its dynamics. The figure contains both decay rates vs. different variables and the population of the most subradiant states on the chain. 
 
 \begin{figure}[H]
     \centering
@@ -190,20 +190,20 @@ In Figure \ref{fig:linear_chain_decayrates_distance_N50}, the decay rates of a l
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figs/case_linear_parallel_d_03.png}
         \caption{}
-        \label{fig:linear_chain_decayrates_distance_N50_3}
+        \label{fig:linear_chain_decayrates}
     \end{subfigure}
     \hfill
     %Bottom right corner
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figs/case_linear_parallel_var_distance_01_04_var_N_40_60_lowest.png}
         \caption{}
-        \label{fig:linear_chain_decayrates_distance_N50_4}
+        \label{fig:linear_chain_decayrates_var_dist_N}
     \end{subfigure}
-    \caption{Note: chain and lattice is used interchangably, but refer in this case to the same thing: a linear one-dimensional lattice. a) Decay rates of $N=50$ linear chain with dipole moments aligned in parallel to the chain. Each vertical line of points represent the decay rates of the 50 eigenstates at the given distance. Similar tendencies as Figure 3a of (REF Asenjo). b) The 10 lowest decay rate eigenvectors visualized by the norm of the amplitudes, $\| c_j \|$, on each basisvector, i.e. $\sum_{j=1}^N c_j \ket{e_j}$. Lattice constant: $\frac{d}{\lambda_0} = 0.3$. c) With the same lattice constant as in b), the 50 decay rates have been ranged from lowest to greatest in a loglog plot. Note: These values corresponds to the values of the vertical line at 0.3 in a). d) . }
+    \caption{Note: chain and lattice is used interchangably, but refer in this case to the same thing: a linear one-dimensional lattice. a) Decay rates of $N=50$ linear chain with dipole moments aligned in parallel to the chain. Each vertical line of points represent the decay rates of the 50 eigenstates at the given distance. Similar tendencies as Figure 3a of (REF Asenjo). b) The 10 lowest decay rate eigenvectors visualized by the norm of the amplitudes, $\| c_j \|$, on each basisvector, i.e. $\ket{\psi_\xi} = \sum_{j=1}^N c_j \ket{e_j}$. Lattice constant: $\frac{d}{\lambda_0} = 0.3$. c) With the same lattice constant as in b), the 50 decay rates have been ranged from lowest to greatest in a loglog plot. Note: These values corresponds to the values of the vertical line at 0.3 in a). d) The lowest decay rate of parallel polarized linear chain vs. two variables. Firstly against lattice vector (black line) for $N=50$ and secondly against number of atoms in chain (red line) for $\frac{d}{\lambda_0} = 0.3$ with linear interpolation between each data point. Note the y-axis on order of $10^{-5}$. }
     \label{fig:fig1}
 \end{figure}
 
-The dipole moments are aligned in parallel to the chain axis. Based on this plot and the production of the other plots of Figure 3 of (REF Asenjo), the computation is verified. In Figure \ref{fig:linear_chain_decayrates_distance_N50}, it is seen that there is no significantly subradiant modes before $\frac{d}{\lambda_0} < 0.5$, i.e. when the distance between the atoms are less than half the wave-length. This property of the system is analytically motivated, as noted in Section IIIA of (REF Asenjo), since the lattice vector must be $d < \frac{\lambda_0}{2}$ to support guided modes in the infinite linear chain. This will serve as a guideline for choosing lattice constants in the following cases. 
+Based on comparison with these plots and Figure 3 of (REF Asenjo), the computation is verified (behøver jeg verificere???). In Figure \ref{fig:linear_chain_decayrates_distance_N50}, it is seen that there is no significantly subradiant modes before $\frac{d}{\lambda_0} < 0.5$, i.e. when the distance between the atoms are less than half the wave-length. This property of the system is analytically motivated, as noted in Section IIIA of (REF Asenjo), since the lattice vector must be $d < \frac{\lambda_0}{2}$ to support guided modes in the infinite linear chain. This will serve as a guideline for choosing lattice constants in the following cases. 
 
 Since the modes with a wavevector within the first Brillouin zone are guided modes (REF Asenjo), the only permitted places for the system to emit photons are at the ends of the chain. Therefore, it is hypothesized that the probability amplitude is decreased primarily, when the waves reach the end of the chain. (Men jeg undersøger jo ikke dette?)
 
