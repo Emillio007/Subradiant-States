@@ -203,7 +203,15 @@ In Figure \ref{fig:fig1}, a deeper insight into the linear chain (also referred 
     \label{fig:fig1}
 \end{figure}
 
-Based on comparison with these plots and Figure 3 of (REF Asenjo), the computation is verified (behøver jeg verificere???). In Figure \ref{fig:linear_chain_decayrates_distance_N50}, it is seen that there is no significantly subradiant modes before $\frac{d}{\lambda_0} < 0.5$, i.e. when the distance between the atoms are less than half the wave-length. This property of the system is analytically motivated, as noted in Section IIIA of (REF Asenjo), since the lattice vector must be $d < \frac{\lambda_0}{2}$ to support guided modes in the infinite linear chain. This will serve as a guideline for choosing lattice constants in the following cases. 
+Based on comparison with these plots and Figure 3 of (REF Asenjo), the computation is verified (behøver jeg verificere???). In Figure \ref{fig:linear_chain_decayrates_distance_N50}, it is seen that there is no significantly subradiant modes before $\frac{d}{\lambda_0} < 0.5$, i.e. when the distance between the atoms are less than half the wave-length. This property of the system is analytically motivated, as noted in Section IIIA of (REF Asenjo), since the lattice vector must be $d < \frac{\lambda_0}{2}$ to support guided modes in the infinite linear chain. This will serve as a guideline for choosing lattice constants in the following cases. In Figure \ref{fig:linear_chain_10loweststates}, the population of the most subradiant states hints at a certain structure. With some resemblance to the well-known particle in a 1D square well, the populations seem to agree with the Ansatz of (REF Asenjo, Section IIIB) for single-excitation modes in a linear chain, which states for population of site j, when mode with wavewector $k_\xi$ is populated: 
+\begin{equation}\label{eq:ansatz}
+    \begin{split}
+        & c^j_{ans,k_\xi} = \sqrt{\frac{2}{N + 1}} cos(k_\xi x_j), if \xi odd \\
+        & c^j_{ans,k_\xi} = \sqrt{\frac{2}{N + 1}} sin(k_\xi x_j), if \xi even \\
+        & k_\xi d = \frac{\pi \xi}{N + 1}
+    \end{split}
+\end{equation}
+Where d is the interatomic distance, and $\xi$ labels the N modes. 
 
 Since the modes with a wavevector within the first Brillouin zone are guided modes (REF Asenjo), the only permitted places for the system to emit photons are at the ends of the chain. Therefore, it is hypothesized that the probability amplitude is decreased primarily, when the waves reach the end of the chain. (Men jeg undersøger jo ikke dette?)
 
