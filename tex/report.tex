@@ -211,7 +211,15 @@ Based on comparison with these plots and Figure 3 of (REF Asenjo), the computati
         & k_\xi d = \frac{\pi \xi}{N + 1}
     \end{split}
 \end{equation}
-Where d is the interatomic distance, and $\xi$ labels the N modes. 
+Where d is the interatomic distance, and $\xi$ labels the N modes. These "ansatz-states" are used as a benchmark for the computed states and respective decay rates. In particular, the overlap of the wavefunctions are computed, and the expected decay-rates for the "ansatz-states" are determined by the expectation value of the effective Hamiltonian and plotted together with the computed decay rates in Figure \ref{fig:linear_chain_decayrates}:
+\begin{equation}\label{eq:overlap}
+    \begin{split}
+        &\mathscr{F}_{ans,\xi} = |\bra{\psi_{ans,\xi}}\ket{\psi_\xi}|^2 \\
+        &\frac{\Gamma_{ans,\xi}}{\Gamma_0} = -2 Im \left( \bra{\psi_{ans,\xi}} \hat{H}_{eff} \ket{\psi_{ans,\xi}} \right)
+    \end{split}
+\end{equation}
+
+TODO: Compute overlap in wavefunctions (HOW TO VISUALIZE?) , Compute decay rates og plot i Figur 1C
 
 Since the modes with a wavevector within the first Brillouin zone are guided modes (REF Asenjo), the only permitted places for the system to emit photons are at the ends of the chain. Therefore, it is hypothesized that the probability amplitude is decreased primarily, when the waves reach the end of the chain. (Men jeg undersøger jo ikke dette?)
 
@@ -229,7 +237,7 @@ The circular lattice is particularly interesting, because the spin-wave modes of
 
 \subsection{Negative decay rates}
 
-For very small distances, e.g. $\frac{d}{\lambda0} = 0.00001$, the decay rates predicted by the diagonalization of the Hamiltonian can become negative, $a_\xi(t)=e^{-Gamma_\xi t} a_\xi (0) \rightarrow e^{Gamma_\xi t} a_\xi (0)$. This is of course unphysical. As seen, it would mean increase in probability. If the system initialized in a state with negative decay rate, the probability would become greater than 1. Why does it happen for very small interatomic distances? Remember, no assumption was made about the chosen transition. Choosing a microwave transition with optically trapped atoms would e.g. produce such circumstances. 
+For very small distances, e.g. $\frac{d}{\lambda0} = 0.00001$, the decay rates predicted by the diagonalization of the Hamiltonian can become negative, $a_\xi(t)=e^{-Gamma_\xi t} a_\xi (0) \rightarrow e^{Gamma_\xi t} a_\xi (0)$. This is of course unphysical. As seen, it would mean increase in probability. If the system initialized in a state with negative decay rate, the probability would become greater than 1. Why does it happen for very small interatomic distances? Remember, no assumption was made about the chosen transition. Choosing a microwave transition with optically trapped atoms would e.g. produce such circumstances (BUT MW TRANSITIONS ARE PHONONS?). 
 
 Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. Vidde på egenværdier gør det svært for algoritmen at være præcis, derfor skal der ikke så meget til, før vi havner på den forkerte side. TEORI?
 
