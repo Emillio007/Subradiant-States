@@ -156,7 +156,7 @@ class Plots:
         from textwrap import wrap
 
         if title == None: 
-            title = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = $" + f"{d}", 60))
+            title = "\n".join(wrap(r"$N = %s$ dipoles in linear lattice, polarized in z-direction, $\frac{d}{\lambda_0} = %s$" % (N, d), 60))
 
         if ax is None:
             fig = plt.figure()

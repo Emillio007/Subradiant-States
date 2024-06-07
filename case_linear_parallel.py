@@ -45,9 +45,9 @@ block.eigenDecomposition()
 
 #decay rates:
 decay_rates = block.getDecayRates()
-print(decay_rates)
+#print(decay_rates)
 
-mytitle = "\n".join(wrap(r"$N = $" + "{}".format(N) + r" dipoles in linear lattice, polarized in x-direction, $\frac{d}{\lambda_0} = $" + f"{a}", 60))
+mytitle = "\n".join(wrap(r"$N = %s$ dipoles in linear lattice, parallel polarized, $\frac{d}{\lambda_0} = %s$" % (N, a), 60))
 
 figDip, axDip = p.plotDipolesPlane(lattice, plane = "xz", title=mytitle, xlim=None, ylim=(-1,1), ham=block, index=block.getSortedIndex()[0])
 figDip.set_size_inches(12, 5)
@@ -65,9 +65,35 @@ def check_expectation_value(index : int) -> None:
 #check_expectation_value(0)
 #Checking the expectation value against the eigenvalue returns the same. So still positive imaginary component for sufficient conditions.
 
+"""Calculating ansatz values"""
+kn = lambda n, d: np.pi * n / d*(N + 1) #Not really sure if to put a or d here... n = 1,..,N
+cj_ans_odd = lambda n, d, x: np.sqrt(2/(N+1)) * np.cos(kn(n, d) * x)
+cj_ans_even = lambda n, d, x: np.sqrt(2/(N+1)) * np.sin(kn(n, d) * x)
+#Construct ansatz vectors:
+ansatz_vectors = []
+ansatz_decay_rates = []
+for n in range(1,N+1):
+    row = []
+    for j in range(0,N):
+        if n % 2 == 0:
+            row.append(cj_ans_even(n, pos[1,0]-pos[0,0], pos[j,0]))
+        if n % 2 == 1:
+            row.append(cj_ans_odd(n, pos[1,0]-pos[0,0], pos[j,0]))
+    ansatz_vectors.append(row)
+    #Compute ans decay rate:
+    v = np.array(row)
+    rate = 2 * np.imag(v.transpose() @ block.getHam() @ v) #no need for conjugate, since ans vector is purely real
+    print(rate)
+    ansatz_decay_rates.append(rate)
+
+ansatz_vectors = np.array(ansatz_vectors)
+ansatz_decay_rates = np.sort(np.array(ansatz_decay_rates))
+
 """Plotting decay rates of linear parallel """
 
 figDec = p.plotRatesLat(lattice, block, scalex="log", scaley = "log", title=mytitle)
+plt.plot(range(1, N+1), ansatz_decay_rates, 'o', label=r"$\Gamma_{ans}$")
+plt.legend()
 #plt.savefig("figures/case_linear_parallel_d_03.png", dpi=300)
 #print(decay_rates)
 p.show()
