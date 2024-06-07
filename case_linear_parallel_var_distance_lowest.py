@@ -63,11 +63,13 @@ lowest_decay_rates_vary_N = np.array(lowest_decay_rates_vary_N)
 
 #third degree fits:
 deg = 3
+dega = 2
 xs1 = np.linspace(lowa, higha, 1000)
 xs2 = np.linspace(lowN, highN, 1000)
-fit1 = np.poly1d(np.polyfit(a, lowest_decay_rates_vary_d, deg))
+#fit1 = np.poly1d(np.polyfit(a, lowest_decay_rates_vary_d, dega))
+interp1 = np.interp(xs1, a, lowest_decay_rates_vary_d)
 fit2 = np.poly1d(np.polyfit(N_var, lowest_decay_rates_vary_N, deg))
-ys1 = fit1(xs1)
+ys1 = interp1
 ys2 = fit2(xs2)
 
 fig, ax1 = plt.subplots(layout="constrained")
@@ -76,10 +78,10 @@ fig, ax1 = plt.subplots(layout="constrained")
 
 ax2 = ax1.twiny()
 
-ax1.plot(a, lowest_decay_rates_vary_d, '-', label=r"var $\frac{d}{\lambda0}$")
-#ax1.plot(xs1, ys1, '-', label="3-deg fit")
-ax2.plot(N_var, lowest_decay_rates_vary_N, 'r-', label=r"var N")
-#ax2.plot(xs2, ys2, '-', label="3-deg fit")
+ax1.plot(a, lowest_decay_rates_vary_d, 'x', label=r"var $\frac{d}{\lambda0}$")
+ax1.plot(xs1, ys1, 'r-', label="interpolation")
+ax2.plot(N_var, lowest_decay_rates_vary_N, 'bx', label=r"var N")
+ax2.plot(xs2, ys2, '-', c="purple", label="3-deg fit")
 ax2.grid(color="grey", linestyle="-.")
 ax1.set_xlabel(r"$\frac{d}{\lambda_0}$", loc="right")
 ax2.set_xlabel("N", loc="right")
