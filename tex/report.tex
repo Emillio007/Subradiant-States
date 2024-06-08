@@ -80,7 +80,7 @@ The effective Hamiltonian (REF Asenjo), which is subject to diagonalization:
         &=- \mu_0 \cdot \omega_0^2 \cdot \|\bar{\mathscr{D}}\|^2 \cdot \sum_{i,j = 1}^N \hat{n}^T \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \hat{n} \sigma_+^i \sigma_-^j. \\
     \end{split}
 \end{equation}
-Where $\mu_0$ is the vacuum permeability, $\omega_0$ is the atomic transition frequency, $\bar{\mathscr{D}}$ is the dipole vector at atom j (however, for most applications, equal directioned dipoles are chosen) and $\sigma_\pm^i$ is the i'th atom's coherence operators acting on the i'th subspace of full Hilbert space. In the last line, the dipole amplitude is separated from the direction, which proves useful when converting to a dimensionless model in Section \ref{sec:dimless}. This matrix fully describes the atom-atom interaction in a quantum jump formalism (REF Asenjo). However, this is not the entire description of the system. At some point, a photon mode is excited, and the excitation is lost to the system. This reflects in the fact that the above matrix is non-Hermitian, i.e. $\hat{H}_{eff} \neq \hat{H}_{eff}^\dagger$. Hermitian matrices conserve norm, meaning no probability amplitude leaves the system. In this description, probability amplitude "leaks" away, as the probability of exciting an photon mode increases. If the system is initialized with an excitation, then at $t=0$, the eigenvectors are the actual eigenstates of the system, even though the non-Hermiticity dictates the non-existence of a single orthonormal basis for the singular value decomposition. It is therefore still valid to consider the eigenvectors, and of particular interest in this project the eigenvalues, of the effective Hamiltonian. The eigenvalues of this matrix are complex numbers, where the real part corresponds to a finite energyshift due to the atoms being close together, and the imaginary part corresponds to damping in time of the state, i.e. decay rates (REF Asenjo, Equation 7): $\lambda_\xi = J_\xi - \frac{i}{2} \Gamma_\xi$. The steps taken towards diagonalizing the matrix is described in Section \ref{sec:block}. 
+Where $\mu_0$ is the vacuum permeability, $\omega_0$ is the atomic transition frequency, $\bar{\mathscr{D}}$ is the dipole vector at atom j (however, for most applications, equal directioned dipoles are chosen) and $\sigma_\pm^i$ is the i'th atom's coherence operators acting on the i'th subspace of full Hilbert space. In the last line, the dipole amplitude is separated from the direction, which proves useful when converting to a dimensionless model in Section \ref{sec:dimless}. This matrix fully describes the atom-atom interaction in a quantum jump formalism (REF Asenjo). However, this is not the entire description of the system. At some point, a photon mode is excited, and the excitation is lost to the system. This reflects in the fact that the above matrix is non-Hermitian, i.e. $\hat{H}_{eff} \neq \hat{H}_{eff}^\dagger$. Hermitian matrices conserve norm, meaning no probability amplitude leaves the system. In this description, probability amplitude "leaks" away, as the probability of exciting a photon mode increases (this is elaborated more in Section \ref{sec:full_system}). If the system is initialized with an excitation, then at $t=0$, the eigenvectors are the actual eigenstates of the system, even though the non-Hermiticity dictates the non-existence of a single orthonormal basis for the singular value decomposition. It is therefore still valid to consider the eigenvectors, and of particular interest in this project the eigenvalues, of the effective Hamiltonian. The eigenvalues of this matrix are complex numbers, where the real part corresponds to a finite energyshift due to the atoms being close together, and the imaginary part corresponds to damping in time of the state, i.e. decay rates (REF Asenjo, Equation 7): $\lambda_\xi = J_\xi - \frac{i}{2} \Gamma_\xi$. The steps taken towards diagonalizing the matrix is described in Section \ref{sec:block}. 
 
 Another issue must also be adressed before working with the abovementioned framework. It is evident in Equation \ref{eq:Greens} that the diagonal values diverge, when the distance goes to zero. The diagonal values describe the interaction of the atoms with themselves, i.e. if they were to be alone, $N = 1$, there should be no energy shift, and the decay rate must be the well-known spontaneous vacuum emission rate:
 
@@ -102,6 +102,19 @@ Kæde: Foton kan ikke undslippe ortogonalt til kæden. Hvorfor? -> "Spin-bølge"
 Dipolbilledet bliver ukorrekt for to excitationer og derover, men formalismen holder stadig. 
 
 Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. Vidde på egenværdier gør det svært for algoritmen at være præcis, derfor skal der ikke så meget til, før vi havner på den forkerte side.  DISKUSSION?
+
+\subsection{The full system}\label{sec:full_system}
+In this section, some justification for the use of the non-Hermitian $\hat{H}_{eff}$ is provided. It is not rigorous for the multiple atoms case, but covers the single atom case, and it is assumed to be a similar relation for multiple atoms. 
+
+A fundamentality of Quantum Mechanics is the unitary evolution of quantum systems. In other words, probability does not "leak" or suddenly increase, but must always sum up to one. For the time-wise propagation of a Hamiltonian to be unitary, the Hamiltonian must be Hermitian, i.e. $\hat[H] = \hat{H}^\dagger$:
+\begin{equation}\label{eq:unitarity}
+    \hat{U}(t) = e^{i \hat{H} t} \rightarrow \hat{U}(t) \hat{U}^\dagger(t) = e^{i \hat{H} t} e^{-i \hat{H}^\dagger t} = e^{i(\hat{H}-\hat{H}^\dagger) t} = e^{i \underline{0} t} = \mathds{1}.
+\end{equation}
+Therefore, to truly describe the evolution of the quantum system in question, it must be expanded to include whereever the the probability may go / come from. For the atomic dipoles interacting with the surrounding field, this is in the coupling to a photon mode, as seen in (REF Mølmer og Castin). The full description of the wave function includes the Hilbert space of photon modes, $\mathscr{H} = \mathscr{H}_{atomic} \otimes \mathscr{H}_{photon}$:
+\begin{equation}\label{eq:full_wave_function}
+    \ket{\psi(t)} = a(t) \ket{g, 0} \sum_{j=1}^N c_j(t) \ket{e_j, 0} + \sum_{\bar{k},s} b_{\bar{k},s} (t) \ket{g, 1_{\bar{k},s}}.
+\end{equation}
+As noted in (REF Mølmer og Castin), under appropriate assumptions, the evolution of this wavefunction may equally as well be treated by Monte-Carlo simulation. With a certain proability, a quantum jump from excited atomic state to ground state plus a photon has happened. For a single atom, this probability is $\delta p = \Gamma |b(t)|^2 dt$, where $b(t)$ is the probability amplitude of being in the atomic excited state (the $c_j (t)$ in multiple atom case). The probability for a quantum jump to occur in the multiple atom case is not simply this, but it does provide an insight: The non-Hermitian evolution of the system provides the true dynamics, except for the atoms becoming deexcited and the photon leaving the system. 
 
 \subsection{The case of $N=2$}\label{sec:N2}
 
@@ -131,7 +144,7 @@ Er dette interessant? Tidslig udvikling kan opnås ved invertering, se noter mø
 
 Issue: Full size of Hilbert-space scales exponentially -> high memory requirements.
 
-Many-body quantum mechanics is in many cases a challenge to compute. In this case, the goal is to find the eigenvalues and eigenvectors of the Hamiltonian in Equation \ref{eq:Heff}. Diagonalization of a matrix is a computation in polynomial time of the dimension, but since the Hamiltonian encodes the information of an exponentially increasing dimension Hilbert-space, the actual scaling of the diagonalization algorithm is exponential. Furthermore, the memory requirements of storing the Hamiltonian is itself exponentially increasing for every atom that is added to the system. Also for sparse matrix methods. Therefore, it is not tractable to consider the full Hilbert space, when diagonalizing the Hamiltoninan. 
+Many-body quantum mechanics is in many cases a challenge to compute. In this case, the goal is to find the eigenvalues and eigenvectors of the Hamiltonian in Equation \ref{eq:Heff}. Diagonalization of a matrix is a computation in polynomial time of the dimension, but since the Hamiltonian encodes the information of an exponentially increasing dimensional Hilbert-space, the scaling of the diagonalization algorithm is exponential in system size. Furthermore, the memory requirements for storing the Hamiltonian is itself exponentially increasing for every atom that is added to the system. Also for sparse matrix methods. Therefore, it is not tractable to consider the full Hilbert space, when diagonalizing the Hamiltonian. 
 
 \subsection{Block hamiltonian}\label{sec:block}
 
@@ -229,7 +242,33 @@ God forklaring af figur, der viser a, b, c og d. a: decay rate rangeret, b: most
 
 Vi ser også i Asenjo IIIA figur 1, at der forventes en mærkeligere opførsel for nogle tilstande, når polarisering er transversal. Måske noget der kan forklare opførslen af de superradiante tilstande. TEORI???
 
+For the linear chain, varying the polarization does not affect the most subradiant modes' decay rates significantly. However, some change in behaviour among the superradiant modes emerged, while doing this analysis. Superradiant modes for some angles relative to the chain axis are seen in Figure \ref{fig:linear_var_angle}:
+\begin{figure}[H]
+    \includegraphics[width=0.99\textwidth]{figs/case_linear_var_angle_0_pi05.png}
+    \caption{Varying polarization angle from parallel to perpendicular (w.r.t. chain axis), $\hat{n} = \hat{e}_x \rightarrow \hat{e}_z$, in 9 steps. The angle is given with respect to $\hat{e}_x$. The visible data points on the plots are limited to $\xi \in [20, 50]$ to give a better view of superradiant states, which seem to be affected the most by this variation. Computed with $\frac{d}{\lambda0} = 0.3$. }
+    \label{fig:linear_var_angle}
+\end{figure}
+Above $\frac{\pi}{4}$, the superradiant spectrum seems to flatten out, and then slightly increase again towards the perpendicular polarization. How the constructive / destructive intererference varies with polarization is a difficult question to answer for many dipoles. As seen in Section \ref{sec:N2}, an expression for this dependency is given in the $N=2$ case, which suggests a WHAT relation. This...
+
 \subsubsection{Broken chain}\label{disc:linear_broken}
+
+In Figure \ref{fig:linear_broken}, the linear chain is "broken" on the middle with varying angle, and the population of $\ket{\psi_{\xi=1}}$ is visualized with a colorbar. Note: the probabilites in this case do not add up to 1. From top to bottom: $p_{total} = [0.95, 0.88, 0.89]$. As discussed in Section \ref{sec:full_system}, this is incorrect in Quantum Mechanics, but remember, the Hamiltonian in question is in fact not Hermitian, which removes the guarantee of a completely orthonormal basis. If the probabilites do not add up to one, the eigenvectors are not normalized. As also noted, the missing probability is attributed to the atoms becoming deexcited and exciting a photon mode. In that picture, this suggests that even the most subradiant modes in a broken chain have a significant probability of instantaneously emitting a photon. 
+\begin{figure}[H]
+    \includegraphics[width=0.9\textwidth]{figs/dipoles_case_linear_broken.png}
+    \caption{Three cases of a broken linear lattice with angles $\{0, \frac{\pi}{4}, \frac{\pi}{2}\}$ polarized along x-axis (non-broken chain axis) with $N = 50$ and $\frac{d}{\lambda_0} = 0.3$. The population on the chain of the most subradiant mode is visualized with the colorbar.}
+    \label{fig:linear_broken}
+\end{figure}
+As expected, the population of the unbroken case is localized in the middle (with a few unexpectedly exempted sites, with a bit lower population), as it is also seen in Figure \ref{fig:linear_chain_10loweststates}. In the two broken cases however, the population is delocalized. MORE. In Figure \ref{fig:linear_broken_rates}, the decay rate of the most subradiant state is plotted against varying angle of the broken chain:
+\begin{figure}[H]
+    \includegraphics[width=0.9\textwidth]{figs/case_linear_broken_rates.png}
+    \caption{Decay rate of most subradiant state vs. angle on broken chain. Dipole moments polarized along x-axis and $\frac{d}{\lambda_0} = 0.3$. }
+    \label{fig:linear_broken_rates}
+\end{figure}
+Considering the range of decay rates in this plot, they do not change much with increasing angle of the corner. As seen in Figure \ref{fig:linear_chain_decayrates_var_dist_N}, the decay rate for the unbroken linear chain is about $\Gamma_{\xi=1, unbroken} \approxeq 2 \cdot 10^{-5}$, but in this plot, it is closer to $\Gamma_{\xi=1, broken w. \theta = 0} \approxeq 8 \cdot 10^{-5}$. It should be the same, because the two lattices are in this case indistinguishable, which points to some error. Since the population on the chain in these cases are not equal either, something is wrong. 
+
+For the increasing angle cases, the approximately steady decay rate of $\Gamma_{\xi = 1, broken w. \theta > 0} \approxeq 10^{-4}$ might suggest little to no dependence of the angle, but as soon as there is a break in the chain, the decay rate will decrease drastically (one order of magnitude in this case). One explanation might be that the break effectively causes the one part to act as a lone linear chain, i.e. the remaining part of the chain is ignored. In this case, the break happens after $j=25$ (half-way), for which a decay rate of $\Gamma_{\xi=1, N=25} \approxeq N^{-3} = 25^{-3} = 6 \cdot 10^{-5}$ is expected for the smallest decay rate mode (assuming the cubic dependency in $N$, as discussed in Section \ref{disc:linear_chain}). 
+
+In Section \ref{sec:further}, it is briefly discussed, what other analyses of this system might be interesting. 
 
 \subsection{Circular chain}\label{disc:circular}
 
@@ -246,6 +285,8 @@ Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. 
 TODO: Evt. put noget om, at det er svært at addressere disse subradiante tilstande, og at der indtil videre ikke findes nogle gode protokoller for netop dette (kilde? Udover introduktion in Asenjo-Garcia et al.). 
 
 \subsection{Further research}\label{sec:further}
+
+As mentioned in Section \ref{disc:linear_broken}, the broken linear chain has very different subradiant populated modes, compared to the unbroken case. A deeper investigation of this particular system could include an integration of the field-strength surrounding the system, to see where the broken chain radiates from. As noted (WHERE?), the linear chain radiates from the ends, so the apparent question is if the broken chain radiates from corner as well? 
 
 Other geometries of interest? Helix, . How is decay affected by curvature?
 Any specific geometries that make efficient and high-fidelity communication protocols available?

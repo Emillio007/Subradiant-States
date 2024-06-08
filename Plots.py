@@ -81,7 +81,7 @@ class Plots:
 
     def plotDipolesPlane(self, lat : Lattice, ax : plt.Axes = None, plane : Literal["xy", "xz", "yz"] = "xy", title : str = None, 
                          xlim : tuple[float, float] = None, ylim : tuple[float, float] = None, ham : Hamiltonian = None, 
-                         index : int = None, legend : bool = True) -> tuple[plt.Figure, plt.Axes]:
+                         index : int = None, legend : bool = True, drawColorbar : bool = True, returnAmpls : bool = False) -> tuple[plt.Figure, plt.Axes]:
         """
         TODO: Description
         """
@@ -129,8 +129,8 @@ class Plots:
         sm = matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap)
         sm.set_array([])
         ax.scatter(p1, p2, c=ampl, cmap=cmap, norm=norm, label="sites")
-        ax.quiver(p1, p2, po1, po2, scale=15, width=0.005, color=cmap(norm(ampl)), label=r"$\hat{d}$", pivot="mid")
-        if firstTime:
+        ax.quiver(p1, p2, po1, po2, scale=15, width=0.005, color=cmap(norm(ampl)), pivot="mid")
+        if firstTime and drawColorbar:
             plt.colorbar(sm, label=r"Amplitude norm of $|e_j> = |c_j|$")
         if not ylim is None:
             lower, upper = ylim
@@ -146,7 +146,10 @@ class Plots:
         if legend:
             plt.legend()
         
-        return fig, ax
+        if returnAmpls:
+            return fig, ax, ampl
+        else:
+            return fig, ax
     
     #Plot rates manually
     def plotRates(self, N : int, d : float, rates : ndarray, ax : plt.Axes = None, scalex : str = "linear", scaley : str = "linear", title : str = None) -> plt.Figure:

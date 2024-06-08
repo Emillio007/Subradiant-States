@@ -169,7 +169,7 @@ class Lattice:
             direction = ex
 
         first_dir = direction
-        second_dir = dot(array([cos(theta), 0, sin(theta)]), first_dir) #break into z-direction by default. 
+        second_dir = array([cos(theta), 0, sin(theta)]) #break into z-direction by default. TODO: Hardcode
 
         #if N is even, break at half+1 lattice site
         if N % 2 == 0:
