@@ -18,7 +18,7 @@ p = Plots.Plots()
 Circular lattice, unidirectional polarization
 """
 
-a = 0.2  #d/lambda0 .... Bug: for a = 0.01 the lowest decay rate is negative.
+a = 0.3  #d/lambda0 .... Bug: for a = 0.01 the lowest decay rate is negative.
 d = 2*pi * a                    #The distance to feed G in units of 1/k0
 
 pola = np.zeros((N,3))
@@ -37,8 +37,11 @@ decay_rates = block.getDecayRates()
 print(decay_rates)
 
 mytitle = "\n".join(wrap(r"$N = %s$ dipoles in circular lattice with $\frac{d}{\lambda0}=%s$ polarized unidirectionally" % (N, a), 60))
+
 figDip, axDip = p.plotDipolesPlane(lat, plane="xy", title=mytitle, ham=block, index=block.getSortedIndex()[0])
+#plt.savefig("figures/dipoles_case_circular_unidirectional_lowest", dpi=300)
 
 p.plotRatesLat(lat, block, scalex="log", scaley="log", title=mytitle)
+#plt.savefig("figures/case_circular_unidirectional_d_03.png", dpi=300)
 
 p.show()
