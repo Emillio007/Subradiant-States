@@ -95,7 +95,7 @@ Therefore, the diagonal values of $\hat{H}_{eff}$ are but a constant offset of t
 \end{equation}
 NOTE: Ved ikke lige med denne del.... Skal i hvert fald inkludere noget omkring diagonalen indsættes ved håndkraft.
 
-In general, becuase the atomic transitions are well-defined two-level systems, this formalism can be considered as spin-wave excitations in arrays of spin-½ particles. This does not give any more clarity on the behaviour of the system for single excitation states, as this is equivalently described by interference between the dipoles. It is another case, when considering multiple excitation states, as the fermionic nature of spin-½ particles gives rise to interesting dynamics (REF Asenjo, Section IIIC). In this project, the quantities of interest limits the use of the formalism to the single-excitation manifold, but multiple excitations is one of the directions outlined as further research in Section \ref{sec:further}. 
+In general, becuase the atomic transitions are well-defined two-level systems, this formalism can be considered as spin-wave excitations in arrays of spin-½ particles. This does not give any more clarity on the behaviour of the system for single excitation states, as this is equivalently described by interference between the dipoles. It is another case, when considering multiple excitation states, as the fermionic nature of spin-½ particles gives rise to interesting dynamics (REF Asenjo, Section IIIC). In this project, the quantities of interest limits the use of the formalism to the single-excitation manifold, but multiple excitations is one of the directions outlined as further research in Section \ref{sec:outlook}. 
 
 Kæde: Foton kan ikke undslippe ortogonalt til kæden. Hvorfor? -> "Spin-bølge" tilstand i gitteret. -> faststoffysik-sprog. Subradiante tilstande for bølgevektorer indenfor første Brillouin-zone. 
 
@@ -134,23 +134,21 @@ As noted in (REF Mølmer og Castin), under appropriate assumptions, the evolutio
         0 & 0 & 0 & h_{11} + h_{22} \\
     \end{pmatrix}
 \end{equation}
-Where $h_{ij}$ is the matrix element $\hat{n}^T G_0(\bar{r}_{ij},\omega_0) \hat{n}$. As discussed, the diagonal values are due to the interaction of the atoms with themselves, i.e. it is the spontaneous decay rate. The analytical $N=2$ case show an important property of the Hamiltonian structure, which will be utilized for the analysis of larger systems in Section \ref{sec:block}. The Hamiltonian is block diagonal, meaning its entries are collected in blocks of excitation number. DIAGONALIZE 2x2 matrix. Story about negative decay rates. Succes? Is the Green's tensor the appropriate form for this problem? Can we still rely on the Markov regime, when $r->0$ ? By then, the energyshift becomes cubic inverse bigger, which may take omega out of the range of Markov.
+Where $h_{ij}$ is the matrix element $\hat{n}^T G_0(\bar{r}_{ij},\omega_0) \hat{n}$. As discussed, the diagonal values are due to the interaction of the atoms with themselves, i.e. it is the spontaneous decay rate. The analytical $N=2$ case show an important property of the Hamiltonian structure, which will be utilized for the analysis of larger systems in Section \ref{sec:block}. The Hamiltonian is block diagonal, meaning its entries are collected in blocks of equal excitation number. DIAGONALIZE 2x2 matrix. Story about negative decay rates. Succes? Is the Green's tensor the appropriate form for this problem? Can we still rely on the Markov regime, when $r->0$ ? By then, the energyshift becomes cubic inverse bigger, which may take omega out of the range of Markov.
 
 \subsection{Time-evolution of excitation}\label{sec:time-evolution}
 
 In this section, it is briefly introduced how to compute the time-evolution of an excitated state of the efficient Hamiltonian. Unfortunately, the there was not enough time in this project to perform a detailed analysis of the time-evolution of the different states. However, the theoretical section is still included for completeness.
 
 The effective Hamiltonian has no time-dependency, and it is therefore possible to evolve the states according to Schrödinger's equation. An expansion of a state into the eigenstates of the effective Hamiltonian including the wiggle-factors of corresponding eigenvalues (including both energyshift and damping) yields the apparent evolution:
-
 \begin{equation}
     \begin{split}
         \ket{\psi (t)} = \sum_{\xi=1}^N c_\xi \ket{\psi_\xi} e^{i \lambda_\xi t}
     \end{split}
 \end{equation}
+Where $\xi$ labels the eigenstates of the effective Hamiltonian. 
 
 \section{Method}
-
-Issue: Full size of Hilbert-space scales exponentially -> high memory requirements.
 
 Many-body quantum mechanics is in many cases a challenge to compute. In this case, the goal is to find the eigenvalues and eigenvectors of the Hamiltonian in Equation \ref{eq:Heff}. Diagonalization of a matrix is a computation in polynomial time of the dimension, but since the Hamiltonian encodes the information of an exponentially increasing dimensional Hilbert-space, the scaling of the diagonalization algorithm is exponential in system size. Furthermore, the memory requirements for storing the Hamiltonian is also exponentially increasing for every atom that is added to the system. Also for sparse matrix methods. Therefore, it is not tractable to consider the full Hilbert space, when diagonalizing the Hamiltonian classically. In this section, it is briefly introduced, how the block-structure of the effective Hamiltonian enables diagonalization for a (relatively) low number of excitations. Furthermore, the equations are transformed to unitless equations to better accommodate precision. 
 
@@ -183,11 +181,11 @@ It is also important to note that the distances inserted the Greens tensor are i
 
 \section{Results \& Discussion}
 
-Firstly, following (REF Asenjo), the computation is compared to the case of a $N=50$ linear chain with parallel polarized dipoles, i.e. both $\bar{r}_{ij}$ and $\hat{n}$ are directed in the same direction. The results match, and Figure 3 of (REF Asenjo) has been reproduced. Secondly, the variation of polarization in the linear chain is investigated, which may be a particularly relevant parameter, as it is controllable in practice with an external magnetic field. Thirdly, a linear chain broken in the middle with varying angle is investigated to see, how the excitation of the most subradiant mode is spread across the system. Lastly, the circular lattice is also investigated with varying polarizations. Finally, some unexpected negative decay rates are discussed, and some probable causes are proposed. 
+Firstly, following (REF Asenjo), the computation is compared to the case of an $N=50$ linear chain with parallel polarized dipoles, i.e. both $\bar{r}_{ij}$ and $\hat{n}$ are directed in the same direction. The results match, and Figure 3 of (REF Asenjo) has been reproduced. Secondly, the variation of polarization in the linear chain is investigated, which may be a particularly relevant parameter, as it is controllable in practice with an external magnetic field. Thirdly, a linear chain broken in the middle with varying angle is investigated to see, how the excitation of the most subradiant mode is spread across the system. Lastly, the circular lattice is also investigated with varying polarizations. Finally, some unexpected negative decay rates are discussed, and some probable causes are proposed. 
 
 \subsection{Linear chain}\label{disc:linear_chain}
 
-In Figure \ref{fig:fig1}, a deeper insight into the linear chain (also referred to as linear lattice) in one dimension. The linear chain is an interesting first geometrical configuration to consider due to its "simplicity". The linear chain introduces less new dependencies to the system and its dynamics. The figure contains both decay rates vs. different variables and the population of the most subradiant states on the chain. 
+In Figure \ref{fig:fig1}, a deeper insight into the linear chain (also referred to as linear lattice) in one dimension. The linear chain is an interesting first geometrical configuration to consider due to its "simplicity". The linear chain introduces less new dependencies to the system and its dynamics. The figure contains both decay rates vs. different variables and the population of the most subradiant states\footnote{N.B.: lowest decay-rate eigenstate and most subradiant mode / state are used interchangably, but refer to the same thing: the eigenstate of the effective Hamiltonian with the smallest imaginary part of eigenvalue.} on the chain. 
 
 \begin{figure}[H]
     \centering
@@ -274,17 +272,17 @@ Regarding the range of decay rates in this plot, they do not change much with in
 
 For the increasing angle cases, the approximately steady decay rate of $\Gamma_{\xi = 1, broken w. \theta > 0} \approxeq 10^{-4}$ might suggest little to no dependence of the angle, but as soon as there is a break in the chain, the decay rate will increase drastically (one order of magnitude in this case). One explanation might be that the discontinuity effectively causes the one part to act as a lone linear chain, i.e. the remaining part of the chain is ignored. In this case, the break happens after $j=25$ (half-way), for which a decay rate of $\Gamma_{\xi=1, N=25} \approxeq N^{-3} = 25^{-3} = 6 \cdot 10^{-5}$ is expected for the smallest decay rate mode (assuming the cubic dependency in $N$, as discussed in Section \ref{disc:linear_chain}). 
 
-In Section \ref{sec:further}, it is briefly discussed, what other analyses of this system might be interesting. 
+In Section \ref{sec:outlook}, it is briefly discussed, what other analyses of this system might be interesting. 
 
 \subsection{Circular chain}\label{disc:circular}
 
-The circular lattice is particularly interesting, because the spin-wave modes of the chain never encounters a boundary, which in Section \ref{disc:linear_chain} is the hypothesized primary loss of excited probability amplitude. As seen in (REF Asenjo), the circular lattice's most subradiant mode achieves exponential decrease in decay rate as function of N, $\Gamma_{\xi = 1} \propto e^{-N}$, compared to the linear chain's $\Gamma_{\xi=1} \propto N^{-3}$. But, how does the decay rate change with variation of the polarization of the atoms? First, the circular lattice with most subradiant mode probability amplitude, decay rate as function of interatomic distance and as function of N. 
+The circular lattice is particularly interesting, because the spin-wave modes of the chain never encounters a boundary, which in Section \ref{disc:linear_chain} is the hypothesized primary loss of excited probability amplitude. As seen in (REF Asenjo), the circular lattice's most subradiant mode achieves exponential decrease in decay rate as function of N, $\Gamma_{\xi = 1} \propto e^{-N}$, compared to the linear chain's $\Gamma_{\xi=1} \propto N^{-3}$. But, how does the decay rate change with variation of the polarization of the atoms? There are various polarization configurations of interest, but in the scope of this project, two are highlighted. First, the circular lattice with unidirectional polarization, and secondly, with inwards polarization. 
 
-inter-atomic distances
+In implementing this computation, the interatomic distance is taken to be the shortest path between each site, i.e. an N-polygon. 
 
 \subsubsection{Polarized unidirectionally}
 
-circular unidirectional. Easier to implement in reality with uniform magnetic field.
+For the unidirectional polarization, the $\hat{x}$-direction is chosen, but is equal to any other choice because of rotational symmetry. The unidirectional approach may be easier to implement, if at first below-wavelength trapping of atoms in a circular lattice is possible, because a uniform magnetic field can be used to align the dipole-moments of the atoms. In Figure \ref{fig:circular}, the population of the lowest decay-rate eigenstate on the chain is visualized with a colorbar, and the decay rates of the eigenstates are indexed by $\xi$. 
 
 \begin{figure}[H]
     \centering
@@ -299,22 +297,24 @@ circular unidirectional. Easier to implement in reality with uniform magnetic fi
         \caption{}
         \label{fig:circular_unidirectional_decayrates}
     \end{subfigure}
-    \caption{}
+    \caption{a) Like in the linear chain case, the circular chain population of lowest decay rate eigenstate is visualized by colorbar ranging from "coldest" to "warmest". Parameters are $N=50$ and $\frac{d}{\lambda_0}= 0.3$. b) The decay rates of the eigenstates of the circular chain of beforementioned parameters are indexed from smallest to largest by $\xi$. }
     \label{fig:circular}
 \end{figure}
 
-circular varying N and d
+There seems to be no apparent structure of the population of the lowest decay-rate eigenstate, compared to the linear case, which was highly structured. Except for one quarter of the chain, which seems to have little-to-none population. In part b), some of the decay rates exhibit pairing behaviour (e.g. for the first 10 states). But, for these parameters, the decay rates are of comparable order of magnitude to the linear case. The case is something else for varying parameters however. In Figure \ref{fig:circular_unidirectional_varying}, the lowest decay rate of the circular chain is plotted vs $\frac{d}{\lambda_0}$ and $N$. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{figs/case_circular_unidirectional_var_distance_01_04_var_N_40_60_lowest.png}
-    \caption{}
+    \caption{Lowest decay rate for the circular chain vs interatomic distance (black points) and number of atoms in chain (red points). Notice the log-scale on the y-axis. }
     \label{fig:circular_unidirectional_varying}
 \end{figure}
 
+From the linear trend of red points, due to the log-scale, it is clear that the decay rate of the most subradiant mode on the circular chain is exponential in $N$, i.e. $\Gamma_{\xi=1} \propto e^{-N}$. The trend of black points is however not linear, suggesting a polynomial trend for varying the inter-atomic distance. 
+
 \subsubsection{Polarized inwards}
 
-circular inwards. probably a challenge to align with magnetic field (emulates magnet monopole = no-go)
+The second polarization configuration for the circular chain is a radially inwards polarization. This configuration may be more difficult to implement in practice, as a magnetic monopole-like field can be difficult to emulate on this scale of operation. Nonetheless, the computation provides interesting comparison to the unidirectional case. In Figure \ref{fig:circular_inwards}, the population of the lowest decay rate eigenstate on the chain is visualized with colorbar, and the decay rates are plotted sorted. 
 
 \begin{figure}[H]
     \centering
@@ -329,9 +329,11 @@ circular inwards. probably a challenge to align with magnetic field (emulates ma
         \caption{}
         \label{fig:circular_inwards_decayrates}
     \end{subfigure}
-    \caption{}
+    \caption{a) The population of the lowest decay rate eigenstate on the circular chain visualized with colorbar, ranging from "cold" to "warm". The parameters are $N=50$ and $\frac{d}{\lambda_0}=0.3$. b) With the same parameters, the decay rates of the N eigenstates are indexed from smallest to largest by $\xi$. }
     \label{fig:circular_inwards}
 \end{figure}
+
+Also for this polarization, the decay rates are exhibiting pairing behaviour. The lowest decay rate however is in this case not paired, and the population on the chain for this eigenstate is also much different from the other case. The population is more equally spread out on the entire chain. Another interesting difference is, the lowest decay rate for this case is almost 3 orders of magnitude smaller than for the unidirecionally polarized case. The parameters are the same in both cases, but the inwards polarization has a significant impact on the decay rate of most subradiant mode. If implementation of inwards polarized circular lattices are somehow possible, this feature advocates strongly for this configuration. 
 
 \subsection{Negative decay rates}
 
