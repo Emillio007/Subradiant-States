@@ -15,7 +15,7 @@
 \usepackage{hyperref}
 \usepackage{physics}
 \usepackage{listings}
-\setlength{\parindent}{0pt}
+\setlength{\parindent}{1.5em}
 \usepackage{setspace}
 \usepackage[sorting=none]{biblatex}
 \usepackage{caption}
@@ -50,12 +50,14 @@ TODO.
 
 \section{Introduction}
 
+\noindent
 The collective excitation states of an atomic array is a well-known phenomenon in the physics of light-matter interaction (REF). In the field of quantum information processing, long-lived quantum states are desired for implementing both quantum communication protocols and quantum computing. Certain excited states of atomic arrays display greatly amplified (superradiant) or suppresed (subradiant) decay rates, when compared to a single atom in vacuum. Such states arise in the interplay of atoms arranged closely together and the surrounding electromagnetic field. In the following, exciting new geometries and variations are investigated within the scope of finding highly subradiant states. The model used for these calculations is a second quantized approach, in which the atoms are assumed dipoles, and the suppresed radiance is manifested as destructive interference between these (???). Furthermore, theoretical considerations are presented to elaborate on expectations and results of these calculations. This project is restricted to radiation in free-space. 
 
 Hvad er mine quantities of interest?
 
 \section{Theory}\label{sec:theory}
 
+\noindent
 The model is developed from a classical perspective, but will in the end be used to describe the quantized field and therefore be a fully quantum model (REF Gruner og Welsch). The model is used to describe the interaction between atoms and the empty-space electromagnetic field. The model is capable of describing both homogenous and inhomogenous Kramers-Kronig dielectrics (REF Gruner og Welsch), which makes it desirable for in-depth studies of collectively excited atomic arrays in various settings and environments. Due to the quantities of interest in this project, the framework is restricted to free space in the following. 
 
 List of assumptions and approximations (REF Asenjo):
@@ -76,32 +78,25 @@ Where $r$ is the norm of the displacement between atoms i and j: $\bar{r}_{ij}$,
 The effective Hamiltonian (REF Asenjo), which is subject to diagonalization:
 \begin{equation}\label{eq:Heff}
     \begin{split}
-        \hat{H}_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}^\dagger \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}} \sigma_+^i \sigma_-^j, \\
-        &=- \mu_0 \cdot \omega_0^2 \cdot \|\bar{\mathscr{D}}\|^2 \cdot \sum_{i,j = 1}^N \hat{n}^T \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \hat{n} \sigma_+^i \sigma_-^j. \\
+        \hat{H}_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}^\dagger \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}} \hat{\sigma}_+^i \hat{\sigma}_-^j, \\
+        &=- \mu_0 \cdot \omega_0^2 \cdot \|\bar{\mathscr{D}}\|^2 \cdot \sum_{i,j = 1}^N \hat{n}^T \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \hat{n} \hat{\sigma}_+^i \hat{\sigma}_-^j. \\
     \end{split}
 \end{equation}
-Where $\mu_0$ is the vacuum permeability, $\omega_0$ is the atomic transition frequency, $\bar{\mathscr{D}}$ is the dipole vector at atom j (however, for most applications, equal directioned dipoles are chosen) and $\sigma_\pm^i$ is the i'th atom's coherence operators acting on the i'th subspace of full Hilbert space. In the last line, the dipole amplitude is separated from the direction, which proves useful when converting to a dimensionless model in Section \ref{sec:dimless}. This matrix fully describes the atom-atom interaction in a quantum jump formalism (REF Asenjo). However, this is not the entire description of the system. At some point, a photon mode is excited, and the excitation is lost to the system. This reflects in the fact that the above matrix is non-Hermitian, i.e. $\hat{H}_{eff} \neq \hat{H}_{eff}^\dagger$. Hermitian matrices conserve norm, meaning no probability amplitude leaves the system. In this description, probability amplitude "leaks" away, as the probability of exciting a photon mode increases (this is elaborated more in Section \ref{sec:full_system}). If the system is initialized with an excitation, then at $t=0$, the eigenvectors are the actual eigenstates of the system, even though the non-Hermiticity dictates the non-existence of a single orthonormal basis for the singular value decomposition. It is therefore still valid to consider the eigenvectors, and of particular interest in this project the eigenvalues, of the effective Hamiltonian. The eigenvalues of this matrix are complex numbers, where the real part corresponds to a finite energyshift due to the atoms being close together, and the imaginary part corresponds to damping in time of the state, i.e. decay rates (REF Asenjo, Equation 7): $\lambda_\xi = J_\xi - \frac{i}{2} \Gamma_\xi$. The steps taken towards diagonalizing the matrix is described in Section \ref{sec:block}. 
+Where $\mu_0$ is the vacuum permeability, $\omega_0$ is the atomic transition frequency, $\bar{\mathscr{D}}$ is the dipole vector at atom j (however, for most applications, equal directioned dipoles are chosen) and $\hat{\sigma}_\pm^i$ is the i'th atom's coherence operators acting on the i'th subspace of full Hilbert space. In the last line, the dipole amplitude is separated from the direction, which proves useful when converting to a dimensionless model in Section \ref{sec:dimless}. This matrix fully describes the atom-atom interaction in a quantum jump formalism (REF Asenjo). However, this is not the entire description of the system. At some point, a photon mode is excited, and the excitation is lost to the system. This reflects in the fact that the above matrix is non-Hermitian, i.e. $\hat{H}_{eff} \neq \hat{H}_{eff}^\dagger$. Hermitian matrices conserve norm, meaning no probability amplitude leaves the system. In this description, probability amplitude "leaks" away, as the probability of exciting a photon mode increases (this is elaborated more in Section \ref{sec:full_system}). If the system is initialized with an excitation, then at $t=0$, the eigenvectors are the actual eigenstates of the system, even though the non-Hermiticity dictates the non-existence of a single orthonormal basis for the singular value decomposition. It is therefore still valid to consider the eigenvectors, and of particular interest in this project the eigenvalues, of the effective Hamiltonian. The eigenvalues of this matrix are complex numbers, where the real part corresponds to a finite energyshift due to the atoms being close together, and the imaginary part corresponds to damping in time of the state, i.e. decay rates (REF Asenjo, Equation 7): $\lambda_\xi = J_\xi - \frac{i}{2} \Gamma_\xi$. The steps taken towards diagonalizing the matrix is described in Section \ref{sec:block}. 
 
-Another issue must also be adressed before working with the abovementioned framework. It is evident in Equation \ref{eq:Greens} that the diagonal values diverge, when the distance goes to zero. The diagonal values describe the interaction of the atoms with themselves, i.e. if they were to be alone, $N = 1$, there should be no energy shift, and the decay rate must be the well-known spontaneous vacuum emission rate:
+Another issue must also be adressed before working with the abovementioned framework. It is evident in Equation \ref{eq:Greens} that the diagonal values diverge, because the distance is equals to 0. The diagonal values describe the interaction of the atoms with themselves, i.e. if they were to be alone, $N = 1$, there should be no energy shift, and the decay rate must be the well-known spontaneous vacuum emission rate:
 
 \begin{equation}\label{eq:vac_emission_rate}
     \Gamma_0 = \frac{\omega_0^3}{3\pi \hbar \varepsilon_0 c^3} \cdot \|\bar{\mathscr{D}}\|^2
 \end{equation}
-
-Therefore, the diagonal values of $\hat{H}_{eff}$ are but a constant offset of the identity, which gives the full matrix:
+Therefore, the diagonal values (to be when considering the block Hamiltonian in Section \ref{sec:block}) of $\hat{H}_{eff}$ are inserted "manually", and the full effective Hamiltonian becomes:
 
 \begin{equation}
-    \hat{H} = \sum_{i=0}^N (\hbar \omega_0 - \frac{i}{2}\Gamma_0) \hat{\sigma}_{ee}^{i} -\mu_0 \omega_0^2 \|\bar{\mathscr{D}}\|^2 \sum_{i,j = 1, i \neq j}^N \hat{n}^T \underline{G}_0(\bar{r}_{ij}, \omega_0) \hat{n} \sigma_+^i \sigma_-^j.
+    \hat{H}_{eff} = \sum_{i=1}^N \hbar \Gamma_0 \left( 1 - \frac{i}{2} \right) \hat{\sigma}_{ee}^i -\mu_0 \omega_0^2 \|\bar{\mathscr{D}}\|^2 \sum_{i,j = 1, i \neq j}^N \hat{n}^T \underline{G}_0(\bar{r}_{ij}, \omega_0) \hat{n} \hat{\sigma}_+^i \hat{\sigma}_-^j.
 \end{equation}
-NOTE: Ved ikke lige med denne del.... Skal i hvert fald inkludere noget omkring diagonalen indsættes ved håndkraft.
+Where the 1 is some constant frequency shift, which is but an energy-offset. I.e. it has no physical importance for the system. 
 
 In general, becuase the atomic transitions are well-defined two-level systems, this formalism can be considered as spin-wave excitations in arrays of spin-½ particles. This does not give any more clarity on the behaviour of the system for single excitation states, as this is equivalently described by interference between the dipoles. It is another case, when considering multiple excitation states, as the fermionic nature of spin-½ particles gives rise to interesting dynamics (REF Asenjo, Section IIIC). In this project, the quantities of interest limits the use of the formalism to the single-excitation manifold, but multiple excitations is one of the directions outlined as further research in Section \ref{sec:outlook}. 
-
-Kæde: Foton kan ikke undslippe ortogonalt til kæden. Hvorfor? -> "Spin-bølge" tilstand i gitteret. -> faststoffysik-sprog. Subradiante tilstande for bølgevektorer indenfor første Brillouin-zone. 
-
-Dipolbilledet bliver ukorrekt for to excitationer og derover, men formalismen holder stadig. 
-
-Forudsigelser for N=2 tilfælde? Problemer! Sammenligning med Adrian N=3 kæde. Vidde på egenværdier gør det svært for algoritmen at være præcis, derfor skal der ikke så meget til, før vi havner på den forkerte side.  DISKUSSION?
 
 \subsection{The full system}\label{sec:full_system}
 In this section, some justification for the use of the non-Hermitian $\hat{H}_{eff}$ is provided. It is not rigorous for the multiple atoms case, but covers the single atom case, and it is assumed to be a similar relation for multiple atoms. 
@@ -110,35 +105,63 @@ A fundamentality of Quantum Mechanics is the unitary evolution of quantum system
 \begin{equation}\label{eq:unitarity}
     \hat{U}(t) = e^{i \hat{H} t} \rightarrow \hat{U}(t) \hat{U}^\dagger(t) = e^{i \hat{H} t} e^{-i \hat{H}^\dagger t} = e^{i(\hat{H}-\hat{H}^\dagger) t} = e^{i \underline{0} t} = \mathds{1}.
 \end{equation}
-Therefore, to truly describe the evolution of the quantum system in question, it must be expanded to include whereever the the probability may go / come from. For the atomic dipoles interacting with the surrounding field, this is in the coupling to a photon mode, as seen in (REF Mølmer og Castin). The full description of the wave function includes the Hilbert space of photon modes, $\mathscr{H} = \mathscr{H}_{atomic} \otimes \mathscr{H}_{photon}$:
+Therefore, to truly describe the evolution of the quantum system in question, it must be expanded to include whereever the the probability may go / come from. For the atomic dipoles interacting with the surrounding field, this is in the coupling to a photon mode. The full description of the wave function includes the Hilbert space of photon modes, $\mathscr{H} = \mathscr{H}_{atomic} \otimes \mathscr{H}_{photon}$:
 \begin{equation}\label{eq:full_wave_function}
-    \ket{\psi(t)} = a(t) \ket{g, 0} \sum_{j=1}^N c_j(t) \ket{e_j, 0} + \sum_{\bar{k},s} b_{\bar{k},s} (t) \ket{g, 1_{\bar{k},s}}.
+    \ket{\psi(t)} = a(t) \ket{g, 0} + \sum_{j=1}^N c_j(t) \ket{e_j, 0} + \sum_{\bar{k},s} b_{\bar{k},s} (t) \ket{g, 1_{\bar{k},s}}.
 \end{equation}
-As noted in (REF Mølmer og Castin), under appropriate assumptions, the evolution of this wavefunction may equally as well be treated by Monte-Carlo simulation. With a certain proability, a quantum jump from excited atomic state to ground state plus a photon has happened. For a single atom, this probability is $\delta p = \Gamma |b(t)|^2 dt$, where $b(t)$ is the probability amplitude of being in the atomic excited state (the $c_j (t)$ in multiple atom case). The probability for a quantum jump to occur in the multiple atom case is not simply this, but it does provide an insight: The non-Hermitian evolution of the system provides the true dynamics, except for the atoms becoming deexcited and the photon leaving the system. 
+As noted in (REF Mølmer og Castin), under appropriate assumptions, the evolution of this wavefunction may equally as well be treated by Monte-Carlo simulation. With a certain proability, a quantum jump from excited atomic state to ground state plus a photon happens. For a single atom, this probability is $\delta p = \Gamma |b(t)|^2 dt$, where $b(t)$ is the probability amplitude of being in the atomic excited state (the $c_j (t)$ in multiple atom case). The probability for a quantum jump to occur in the multiple atom case is not simply this, but it does provide an insight: The non-Hermitian evolution of the system provides the true dynamics, except for the atoms becoming deexcited and the photon leaving the system. 
 
 \subsection{The case of $N=2$}\label{sec:N2}
 
+\noindent
+In Section \ref{sec:results}, the computations result in some negative decay rates for very small distances. This is intuitively unphysical, as negative decay rates mean an increase in energy by dissipation. Some suggested causes are discussed following the results, but it may also provide some insight to approach this limit analytically. As seen in Equation \ref{eq:Greens}, for small distances, $r \rightarrow 0$, some terms diverge. Not all terms diverge, since the factoring exponential breaks into a cosine and sine combination, and the sine effectively goes as $r$ in this limit. Therefore, the terms with sine goes as one order less, and the terms with only one order of $\frac{1}{r}$, become constant. The question is, do the leading terms in this limit somehow give rise to negative eigenvalues? The physical interpretation of two dipoles sitting in the (approximately) same site, is either double the dipole strength if aligned in parallel or no dipole if anti-parallel. So, a diverging Green's tensor, and in extension a diverging Hamiltonian, is not appropriate. To investigate this, the $N=2$ case is computed.
+
+The $N=2$ 4-dimensional effective Hamiltonian is given generally, as this underlines an important property of the Hamiltonian. The Hamiltonian is block diagonal, meaning its entries are collected in blocks of equal excitation number. This will be utilized for the analysis of larger systems in Section \ref{sec:block}:
 \begin{equation}\label{eq:N2_general}
-    \hat{H}_{eff} = 
+    \hat{H}_{eff} = \hbar \Gamma_0
     \begin{pmatrix}
         0 & 0 & 0 & 0 \\
-        0 & \hbar \omega_0 & 0 & 0 \\
-        0 & 0 & \hbar \omega_0 & 0 \\
-        0 & 0 & 0 & 2 \hbar \omega_0 \\
+        0 & 1 - \frac{i}{2} & 0 & 0 \\
+        0 & 0 & 1 - \frac{i}{2} & 0 \\
+        0 & 0 & 0 & 2 \left( 1 - \frac{i}{2} \right) \\
     \end{pmatrix}
     - \mu_0 \omega_0^2 \| \bar{\mathscr{D}} \|^2
     \begin{pmatrix}
         0 & 0 & 0 & 0 \\
-        0 & h_{11} & h_{12} & 0 \\
-        0 & h_{21} & h_{22} & 0 \\
-        0 & 0 & 0 & h_{11} + h_{22} \\
+        0 & 0 & g_{12} & 0 \\
+        0 & g_{21} & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
     \end{pmatrix}
 \end{equation}
-Where $h_{ij}$ is the matrix element $\hat{n}^T G_0(\bar{r}_{ij},\omega_0) \hat{n}$. As discussed, the diagonal values are due to the interaction of the atoms with themselves, i.e. it is the spontaneous decay rate. The analytical $N=2$ case show an important property of the Hamiltonian structure, which will be utilized for the analysis of larger systems in Section \ref{sec:block}. The Hamiltonian is block diagonal, meaning its entries are collected in blocks of equal excitation number. DIAGONALIZE 2x2 matrix. Story about negative decay rates. Succes? Is the Green's tensor the appropriate form for this problem? Can we still rely on the Markov regime, when $r->0$ ? By then, the energyshift becomes cubic inverse bigger, which may take omega out of the range of Markov.
+Where $g_{ij}$ is the matrix element $\hat{n}^T G_0(\bar{r}_{ij},\omega_0) \hat{n}$. As discussed in relation to Equation \ref{eq:vac_emission_rate}, the diagonal values are due to the interaction of the atoms with themselves, i.e. it is a constant energy offset and the spontaneous decay rate. To further ease the computation, the two atoms lie along the x-axis, and the dipoles are also oriented along the x-axis. For this configuration, some terms in the Green's tensor cancels out. The analysis is also performed for dipoles oriented along the z-axis, which is compared later. The Hamiltonian is also cast to a unitless representation, the steps for this is discussed later in Section \ref{sec:dimless}. Finally, the one-excitation block Hamiltonian becomes for the $N=2$ case:
+\begin{equation}\label{eq:N2_Ham_block}
+    \hat{h} = 
+    \begin{bmatrix} 
+        1 - \frac{i}{2} & -\frac{3}{4}\left( \frac{2e^{ir}}{r^3} + \frac{2e^{i(r+\frac{3\pi}{2})}}{r^2} \right) \\ 
+        -\frac{3}{4}\left( \frac{2e^{ir}}{r^3} + \frac{2e^{i(r+\frac{3\pi}{2})}}{r^2} \right) & 1 - \frac{i}{2} \\
+    \end{bmatrix}
+\end{equation}
+
+In the limit of $r\rightarrow 0$, this Hamiltonian can be seperated into dominating terms in a $\hat{h}_0$ and the remaining in a perturbing Hamiltoninan $V$. Furthermore, in this limit, the terms with a sine will actually belong in the perturbing Hamiltonian:
+\begin{equation}\label{eq:pertubation}
+    \begin{split}
+        \hat{h} &= \hat{h}_0 + V = \left[ \left( 1 - \frac{i}{2} \right) \mathds{1} - \frac{3}{4} \frac{2e^{ir}}{r^3} \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix} \right] + i \frac{3}{2} \frac{e^{ir}}{r^2} \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix}, \\
+        \hat{h}_{r\rightarrow 0} &= \left[ \left( 1 - \frac{i}{2} \right) \mathds{1} - \frac{3}{2} \frac{cos(r)}{r^3} \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix} \right] - \left( i \frac{3}{2r^2} \left(1 - cos(r)\right) - \frac{3}{2r} \right) \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix}.
+    \end{split}
+\end{equation}
+With the main Hamiltonian in the square brackets. Diagonalising the main Hamiltonian yields eigenvectors $v_- = (-1, 1)$ and $v_+ = (1, 1)$, from which the contributions to the eigenvalues can be computed with first-order perturbation theory: $\bra{v_{\pm}} V \ket{v_{\pm}}$. The decay rates are extracted from the eigenvalues by $\Gamma = -2 \cdot Im(\lambda)$, and in the limit of $r\rightarrow 0$, they approach finite values:
+\begin{equation}\label{eq:N2_decayrates_ex}
+    \Gamma_{\pm,r\rightarrow 0} = 1 \pm 3
+\end{equation}
+Which does point to a subradiant eigenstate with negative decay rate. Oddly, the splittings are exactly a factor of 3 off from the otherwise expected eigenvalues of a matrix of such form: $\Gamma_{\pm, exp} = 1 \pm 1$. As seen in Section \ref{sec:dimless}, a factor of 3 is indeed included, but this is a requirement for the Hamiltonian to be expressed in units of the vacuum decay rate: $\hbar \Gamma_0$. And, as seen in Section \ref{disc:linear_chain}, the computation results agree with the results of the paper (REF Asenjo). The above result is also compared to an equivalent computation of Equation 5 in (REF Petrosyan \& Mølmer), which is in agreement. Lastly, the above calculation is also conducted for the dipoles aligned along the z-axis, which yields:
+\begin{equation}\label{eq:N2_decayrates_ez}
+    \Gamma_{\pm, r\rightarrow 0} = 1 \mp \left( \frac{3}{2} - 4 \right)
+\end{equation}
+Again, the subradiant eigenstate has a negative decay rate. A suggested explanation for this unexpected behaviour could be that the chosen form of Green's tensor may not be the appropriate one in this regime. One of the assumptions for this framework to be valid is the radiation being in the Markovian regime, and the energy-shift divergence when taking $r\rightarrow 0$ may conflict with this. It is however not unphysical to imagine a scenario, where these conditions are present in reality. Choosing a long wavelength transition in the atoms will render the interatomic distance very small with respect to the wavelength: $d \ll \lambda_0$. 
 
 \subsection{Time-evolution of excitation}\label{sec:time-evolution}
 
-In this section, it is briefly introduced how to compute the time-evolution of an excitated state of the efficient Hamiltonian. Unfortunately, the there was not enough time in this project to perform a detailed analysis of the time-evolution of the different states. However, the theoretical section is still included for completeness.
+In this section, it is briefly introduced how to compute the time-evolution of an excitated state of the efficient Hamiltonian. Unfortunately, there was not enough time in this project to perform a detailed analysis of the time-evolution of the different states. However, the theoretical section is still included for completeness.
 
 The effective Hamiltonian has no time-dependency, and it is therefore possible to evolve the states according to Schrödinger's equation. An expansion of a state into the eigenstates of the effective Hamiltonian including the wiggle-factors of corresponding eigenvalues (including both energyshift and damping) yields the apparent evolution:
 \begin{equation}
@@ -148,7 +171,7 @@ The effective Hamiltonian has no time-dependency, and it is therefore possible t
 \end{equation}
 Where $\xi$ labels the eigenstates of the effective Hamiltonian. 
 
-\section{Method}
+\section{Method}\label{sec:method}
 
 Many-body quantum mechanics is in many cases a challenge to compute. In this case, the goal is to find the eigenvalues and eigenvectors of the Hamiltonian in Equation \ref{eq:Heff}. Diagonalization of a matrix is a computation in polynomial time of the dimension, but since the Hamiltonian encodes the information of an exponentially increasing dimensional Hilbert-space, the scaling of the diagonalization algorithm is exponential in system size. Furthermore, the memory requirements for storing the Hamiltonian is also exponentially increasing for every atom that is added to the system. Also for sparse matrix methods. Therefore, it is not tractable to consider the full Hilbert space, when diagonalizing the Hamiltonian classically. In this section, it is briefly introduced, how the block-structure of the effective Hamiltonian enables diagonalization for a (relatively) low number of excitations. Furthermore, the equations are transformed to unitless equations to better accommodate precision. 
 
@@ -179,7 +202,7 @@ Unless otherwise stated, the above unitless Hamiltonian and variables are the en
 
 It is also important to note that the distances inserted the Greens tensor are in units of $2\pi$. $r$ is expressed in units of $k_0^{-1}$, so the actual distance measure is (using $d$ instead of $r$ to distinguish): $\frac{d}{\lambda_0} = 2 \pi r$, which is a useful way to express distances between the atoms, as it compares directly to the wavelength of the photons. 
 
-\section{Results \& Discussion}
+\section{Results \& Discussion}\label{sec:results}
 
 Firstly, following (REF Asenjo), the computation is compared to the case of an $N=50$ linear chain with parallel polarized dipoles, i.e. both $\bar{r}_{ij}$ and $\hat{n}$ are directed in the same direction. The results match, and Figure 3 of (REF Asenjo) has been reproduced. Secondly, the variation of polarization in the linear chain is investigated, which may be a particularly relevant parameter, as it is controllable in practice with an external magnetic field. Thirdly, a linear chain broken in the middle with varying angle is investigated to see, how the excitation of the most subradiant mode is spread across the system. Lastly, the circular lattice is also investigated with varying polarizations. Finally, some unexpected negative decay rates are discussed, and some probable causes are proposed. 
 
@@ -335,7 +358,7 @@ The second polarization configuration for the circular chain is a radially inwar
 
 Also for this polarization, the decay rates are exhibiting pairing behaviour. The lowest decay rate however is in this case not paired, and the population on the chain for this eigenstate is also much different from the other case. The population is more equally spread out on the entire chain. Another interesting difference is, the lowest decay rate for this case is almost 3 orders of magnitude smaller than for the unidirecionally polarized case. The parameters are the same in both cases, but the inwards polarization has a significant impact on the decay rate of most subradiant mode. If implementation of inwards polarized circular lattices are somehow possible, this feature advocates strongly for this configuration. 
 
-\subsection{Negative decay rates}
+\subsection{Negative decay rates}\label{disc:negative}
 
 For very small distances, e.g. $\frac{d}{\lambda0} = 0.00001$, the decay rates predicted by the diagonalization of the Hamiltonian can become negative, $a_\xi(t)=e^{-\Gamma_\xi t} a_\xi (0) \rightarrow e^{\Gamma_\xi t} a_\xi (0)$. This is of course unphysical. As seen, it would mean increase in probability. If the system initialized in a state with negative decay rate, the probability would become greater than 1. Why does it happen for very small interatomic distances? Remember, no assumption was made about the chosen transition. Choosing a microwave transition with optically trapped atoms would e.g. produce such circumstances (BUT MW TRANSITIONS ARE PHONONS?). 
 
