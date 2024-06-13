@@ -1,0 +1,270 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{Asenjo}{article}{}
+      \name{author}{5}{}{%
+        {{hash=5965a8c0d391fed446691b9f5a26870d}{%
+           family={Asenjo-Garcia},
+           familyi={A\bibinithyphendelim G\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=81ca81efb01c73dd31f7ecc4a68701bf}{%
+           family={Moreno-Cardoner},
+           familyi={M\bibinithyphendelim C\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=9cd3f3d3d6c9693dd32626a94929c951}{%
+           family={Albrecht},
+           familyi={A\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=aea70dd628dc6535ce5213ef85f63855}{%
+           family={Kimble},
+           familyi={K\bibinitperiod},
+           given={H.\bibnamedelimi J.},
+           giveni={H\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=eb4dded13edbd82a818650b29378b89e}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={D.\bibnamedelimi E.},
+           giveni={D\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{7b8dc75d7595d671db8c8981940573ec}
+      \strng{fullhash}{d0c8c7547256d521b597801df8034648}
+      \strng{bibnamehash}{7b8dc75d7595d671db8c8981940573ec}
+      \strng{authorbibnamehash}{7b8dc75d7595d671db8c8981940573ec}
+      \strng{authornamehash}{7b8dc75d7595d671db8c8981940573ec}
+      \strng{authorfullhash}{d0c8c7547256d521b597801df8034648}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review X}
+      \field{title}{Exponential Improvement in Photon Storage Fidelities Using Subradiance and "Selective Radiance" i Atomic Arrays}
+      \field{year}{2017}
+      \verb{doi}
+      \verb https://doi.org/10.1103/PhysRevX.7.031024
+      \endverb
+    \endentry
+    \entry{Gruner}{article}{}
+      \name{author}{2}{}{%
+        {{hash=bb639a14812a79d6f068c68516409bcd}{%
+           family={Grüner},
+           familyi={G\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+        {{hash=3b3a042c00f6ffa3b0e89738cb998b73}{%
+           family={Welsch},
+           familyi={W\bibinitperiod},
+           given={D.-G.},
+           giveni={D\bibinithyphendelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{8271969ca4f123868b743f0494304f11}
+      \strng{fullhash}{8271969ca4f123868b743f0494304f11}
+      \strng{bibnamehash}{8271969ca4f123868b743f0494304f11}
+      \strng{authorbibnamehash}{8271969ca4f123868b743f0494304f11}
+      \strng{authornamehash}{8271969ca4f123868b743f0494304f11}
+      \strng{authorfullhash}{8271969ca4f123868b743f0494304f11}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review A}
+      \field{title}{Green-function approach to the radiation-field quantization for homogeneous and inhomogeneous Kramers-Kronig dielectrics}
+      \field{year}{1996}
+      \verb{doi}
+      \verb https://doi.org/10.1103/PhysRevA.53.1818
+      \endverb
+    \endentry
+    \entry{Deutsch}{unpublished}{}
+      \name{author}{1}{}{%
+        {{hash=0f3dce23d45b63feb862b5bb824e6269}{%
+           family={Deutsch},
+           familyi={D\bibinitperiod},
+           given={I.},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{0f3dce23d45b63feb862b5bb824e6269}
+      \strng{fullhash}{0f3dce23d45b63feb862b5bb824e6269}
+      \strng{bibnamehash}{0f3dce23d45b63feb862b5bb824e6269}
+      \strng{authorbibnamehash}{0f3dce23d45b63feb862b5bb824e6269}
+      \strng{authornamehash}{0f3dce23d45b63feb862b5bb824e6269}
+      \strng{authorfullhash}{0f3dce23d45b63feb862b5bb824e6269}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Spontaneous Emission: Weisskopf-Wigner Theory}
+      \field{urlday}{13}
+      \field{urlmonth}{6}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb http://info.phys.unm.edu/~ideutsch/Classes/Phys566F13/Notes%20from%20others/Spontaneous%20Emission%20Weisskopf-Wigner%20.pdf
+      \endverb
+      \verb{url}
+      \verb http://info.phys.unm.edu/~ideutsch/Classes/Phys566F13/Notes%20from%20others/Spontaneous%20Emission%20Weisskopf-Wigner%20.pdf
+      \endverb
+    \endentry
+    \entry{MolmerCastin}{article}{}
+      \name{author}{2}{}{%
+        {{hash=6074d140bb874d17c45147fac821a121}{%
+           family={Mølmer},
+           familyi={M\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+        {{hash=9e6900e1cd86f2650ff364cf01fb19a6}{%
+           family={Castin},
+           familyi={C\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{4e70afe682df4cef469952d5fb508671}
+      \strng{fullhash}{4e70afe682df4cef469952d5fb508671}
+      \strng{bibnamehash}{4e70afe682df4cef469952d5fb508671}
+      \strng{authorbibnamehash}{4e70afe682df4cef469952d5fb508671}
+      \strng{authornamehash}{4e70afe682df4cef469952d5fb508671}
+      \strng{authorfullhash}{4e70afe682df4cef469952d5fb508671}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the European Optical Society Part B}
+      \field{title}{Monte Carlo wavefunctions in quantum optics}
+      \field{year}{1996}
+      \verb{doi}
+      \verb https://doi.org/10.1088/1355-5111/8/1/015
+      \endverb
+    \endentry
+    \entry{PetrosyanMolmer}{article}{}
+      \name{author}{2}{}{%
+        {{hash=7c107a88b521acbe102aec865c2e2cb5}{%
+           family={Petrosyan},
+           familyi={P\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=6074d140bb874d17c45147fac821a121}{%
+           family={Mølmer},
+           familyi={M\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{aaf2794b4b16e0f2c621daeef716589b}
+      \strng{fullhash}{aaf2794b4b16e0f2c621daeef716589b}
+      \strng{bibnamehash}{aaf2794b4b16e0f2c621daeef716589b}
+      \strng{authorbibnamehash}{aaf2794b4b16e0f2c621daeef716589b}
+      \strng{authornamehash}{aaf2794b4b16e0f2c621daeef716589b}
+      \strng{authorfullhash}{aaf2794b4b16e0f2c621daeef716589b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review A}
+      \field{title}{Collective emission of photons from dense, dipole-dipole interacting atomic ensembles}
+      \field{year}{2021}
+      \verb{doi}
+      \verb https://doi.org/10.1103/PhysRevA.103.023703
+      \endverb
+    \endentry
+    \entry{ZhangMolmer}{article}{}
+      \name{author}{2}{}{%
+        {{hash=58d2674351f352657840f8f8ce60043a}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yu-Xiang},
+           giveni={Y\bibinithyphendelim X\bibinitperiod}}}%
+        {{hash=6074d140bb874d17c45147fac821a121}{%
+           family={Mølmer},
+           familyi={M\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{c9315a5d37db65dbfb0b85777f763142}
+      \strng{fullhash}{c9315a5d37db65dbfb0b85777f763142}
+      \strng{bibnamehash}{c9315a5d37db65dbfb0b85777f763142}
+      \strng{authorbibnamehash}{c9315a5d37db65dbfb0b85777f763142}
+      \strng{authornamehash}{c9315a5d37db65dbfb0b85777f763142}
+      \strng{authorfullhash}{c9315a5d37db65dbfb0b85777f763142}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review Letters}
+      \field{title}{Theory of Subradiant States of a One-Dimensional Two-Level Atom Chain}
+      \field{year}{2019}
+      \verb{doi}
+      \verb https://doi.org/10.1103/PhysRevLett.122.203605
+      \endverb
+    \endentry
+    \entry{Yong}{article}{}
+      \name{author}{1}{}{%
+        {{hash=186e30171c14115d06aa1f2696e93c4e}{%
+           family={Yong},
+           familyi={Y\bibinitperiod},
+           given={Yu\bibnamedelima \textit{et\bibnamedelimb al.}},
+           giveni={Y\bibinitperiod\bibinitdelim e\bibinitperiod\bibinitdelim a\bibinitperiod}}}%
+      }
+      \strng{namehash}{186e30171c14115d06aa1f2696e93c4e}
+      \strng{fullhash}{186e30171c14115d06aa1f2696e93c4e}
+      \strng{bibnamehash}{186e30171c14115d06aa1f2696e93c4e}
+      \strng{authorbibnamehash}{186e30171c14115d06aa1f2696e93c4e}
+      \strng{authornamehash}{186e30171c14115d06aa1f2696e93c4e}
+      \strng{authorfullhash}{186e30171c14115d06aa1f2696e93c4e}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature}
+      \field{title}{Entanglement of two quantum memories via fibres over dozens of kilometres}
+      \field{year}{2020}
+      \verb{doi}
+      \verb https://doi.org/10.1038/s41586-020-1976-7
+      \endverb
+    \endentry
+    \entry{Fayard}{article}{}
+      \name{author}{1}{}{%
+        {{hash=65843ded2a3962007b387d7b346d18a5}{%
+           family={Fayard},
+           familyi={F\bibinitperiod},
+           given={N.\bibnamedelimi \textit{et\bibnamedelimb al.}},
+           giveni={N\bibinitperiod\bibinitdelim e\bibinitperiod\bibinitdelim a\bibinitperiod}}}%
+      }
+      \strng{namehash}{65843ded2a3962007b387d7b346d18a5}
+      \strng{fullhash}{65843ded2a3962007b387d7b346d18a5}
+      \strng{bibnamehash}{65843ded2a3962007b387d7b346d18a5}
+      \strng{authorbibnamehash}{65843ded2a3962007b387d7b346d18a5}
+      \strng{authornamehash}{65843ded2a3962007b387d7b346d18a5}
+      \strng{authorfullhash}{65843ded2a3962007b387d7b346d18a5}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv}
+      \field{title}{Optical control of collective states in 1D ordered atomic chains beyond the linear regime}
+      \field{year}{2023}
+      \verb{doi}
+      \verb https://doi.org/10.48550/arXiv.2212.13022
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

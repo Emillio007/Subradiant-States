@@ -1,0 +1,29 @@
+From section with linear chain: 
+
+These "ansatz-states" are used as a benchmark for the computed states and respective decay rates. In particular, the overlap of the wavefunctions are computed, and the expected decay-rates for the "ansatz-states" are determined by the expectation value of the effective Hamiltonian and plotted together with the computed decay rates in Figure \ref{fig:linear_chain_decayrates}:
+\begin{equation}\label{eq:overlap}
+    \begin{split}
+        &\mathscr{F}_{ans,\xi} = |\bra{\psi_{ans,\xi}}\ket{\psi_\xi}|^2 \\
+        &\frac{\Gamma_{ans,\xi}}{\Gamma_0} = -2 Im \left( \bra{\psi_{ans,\xi}} \hat{H}_{eff} \ket{\psi_{ans,\xi}} \right)
+    \end{split}
+\end{equation}
+
+TODO: Compute overlap in wavefunctions (HOW TO VISUALIZE?) , Compute decay rates og plot i Figur 1C. 
+
+Since the modes with a wavevector within the first Brillouin zone are guided modes (REF Asenjo), the only permitted places for the system to emit photons are at the ends of the chain. Therefore, it is hypothesized that the probability amplitude is decreased primarily, when the waves reach the end of the chain. (Men jeg undersøger jo ikke dette?)
+
+
+Vi ser også i Asenjo IIIA figur 1, at der forventes en mærkeligere opførsel for nogle tilstande, når polarisering er transversal. Måske noget der kan forklare opførslen af de superradiante tilstande. TEORI???
+
+
+konklusion:
+
+paired behaviour for circular chain
+
+-----
+
+Hvor meget subradians kræver det, før vi kan implementere fx repeater protokoller?
+
+Gennem projektet mangler der det sidste niveau af abstraktion, i.e. springet fra enkelte resultater til en samlet helhed. Hvad er det mest optimale baseret på min resultater? Hvad kan det have af konsekvenser for virkelig implementering? For hvilke problemer er de forskellige geometrier mest velegnede? Hvordan kan resultaterne bruges til at optimere metoden? Feedback-loop.
+
+til forsvaret: gennemgå for åbenlyse fejl og rapporter. Inkludér tanker sidenhen. 
