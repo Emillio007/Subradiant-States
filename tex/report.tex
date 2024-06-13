@@ -47,7 +47,7 @@ In this project, a framework for describing atom-atom interactions based on a Gr
 
 \section*{Acknowledgements}
 \noindent
-A big thanks to Klaus Mølmer for great supervision and elaborate discussions on advanced quantum mechanical topics. Also, gratitude to my fellow student Adrian, who worked independently on a similar project, for comparison of results and challenging the intuition of the phenomena. 
+A big thanks to Klaus Mølmer for great supervision and elaborate discussions on difficult topics. Also, gratitude to my fellow student Adrian, who worked independently on a similar project, for comparison of results and challenging the intuition of the phenomena. 
 
 \newpage
 \tableofcontents
@@ -57,7 +57,7 @@ A big thanks to Klaus Mølmer for great supervision and elaborate discussions on
 \noindent
 The collective excitation states of an atomic array is a well-known phenomenon in the physics of light-matter interaction. In the field of quantum information processing, long-lived quantum states are desired for implementing both quantum communication protocols and quantum computing. Certain excited states of atomic arrays display greatly amplified (superradiant) or suppressed (subradiant) decay rates, when compared to a single atom in vacuum. Such states arise in the interplay of atoms arranged closely together and the surrounding electromagnetic field. In the following, a well-described framework \cite{Asenjo} for analyzing these systems is implemented, and exciting new variations of geometries are investigated within the scope of exploring highly subradiant states. 
 
-After a presentation of the theoretical groundwork in Section \ref{sec:theory}, some elements of the applied method is briefly introduced in Section \ref{sec:method}. With the setup in place, the following atomic configurations are investigated in Section \ref{sec:results}: a linear chain with different polarizations and a discontinuity and a circular chain with different polarizations. With offset in the computed decay rates, some expected and unexpected results are discussed. Finally in Section \ref{sec:outlook}, an outlook to further research and next projects is given. 
+After a presentation of the theoretical groundwork in Section \ref{sec:theory}, some elements of the applied method is briefly introduced in Section \ref{sec:method}. With the setup in place, the following atomic configurations are investigated in Section \ref{sec:results}: a linear chain with different polarizations and a discontinuity and a circular chain with different polarizations. With offset in the computed decay rates, some expected and unexpected results are discussed. Finally in Section \ref{sec:outlook}, an outlook to further research and possible next projects is given. 
 
 \section{Theory}\label{sec:theory}
 
@@ -82,7 +82,7 @@ Where $r$ is the norm of the displacement between atoms i and j: $\bar{r}_{ij}$,
 The effective Hamiltonian \cite[Equation 5]{Asenjo}, which is subject to diagonalization:
 \begin{equation}\label{eq:Heff}
     \begin{split}
-        \hat{H}_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}^\dagger \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}} \hat{\sigma}_+^i \hat{\sigma}_-^j, \\
+        \hat{H}_{eff} &= - \mu_0 \cdot \omega_0^2 \cdot \sum_{i,j = 1}^N \bar{\mathscr{D}}_j^\dagger \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \bar{\mathscr{D}}_j \hat{\sigma}_+^i \hat{\sigma}_-^j, \\
         &=- \mu_0 \cdot \omega_0^2 \cdot \|\bar{\mathscr{D}}\|^2 \cdot \sum_{i,j = 1}^N \hat{n}^T \underline{G}_0(\bar{r_i}, \bar{r_j}, \omega_0) \hat{n} \hat{\sigma}_+^i \hat{\sigma}_-^j. \\
     \end{split}
 \end{equation}
@@ -96,16 +96,16 @@ Another issue must also be adressed before working with the abovementioned frame
 Therefore, the diagonal values (to be when considering the block Hamiltonian in Section \ref{sec:block}) of $\hat{H}_{eff}$ are inserted "manually", and the full effective Hamiltonian becomes:
 
 \begin{equation}
-    \hat{H}_{eff} = \sum_{i=1}^N \hbar \Gamma_0 \left( 1 - \frac{i}{2} \right) \hat{\sigma}_{ee}^i -\mu_0 \omega_0^2 \|\bar{\mathscr{D}}\|^2 \sum_{i,j = 1, i \neq j}^N \hat{n}^T \underline{G}_0(\bar{r}_{ij}, \omega_0) \hat{n} \hat{\sigma}_+^i \hat{\sigma}_-^j.
+    \hat{H}_{eff} = \sum_{i=1}^N \hbar \Gamma_0 \left( - \frac{i}{2} \right) \hat{\sigma}_{ee}^i -\mu_0 \omega_0^2 \|\bar{\mathscr{D}}\|^2 \sum_{i,j = 1, i \neq j}^N \hat{n}^T \underline{G}_0(\bar{r}_{ij}, \omega_0) \hat{n} \hat{\sigma}_+^i \hat{\sigma}_-^j.
 \end{equation}
-Where the 1 is some constant frequency shift, which is but an energy-offset. I.e. it has no physical importance for the system. 
+Note that no real part is inserted on the diagonals, which would correspond to an energy shift - the Lamb shift. This shift is infinite, but can be dealt with through renormalization. Instead, this energyshift is absorbed in the definition of the atom's energy, and no energy shift appears in the Hamiltonian. 
 
 In general, becuase the atomic transitions are well-defined two-level systems, this formalism can be considered as spin-wave excitations in arrays of spin-½ particles. This does not give any more clarity on the behaviour of the system for single excitation states, as this is equivalently described by interference between the dipoles. It is another case, when considering multiple excitation states, as the fermionic nature of spin-½ particles gives rise to interesting dynamics \cite[Section III.C]{Asenjo}. In this project, the quantities of interest limits the use of the formalism to the single-excitation manifold, but multiple excitations is one of the directions outlined as further research in Section \ref{sec:outlook}. 
 
 \subsection{The full system}\label{sec:full_system}
 In this section, some justification for the use of the non-Hermitian $\hat{H}_{eff}$ is provided. It is not rigorous for the multiple atoms case, but covers the single atom case, and it is assumed to be a similar relation for multiple atoms. 
 
-A fundamentality of Quantum Mechanics is the unitary evolution of quantum systems. In other words, probability does not "leak" or suddenly increase, but must always sum up to one. For the time-wise propagation of a Hamiltonian to be unitary, the Hamiltonian must be Hermitian, i.e. $\hat[H] = \hat{H}^\dagger$:
+A fundamentality of Quantum Mechanics is the unitary evolution of quantum systems. In other words, probability does not "leak" or suddenly increase, but must always sum up to one. For the time-wise propagation of a Hamiltonian to be unitary, the Hamiltonian must be Hermitian, i.e. $\hat{H} = \hat{H}^\dagger$:
 \begin{equation}\label{eq:unitarity}
     \hat{U}(t) = e^{i \hat{H} t} \rightarrow \hat{U}(t) \hat{U}^\dagger(t) = e^{i \hat{H} t} e^{-i \hat{H}^\dagger t} = e^{i(\hat{H}-\hat{H}^\dagger) t} = e^{i \underline{0} t} = \mathds{1}.
 \end{equation}
@@ -118,16 +118,16 @@ As noted in \cite{MolmerCastin}, under appropriate assumptions, the evolution of
 \subsection{The case of $N=2$}\label{sec:N2}
 
 \noindent
-In Section \ref{sec:results}, the computations result in some negative decay rates for very small distances. This is intuitively unphysical, as negative decay rates mean an increase in energy by dissipation. Some suggested causes are discussed following the results, but it may also provide some insight to approach this limit analytically. As seen in Equation \ref{eq:Greens}, for small distances, $r \rightarrow 0$, some terms diverge. Not all terms diverge, since the factoring exponential breaks into a cosine and sine combination, and the sine effectively goes as $r$ in this limit. Therefore, the terms with sine goes as one order less, and the terms with only one order of $\frac{1}{r}$, become constant. The question is, do the leading terms in this limit somehow give rise to negative eigenvalues? The physical interpretation of two dipoles sitting in the (approximately) same site, is either double the dipole strength if aligned in parallel or no dipole if anti-parallel. So, a diverging Green's tensor, and in extension a diverging Hamiltonian, is not appropriate. To investigate this, the $N=2$ case is computed.
+In Section \ref{sec:results}, the computations result in some negative decay rates for very small distances. This is intuitively unphysical, as negative decay rates mean an increase in energy by dissipation. Some suggested causes are discussed following the results, but it may also provide some insight to approach this limit analytically. As seen in Equation \ref{eq:Greens}, for small distances, $r \rightarrow 0$, some terms diverge. Not all terms diverge, since the factoring exponential breaks into a cosine and sine combination, and the sine effectively goes as $r$ in this limit. Therefore, the terms with sine goes as one order less, and the terms with only one order of $\frac{1}{r}$, become constant. The question is, do the leading terms in this limit somehow give rise to negative eigenvalues? The physical interpretation of two dipoles sitting in the (approximately) same site, is either double the dipole strength if aligned in parallel or no dipole if anti-parallel. To investigate this, the $N=2$ case is computed.
 
 The $N=2$ 4-dimensional effective Hamiltonian is given generally, as this underlines an important property of the Hamiltonian. The Hamiltonian is block diagonal, meaning its entries are collected in blocks of equal excitation number. This will be utilized for the analysis of larger systems in Section \ref{sec:block}:
 \begin{equation}\label{eq:N2_general}
     \hat{H}_{eff} = \hbar \Gamma_0
     \begin{pmatrix}
         0 & 0 & 0 & 0 \\
-        0 & 1 - \frac{i}{2} & 0 & 0 \\
-        0 & 0 & 1 - \frac{i}{2} & 0 \\
-        0 & 0 & 0 & 2 \left( 1 - \frac{i}{2} \right) \\
+        0 & - \frac{i}{2} & 0 & 0 \\
+        0 & 0 & - \frac{i}{2} & 0 \\
+        0 & 0 & 0 & 2 \left( - \frac{i}{2} \right) \\
     \end{pmatrix}
     - \mu_0 \omega_0^2 \| \bar{\mathscr{D}} \|^2
     \begin{pmatrix}
@@ -137,23 +137,23 @@ The $N=2$ 4-dimensional effective Hamiltonian is given generally, as this underl
         0 & 0 & 0 & 0 \\
     \end{pmatrix}
 \end{equation}
-Where $g_{ij}$ is the matrix element $\hat{n}^T G_0(\bar{r}_{ij},\omega_0) \hat{n}$. As discussed in relation to Equation \ref{eq:vac_emission_rate}, the diagonal values are due to the interaction of the atoms with themselves, i.e. it is a constant energy offset and the spontaneous decay rate. To further ease the computation, the two atoms lie along the x-axis, and the dipoles are also oriented along the x-axis. For this configuration, some terms in the Green's tensor cancels out. The analysis is also performed for dipoles oriented along the z-axis, which is compared later. The Hamiltonian is also cast to a unitless representation, the steps for this is discussed later in Section \ref{sec:dimless}. Finally, the one-excitation block Hamiltonian becomes for the $N=2$ case:
+Where $g_{ij}$ is the matrix element $\hat{n}^T G_0(\bar{r}_{ij},\omega_0) \hat{n}$. As discussed in relation to Equation \ref{eq:vac_emission_rate}, the diagonal values are due to the interaction of the atoms with themselves, i.e. it is the spontaneous vacuum decay rate. To further ease the computation, the two atoms lie along the x-axis, and the dipoles are also oriented along the x-axis. For this configuration, some terms in the Green's tensor cancels out. The analysis is also performed for dipoles oriented along the z-axis, which is compared later. The Hamiltonian is also cast to a unitless representation, the steps for this is discussed later in Section \ref{sec:dimless}. Finally, the one-excitation block Hamiltonian becomes for the $N=2$ case:
 \begin{equation}\label{eq:N2_Ham_block}
     \hat{h} = 
     \begin{bmatrix} 
-        1 - \frac{i}{2} & -\frac{3}{4}\left( \frac{2e^{ir}}{r^3} + \frac{2e^{i(r+\frac{3\pi}{2})}}{r^2} \right) \\ 
-        -\frac{3}{4}\left( \frac{2e^{ir}}{r^3} + \frac{2e^{i(r+\frac{3\pi}{2})}}{r^2} \right) & 1 - \frac{i}{2} \\
+        - \frac{i}{2} & -\frac{3}{4}\left( \frac{2e^{ir}}{r^3} + \frac{2e^{i(r+\frac{3\pi}{2})}}{r^2} \right) \\ 
+        -\frac{3}{4}\left( \frac{2e^{ir}}{r^3} + \frac{2e^{i(r+\frac{3\pi}{2})}}{r^2} \right) & - \frac{i}{2} \\
     \end{bmatrix}
 \end{equation}
 
 In the limit of $r\rightarrow 0$, this Hamiltonian can be seperated into dominating terms in a $\hat{h}_0$ and the remaining in a perturbing Hamiltoninan $V$. Furthermore, in this limit, the terms with a sine will actually belong in the perturbing Hamiltonian:
 \begin{equation}\label{eq:pertubation}
     \begin{split}
-        \hat{h} &= \hat{h}_0 + V = \left[ \left( 1 - \frac{i}{2} \right) \mathds{1} - \frac{3}{4} \frac{2e^{ir}}{r^3} \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix} \right] + i \frac{3}{2} \frac{e^{ir}}{r^2} \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix}, \\
-        \hat{h}_{r\rightarrow 0} &= \left[ \left( 1 - \frac{i}{2} \right) \mathds{1} - \frac{3}{2} \frac{cos(r)}{r^3} \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix} \right] - \left( i \frac{3}{2r^2} \left(1 - cos(r)\right) - \frac{3}{2r} \right) \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix}.
+        \hat{h} &= \hat{h}_0 + V = \left[ \left(- \frac{i}{2} \right) \mathds{1} - \frac{3}{4} \frac{2e^{ir}}{r^3} \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix} \right] + \left(i \frac{3}{2} \frac{e^{ir}}{r^2} \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix}\right), \\
+        \hat{h}_{r\rightarrow 0} &= \left[ \left(- \frac{i}{2} \right) \mathds{1} - \frac{3}{2} \frac{cos(r)}{r^3} \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix} \right] - \left(\left( i \frac{3}{2r^2} \left(1 - cos(r)\right) + \frac{3}{2r} \right) \begin{bmatrix} 0 & 1 \\ 1 & 0 \\ \end{bmatrix}\right).
     \end{split}
 \end{equation}
-With the main Hamiltonian in the square brackets. Diagonalising the main Hamiltonian yields eigenvectors $v_- = (-1, 1)$ and $v_+ = (1, 1)$, from which the contributions to the eigenvalues can be computed with first-order perturbation theory: $\bra{v_{\pm}} V \ket{v_{\pm}}$. The decay rates are extracted from the eigenvalues by $\Gamma = -2 \cdot Im(\lambda)$, and in the limit of $r\rightarrow 0$, they approach finite values:
+With the main Hamiltonian in the square brackets and the perturbing Hamiltonian in the parentheses. In the second line, in the limit of $r\rightarrow 0$, the terms including $sin(r)$ are approximated by $r$, after which they drop an order in the denominator. So, the main Hamiltonian (square brackets) and perturbing Hamiltonian (parentheses) are in this limit the second line. Diagonalising the main Hamiltonian yields eigenvectors $v_- = (-1, 1)$ and $v_+ = (1, 1)$ with eigenvalues $\lambda^{(0)}_\pm = -\frac{i}{2} \pm \frac{3}{2} \frac{cos(r)}{r^3}$. To first order, the eigenvalues can be corrected with the perturbing Hamiltonian, V, as seen in the parentheses in Equation \ref{eq:pertubation}: $\lambda^{(1)}_\pm=\bra{v_{\pm}} V \ket{v_{\pm}} = \pm (i \frac{3(1-cos(r))}{r^2} + \frac{3}{r})$. The decay rates are extracted from the first-order corrected eigenvalues by $\Gamma_\pm = -2 \cdot Im(\lambda^{(0)}_\pm + \lambda^{(1)}_\pm) = 1 \pm \frac{6(1-cos(r))}{r^2}$, and in the limit of $r\rightarrow 0$, they approach finite values:
 \begin{equation}\label{eq:N2_decayrates_ex}
     \Gamma_{\pm,r\rightarrow 0} = 1 \pm 3
 \end{equation}
@@ -167,7 +167,7 @@ Again, the subradiant eigenstate has a negative decay rate. A suggested explanat
 
 In this section, it is briefly introduced how to compute the time-evolution of an excitated state of the efficient Hamiltonian. Unfortunately, there was not enough time in this project to perform a detailed analysis of the time-evolution of the different states. However, the theoretical section is still included for completeness.
 
-The effective Hamiltonian has no time-dependency, and it is therefore possible to evolve the states according to Schrödinger's equation. An expansion of a state into the eigenstates of the effective Hamiltonian including the wiggle-factors of corresponding eigenvalues (including both energyshift and damping) yields the apparent evolution:
+The states can be evolved under Schrödinger's equation. Because the effective Hamiltonian is time-independent, an expansion of a state into the eigenstates of the effective Hamiltonian including the wiggle-factors of corresponding eigenvalues (including both energyshift and damping) yields the apparent evolution:
 \begin{equation}
     \begin{split}
         \ket{\psi (t)} = \sum_{\xi=1}^N c_\xi \ket{\psi_\xi} e^{i \lambda_\xi t}
@@ -181,7 +181,7 @@ Many-body quantum mechanics is in many cases a challenge to compute. In this cas
 
 \subsection{Block hamiltonian}\label{sec:block}
 
-The structure of Equation \ref{eq:Heff} has a useful property, as seen initially for the $N=2$ case in Section \ref{sec:N2}. It commutes with the excitation-number operator (FINDES DEN?), $[\hat{H}_{eff}, \hat{N}_{exc}] = 0$, which means the Hamiltonian has a block-diagonal structure. In other words, in the basis of single excitations, the Hamiltonian is effectively an $N \times N$ matrix. The basis is $\{ \ket{e_i} \}_{i=1}^N$, where $\ket{e_i}$ is the i'th atom excited and the remaining in the ground state: $\ket{g_1, g_2, g_3, ..., e_i, ..., g_{N-1}, g_N}$. In the single excitation case, the problem is but the diagonalization of an $N \times N$ matrix. In the k excitations case, it is determined by the binomial factor, because of the two-level nature of the atoms: $\begin{pmatrix} N \\ k \\ \end{pmatrix} \times \begin{pmatrix} N \\ k \\ \end{pmatrix}$. Therefore, it is still not possible to consider a high k (i.e. more than a few), as the binomial factor scales too fast. 
+The structure of Equation \ref{eq:Heff} has a useful property, as seen initially for the $N=2$ case in Section \ref{sec:N2}. It commutes with the excitation-number operator, $[\hat{H}_{eff}, \hat{N}_{exc}] = 0$, which means the Hamiltonian has a block-diagonal structure. In other words, in the basis of single excitations, the Hamiltonian is effectively an $N \times N$ matrix. The basis is $\{ \ket{e_i} \}_{i=1}^N$, where $\ket{e_i}$ is the i'th atom excited and the remaining in the ground state: $\ket{g_1, g_2, g_3, ..., e_i, ..., g_{N-1}, g_N}$. In the single excitation case, the problem is but the diagonalization of an $N \times N$ matrix. In the k excitations case, it is determined by the binomial factor, because of the two-level nature of the atoms: $\begin{pmatrix} N \\ k \\ \end{pmatrix} \times \begin{pmatrix} N \\ k \\ \end{pmatrix}$. Therefore, it is still not possible to consider a high k (i.e. more than a few), as the binomial factor scales too fast. 
 
 \subsection{Dimensionless computation}\label{sec:dimless}
 
@@ -189,22 +189,23 @@ Finding the eigenvalues of the system is now efficiently solvable in a classical
 
 \begin{equation}\label{eq:Green_unitless}
     \begin{split}
-        &\underline{G_0}(\bar{r}_{ij}, \omega_0) \longrightarrow k_0 \cdot \tilde{\underline{G}}_0(\bar{\tilde{r}}_{ij}) \\
-        \rightarrow &\tilde{\underline{G}}_0(\bar{\tilde{r}}_{ij}) = \frac{e^{i\tilde{r}}}{4\pi \tilde{r}^3} \left[ (\tilde{r}^2 - i\tilde{r} + 1) \mathds{1}_3 (-\tilde{r}^2 - 3i\tilde{r} + 3) \frac{\ket{\bar{\tilde{r}}_{ij}}\bra{\bar{\tilde{r}}_{ij}}}{\tilde{r}^2} \right]
+        &\tilde{r} = k_0 \cdot r \\
+        &\underline{\tilde{G}}_0(\bar{\tilde{r}}_{ij}, \omega_0) = k_0^{-1} \underline{G}_0(\bar{\tilde{r}}_{ij}, \omega_0), \\
+        \rightarrow &\underline{\tilde{G}}_0(\bar{\tilde{r}}_{ij}) = \frac{e^{i\tilde{r}}}{4\pi \tilde{r}^3} \left[ (\tilde{r}^2 - i\tilde{r} + 1) \mathds{1}_3 (-\tilde{r}^2 - 3i\tilde{r} + 3) \frac{\ket{\bar{\tilde{r}}_{ij}}\bra{\bar{\tilde{r}}_{ij}}}{\tilde{r}^2} \right].
     \end{split}
 \end{equation}
-Where $\tilde{r}$ is the norm of $\bar{\tilde{r}}_{ij}$. The Green's tensor is now unitless. In order to get the Hamiltonian in the above energy units, a few factors must be considered. The factor in front of $\hat{H}_{eff}$, $A_0$ is after changing units of Green's tensor compared to $\hbar \Gamma_0$, which finally gives the unitless Hamiltonian:
+Where $\tilde{r}$ is the norm of $\bar{\tilde{r}}_{ij}$, the unitless distance between i and j. $\underline{\tilde{G}}_0$ is the unitless Green's tensor, which has been multiplied with $k_0$, for all $k_0$'s and $r$'s to cancel out. In order to get the Hamiltonian in the abovementioned energy units, a few factors must be considered. The desired factor in front should be $\hbar \Gamma_0$, such that the entire unitless setup describes energies in quantity of this factor. Comparing the current front factor $A_0 = -\mu_0 \omega_0^2 \|\bar{\mathscr{D}}\|^2 k_0$ with $\hbar \Gamma_0$ reveals the required factors, for the Hamiltonian to be of desired units:
 
 \begin{equation}\label{eq:Hamiltonian_unitless}
     \begin{split}
-        &A_0 = -\mu_0 \omega_0^2 \| \bar{\mathscr{D}} \|^2 k_0^{-1} = - \frac{\omega_0^3}{\varepsilon_0 c^3} \| \bar{\mathscr{D}} \|^2 \\
-        &\hbar \Gamma_0 = \frac{\omega_0^3}{3\pi \varepsilon_0 c^3} \| \bar{\mathscr{D}} \|^2 \\
-        \longrightarrow & \tilde{H}_{ij} = -3 \pi \hat{n}^T \underline{\tilde{G}}_0 (\bar{\tilde{r}}_{ij}) \hat{n}
+        &A_0 = -\mu_0 \omega_0^2 \| \bar{\mathscr{D}} \|^2 k_0 = - \frac{\omega_0^3}{\varepsilon_0 c^3} \| \bar{\mathscr{D}} \|^2, \\
+        &\hbar \Gamma_0 = \frac{\omega_0^3}{3\pi \varepsilon_0 c^3} \| \bar{\mathscr{D}} \|^2, \\
+        \longrightarrow & \tilde{H}_{ij} = \frac{H_{ij}}{\hbar \Gamma_0} = -3 \pi \hat{n}^T \underline{\tilde{G}}_0 (\bar{\tilde{r}}_{ij}) \hat{n}.
     \end{split}
 \end{equation}
-Unless otherwise stated, the above unitless Hamiltonian and variables are the entities in mind, when discussing results, and the tilde's are omitted. 
+Unless otherwise stated, the above unitless Hamiltonian and variables are the entities in mind, when discussing results, and the tilde's are omitted. Another important aspect of this maneuvre is to avoid specifying $\omega_0$, such that the computations are for arbitrary transitions.
 
-It is also important to note that the distances inserted the Greens tensor are in units of $2\pi$. $r$ is expressed in units of $k_0^{-1}$, so the actual distance measure is (using $d$ instead of $r$ to distinguish): $\frac{d}{\lambda_0} = 2 \pi r$, which is a useful way to express distances between the atoms, as it compares directly to the wavelength of the photons. 
+Because $r$ is now specified in units of $k_0^{-1}$, when two sites are one wavelength apart, the distance is equals to $2\pi$. To ease the comparability of distances, the used measure is instead $\frac{d}{\lambda_0}$ (using $d$ to signify difference from $r$). This measure is nice, because it tells interatomic distance directly compared to the wavelength.
 
 \section{Results \& Discussion}\label{sec:results}
 
@@ -247,12 +248,12 @@ In Figure \ref{fig:fig1}, a deeper insight into the linear chain (also referred 
     \label{fig:fig1}
 \end{figure}
 
-Based on comparison with these plots and Figure 3 of \cite{Asenjo}, the computation is verified. In Figure \ref{fig:linear_chain_decayrates_distance_N50}, it is seen that there is no significantly subradiant modes before $\frac{d}{\lambda_0} < 0.5$, i.e. when the distance between the atoms are less than half the wave-length. This property of the system is analytically motivated, as noted in \cite[Section III.A]{Asenjo}, since the size of the wave-vector must be $d < \frac{\lambda_0}{2}$ to support guided modes in the infinite linear lattice. This will serve as a guideline for choosing interatomic distances in the following cases. In Figure \ref{fig:linear_chain_10loweststates}, the population of the most subradiant states hints at a certain structure. With some resemblance to the well-known particle in a 1D square well, the populations seem to agree with the Ansatz of \cite[Section III.B.1]{Asenjo} for single-excitation modes in a linear lattice, which states for probability amplitude of site j, of mode with wavewector $k_\xi$: 
+In Figure \ref{fig:linear_chain_decayrates_distance_N50}, it is seen that there is no significantly subradiant modes before $\frac{d}{\lambda_0} < 0.5$, i.e. when the distance between the atoms are less than half the wave-length. This property of the system is analytically motivated, as noted in \cite[Section III.A]{Asenjo}, since the size of the wave-vector must be $d < \frac{\lambda_0}{2}$ to support guided modes in the infinite linear lattice. This will serve as a guideline for choosing interatomic distances in the following cases. In Figure \ref{fig:linear_chain_10loweststates}, the population of the most subradiant states hints at a certain structure. With some resemblance to the well-known particle in a 1D square well, the populations seem to agree with the Ansatz of \cite[Section III.B.1]{Asenjo} for single-excitation modes in a linear lattice, which states for probability amplitude of site j, of mode with wavewector $k_\xi$: 
 \begin{equation}\label{eq:ansatz}
     \begin{split}
-        & c^j_{ans,k_\xi} = \sqrt{\frac{2}{N + 1}} cos(k_\xi x_j), if \xi odd \\
-        & c^j_{ans,k_\xi} = \sqrt{\frac{2}{N + 1}} sin(k_\xi x_j), if \xi even \\
-        & k_\xi d = \frac{\pi \xi}{N + 1}
+        & c^j_{ans,k_\xi} = \sqrt{\frac{2}{N + 1}} cos(k_\xi x_j), \text{if \xi odd}, \\
+        & c^j_{ans,k_\xi} = \sqrt{\frac{2}{N + 1}} sin(k_\xi x_j), \text{if \xi even}, \\
+        & k_\xi d = \frac{\pi \xi}{N + 1}.
     \end{split}
 \end{equation}
 Where d is the interatomic distance, and $\xi$ labels the N modes. Thirdly, in Figure \ref{fig:linear_chain_decayrates} the decay rates of the $N=50$ modes are indexed by $\xi$. For the chosen parameters, atom number, $\frac{d}{\lambda_0}=0.3$ and polarization in parallel to chain axis, the most subradiant state's decay rate is $\Gamma_{\xi=1} \approxeq 2.5 \cdot 10^{-5}$. Finally, in Figure \ref{fig:linear_chain_decayrates_var_dist_N}, the most subradiant state's decay rate is plotted against varying the interatomic distance and number of atoms. For the case of varying distance (black and red interpolation), the number of atoms is static at $N=50$. For the case of varying number of atoms (blue and purple fit), the distance is static at $\frac{d}{\lambda_0} = 0.3$. As brought in \cite{ZhangMolmer}, the most subradiant mode's decay rate dependency of an linear lattice is found to be cubic in N: $\Gamma_{\xi=1} \propto N^{-3}$, which aligns well with the cubic fit. Regarding the varying distance, Section \ref{sec:N2} sheds some light, albeit not for many N, on the decay rate dependency of distance. It is seen that the Green's function's leading term for small distances is a $\frac{1}{r^3}$-term, also for the imaginary parts, which ends up determining the decay rate. However, for small distances we also have $sin(r) \approx r$, so the leading term for imaginary parts will be $\frac{1}{r^2}$. This may explain the change in curvature, which is noticable for the red interpolation line that resembles an exponential function. It cannot be exponential, as evidently in Figure \ref{fig:linear_chain_decayrates_distance_N50}. Distances greater than $\frac{d}{\lambda_0} = 0.5$ has the decay rate oscillating around 1, and for distances even greater, the interaction between the dipoles weaken, leaving the atoms closer to the vacuum spontaneous emission rate. 
@@ -263,10 +264,10 @@ Where d is the interatomic distance, and $\xi$ labels the N modes. Thirdly, in F
 For the linear chain, varying the polarization does not affect the most subradiant states' decay rates significantly. However, some change in behaviour among the superradiant states emerged, while doing this analysis. Superradiant modes for some angles relative to the chain axis are seen in Figure \ref{fig:linear_var_angle}:
 \begin{figure}[H]
     \includegraphics[width=0.99\textwidth]{figs/case_linear_var_angle_0_pi05.png}
-    \caption{Varying polarization angle from parallel to perpendicular (w.r.t. chain axis), $\hat{n} = \hat{e}_x \rightarrow \hat{e}_z$, in 9 steps. The angle is given with respect to $\hat{e}_x$. The visible data points on the plots are limited to $\xi \in [20, 50]$ to give a better view of superradiant states, which seem to be affected the most by this variation. Computed with $\frac{d}{\lambda0} = 0.3$. }
+    \caption{Varying polarization angle from parallel to perpendicular (w.r.t. chain axis), $\hat{n} = \hat{e}_x \rightarrow \hat{e}_z$, in 9 steps. The angle is given with respect to $\hat{e}_x$. The visible data points on the plots are limited to $\xi \in [20, 50]$ to give a better view of superradiant states, which seem to be affected the most by this variation. Computed with $\frac{d}{\lambda_0} = 0.3$. }
     \label{fig:linear_var_angle}
 \end{figure}
-Above $\frac{\pi}{4}$, the superradiant spectrum seems to flatten out, and then slightly increase again towards the perpendicular polarization, which suggests that for certain angles, the superradiance disappears. 
+Above $\frac{\pi}{4}$, the superradiant spectrum seems to flatten out, and then slightly increase again towards the perpendicular polarization, which suggests that for certain angles, the superradiance reaches an upper bound. 
 
 \subsubsection{Broken chain}\label{disc:linear_broken}
 
@@ -276,7 +277,7 @@ In Figure \ref{fig:linear_broken}, the linear chain is "broken" on the middle wi
     \caption{Three cases of a broken linear lattice with angles $\{0, \frac{\pi}{4}, \frac{\pi}{2}\}$ polarized along x-axis (non-broken chain axis) with $N = 50$ and $\frac{d}{\lambda_0} = 0.3$. The population on the chain of the most subradiant mode is visualized with the colorbar.}
     \label{fig:linear_broken}
 \end{figure}
-As expected, the population of the unbroken case is localized in the middle (with a few unexpectedly exempted sites, with a bit lower population), as it is also seen in Figure \ref{fig:linear_chain_10loweststates}. In the two broken cases however, the population is delocalized. MORE. In Figure \ref{fig:linear_broken_rates}, the decay rate of the most subradiant state is plotted against varying angle of the broken chain:
+As expected, the population of the unbroken case is localized in the middle (with a few unexpectedly exempted sites, with a bit lower population), as it is also seen in Figure \ref{fig:linear_chain_10loweststates}. In the two broken cases however, the population is delocalized. In Figure \ref{fig:linear_broken_rates}, the decay rate of the most subradiant state is plotted against varying angle of the broken chain:
 \begin{figure}[H]
     \includegraphics[width=0.9\textwidth]{figs/case_linear_broken_rates.png}
     \caption{Decay rate of most subradiant state vs. angle on broken chain. Dipole moments polarized along x-axis and $\frac{d}{\lambda_0} = 0.3$. }
@@ -291,7 +292,7 @@ In Section \ref{sec:outlook}, it is briefly discussed, what other analyses of th
 \subsection{Circular chain}\label{disc:circular}
 
 \noindent
-The circular lattice is particularly interesting, because the spin-wave modes of the chain never encounters a boundary, which in Section \ref{disc:linear_chain} is the hypothesized primary loss of excited probability amplitude. As seen in \cite[Section III.B.4]{Asenjo}, the circular lattice's most subradiant mode achieves exponential decrease in decay rate as function of N, $\Gamma_{\xi = 1} \propto e^{-N}$, compared to the linear chain's $\Gamma_{\xi=1} \propto N^{-3}$. But, how does the decay rate change with variation of the polarization of the atoms? There are various polarization configurations of interest, but in the scope of this project, two are highlighted. First, the circular lattice with unidirectional polarization, and secondly, with inwards polarization. 
+The circular lattice is particularly interesting, because the spin-wave modes of the chain never encounters a boundary, which in \cite{Asenjo} is the hypothesized primary loss of excited state probability amplitude. As seen in \cite[Section III.B.4]{Asenjo}, the circular lattice's most subradiant mode achieves exponential decrease in decay rate as function of N, $\Gamma_{\xi = 1} \propto e^{-N}$, compared to the linear chain's $\Gamma_{\xi=1} \propto N^{-3}$. But, how does the decay rate change with variation of the polarization of the atoms? There are various polarization configurations of interest, but in the scope of this project, two are highlighted. First, the circular lattice with unidirectional polarization, and secondly, with inwards polarization. 
 
 In implementing this computation, the interatomic distance is taken to be the shortest path between each site, i.e. the geometry is actually an N-polygon. 
 
@@ -366,13 +367,13 @@ In Section \ref{sec:N2}, the analytical decay rates for the parallel polarized d
 \subsection{Outlook}\label{sec:outlook}
 
 \noindent
-As mentioned in Section \ref{disc:linear_broken}, the broken linear chain has very different subradiant populated modes, compared to the unbroken case. A deeper investigation of this particular system could include an integration of the field-strength surrounding the system to see, where the broken chain radiates from. As noted, it is hypothesized that the linear chain radiates from the ends, so the apparent question is, if the broken chain radiates from corner as well? The field surrounding these systems in combination with time-evolution of the eigenstates could bring further insight in the radiative properties and wave-propagation throughout the systems. For atomic arrays in general to be a prospect for quantum information processing, in particular storing of states, the systems need a good trade-off between good coupling to the surrounding field, while not too strong. The circular chain does for instance not have any ends, from which the field may radiate, and this may prove difficult to retreive a state. In atomic ensembles, this problem has been overcome by coupling strongly to favored photon modes in a cavity \cite{Yong}, which yields efficient storage and retrieval protocols. As the strong coupling regime of CQED invalidates the Markovian approximations taken in Section \ref{sec:theory}, another approach must be investigated. 
+As mentioned in Section \ref{disc:linear_broken}, the broken linear chain has very differently populated subradiant states, compared to the unbroken case. A deeper investigation of this particular system could include an integration of the field-strength surrounding the system to see, where the broken chain radiates from. As noted, it is hypothesized that the linear chain radiates from the ends, so the apparent question is, if the broken chain radiates from corner as well? The field surrounding these systems in combination with time-evolution of the eigenstates could bring further insight in the radiative properties and wave-propagation throughout the systems. For atomic arrays in general to be a prospect for quantum information processing, in particular storing of states, the systems need a good trade-off between good coupling to the surrounding field, while not too strong. The circular chain does for instance not have any ends, from which the field may radiate, and this may prove difficult to retreive a state. In atomic ensembles, this problem has been overcome by coupling strongly to favored photon modes in a cavity \cite{Yong}, which yields efficient storage and retrieval protocols. As the strong coupling regime of CQED invalidates the Markovian approximations taken in Section \ref{sec:theory}, another approach must be investigated. 
 
-One such approach is suggested in \cite{Fayard}, where a linear V-shaped chain of 3-level atoms are deployed. The extra level proves useful as a manipulator of collective excitations and can in theory be used to transfer a superradiant mode to a subradiant and vice-versa. This shopping between modes with desired properties can prove useful designing efficient protocols. 
+One such approach is suggested in \cite{Fayard}, where a linear V-shaped chain of 3-level atoms are deployed. The extra level proves useful as a manipulator of collective excitations and can in theory be used to transfer a superradiant mode to a subradiant and vice-versa. This shopping between modes with desired properties can prove useful when designing efficient protocols. 
 
-Another example may be coupling of the atomic array to a wave-guide, as described in \cite[Section IV]{Asenjo}. The framework developed by Grüner \& Welsch \cite{Gruner} can be extended to include propagation in other media and guided modes. The guided modes of the wave-guide couple strongly to certain subradiant modes of the array, while the coupling to free space emission is still supressed. The lifetime of the subradiant states do however not improve much in this particular study, but the memory fidelity (i.e. store and retrieve) improves exponentially. A direction for further projects could be to simulate other geometrical configurations of arrays in combination with wave-guides. 
+Another example may be coupling of the atomic array to a wave-guide, as described in \cite[Section IV]{Asenjo}. The framework developed by Grüner \& Welsch \cite{Gruner} can be extended to include propagation in other media and guided modes. The guided modes of the wave-guide couple strongly to certain subradiant modes of the array, while the coupling to free space emission is still suppressed. The lifetime of the subradiant states do however not improve much in this particular study, but the memory fidelity (i.e. store and retrieve) improves exponentially. A direction for further projects could be to simulate other geometrical configurations of arrays in combination with wave-guides. 
 
-Further research in the track of this project could include more complex geometries. Suggestions include elliptic chains to study the decay rates dependencies of curvature and a helix-shaped array, which may incorporate features from the linear chain on the longitudinal axis and features from the circular chain in the radial axis. Complex geometries may yield interesting properties, but it is important to keep in mind that arranging atoms precisely below optical wavelengths is challenging, and increasing complexity in this manner could render the physical implementation outside of reach. 
+Further research in the track of this project could include more complex geometries. Suggestions include elliptic chains to study the decay rates' dependencies of curvature and a helix-shaped array, which may incorporate features from the linear chain on the longitudinal axis and features from the circular chain in the radial axis. Complex geometries may yield interesting properties, but it is important to keep in mind that arranging atoms precisely below optical wavelengths is challenging, and increasing complexity in this manner could render the physical implementation outside of reach. 
 
 Finally, another track continuing naturally from this project is multiexcitation states and their behaviour. As noted in \cite{Asenjo}, the multi-excitation states will, due to the spin-wave guided modes, exhibit fermionic behaviour, which impacts decay rates differently than for bosonic behaviour. 
 

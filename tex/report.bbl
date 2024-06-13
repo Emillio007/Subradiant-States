@@ -215,12 +215,15 @@
       \endverb
     \endentry
     \entry{Yong}{article}{}
-      \name{author}{1}{}{%
-        {{hash=186e30171c14115d06aa1f2696e93c4e}{%
+      \name{author}{2}{}{%
+        {{hash=e029f6a7c895e30260296f6cef401627}{%
            family={Yong},
            familyi={Y\bibinitperiod},
-           given={Yu\bibnamedelima \textit{et\bibnamedelimb al.}},
-           giveni={Y\bibinitperiod\bibinitdelim e\bibinitperiod\bibinitdelim a\bibinitperiod}}}%
+           given={Yu},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=cfc6df954cbc161078c4d9cdf3ccd245}{%
+           family={\textit{et\bibnamedelimb al.}},
+           familyi={e\bibinitperiod\bibinitdelim a\bibinitperiod}}}%
       }
       \strng{namehash}{186e30171c14115d06aa1f2696e93c4e}
       \strng{fullhash}{186e30171c14115d06aa1f2696e93c4e}
@@ -240,12 +243,15 @@
       \endverb
     \endentry
     \entry{Fayard}{article}{}
-      \name{author}{1}{}{%
-        {{hash=65843ded2a3962007b387d7b346d18a5}{%
+      \name{author}{2}{}{%
+        {{hash=3783dce979cb38fbbbf022713a6b5664}{%
            family={Fayard},
            familyi={F\bibinitperiod},
-           given={N.\bibnamedelimi \textit{et\bibnamedelimb al.}},
-           giveni={N\bibinitperiod\bibinitdelim e\bibinitperiod\bibinitdelim a\bibinitperiod}}}%
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+        {{hash=cfc6df954cbc161078c4d9cdf3ccd245}{%
+           family={\textit{et\bibnamedelimb al.}},
+           familyi={e\bibinitperiod\bibinitdelim a\bibinitperiod}}}%
       }
       \strng{namehash}{65843ded2a3962007b387d7b346d18a5}
       \strng{fullhash}{65843ded2a3962007b387d7b346d18a5}

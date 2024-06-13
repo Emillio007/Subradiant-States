@@ -1,0 +1,18 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {section}{\numberline {2}Theory}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}The full system}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}The case of $N=2$}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Time-evolution of excitation}{6}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Method}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Block hamiltonian}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Dimensionless computation}{7}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Results \& Discussion}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Linear chain}{8}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Varying polarization in linear chain}{10}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Broken chain}{11}{subsubsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.2}Circular chain}{13}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Polarized unidirectionally}{14}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Polarized inwards}{15}{subsubsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.3}Negative decay rates}{16}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Outlook}{17}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Conclusion}{18}{section.5}%
