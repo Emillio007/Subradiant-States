@@ -14,7 +14,7 @@ N = 50                                                          #number of atoms
 
 
 """
-Different inter-atomic distances in scalar (linear transverse) case.
+Different inter-atomic distances in linear parallel case.
 """
 
 a = np.linspace(0.1, 2.0, 100)  #d/lambda0
