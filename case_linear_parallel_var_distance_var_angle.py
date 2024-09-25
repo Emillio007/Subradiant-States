@@ -16,12 +16,18 @@ N = 50                                                          #number of atoms
 """
 Different inter-atomic distances in linear var angle case.
 """
-ncases = 10
-a = np.linspace(0.2, 0.4, ncases)  #d/lambda0
+grid_points = 10
+
+a = np.linspace(0.2, 0.4, grid_points)  #d/lambda0
 d = 2*pi * a                    #The distance to feed G in units of 1/k0
 
-#Unit vector with angle for polarization (respective to linear chain axis, ex)
 angle = 5*pi/16
+angles = np.linspace(0, pi/2, grid_points)
+
+#for plotting
+X, Y = np.meshgrid(d, angles)
+
+#Unit vector with angle for polarization (respective to linear chain axis, ex)
 pola_vec = np.array([np.cos(angle), 0, np.sin(angle)])
 
 lat = Lattice.Lattice()
@@ -37,7 +43,7 @@ x = np.zeros(N)
 xax = range(N)[-30:-1]
 
 #Set color cycle to gradient:
-plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.gray(np.linspace(0, 1, ncases)))
+plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.gray(np.linspace(0, 1, grid_points)))
 
 for i in range(len(a)):
     x[:] = a[i]
