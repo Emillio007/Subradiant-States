@@ -31,7 +31,7 @@ def G_0(r, w0=1, dimensionless=True):
         r = r' * r0, r0 = 1/k0
     """
     from numpy.linalg import norm
-    from numpy import e, outer, pi
+    from numpy import e, outer, pi, identity
     from scipy.constants import c
     from qutip import qeye
     
@@ -39,12 +39,12 @@ def G_0(r, w0=1, dimensionless=True):
     r_norm = norm(r)
     if dimensionless:
         G = ((e**(1j * r_norm))/(4 * pi * r_norm**3)) * (
-            (r_norm**2 + 1j * r_norm - 1) * qeye(3) + 
+            (r_norm**2 + 1j * r_norm - 1) * identity(3) + 
             (-r_norm**2 -1j * 3 * r_norm + 3) * (outer(r,r)/r_norm**2)
             )
     else:
         G = ((e**(k0*r_norm*complex(0,1)))/(4 * pi * k0**2 * r_norm**3)) * (
-            (k0**2 * r_norm**2 + k0 * r_norm * complex(0, 1) - 1)*qeye(3) 
+            (k0**2 * r_norm**2 + k0 * r_norm * complex(0, 1) - 1)*identity(3) 
             + (-k0**2 * r_norm**2 - 3 * k0 * r_norm * complex(0, 1) + 3)*outer(r, r)/(r_norm**2)
             )
     return G
